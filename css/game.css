@@ -1,9 +1,17 @@
 table {
     width: 64vw;
-    height: 48vw;
+    height: 48vw; 
     max-width: 96vh;
     max-height: 72vh;
     aspect-ratio: 8/6;
+    /*
+    if want a full screen mode : 
+    width: 100vw;
+    height: 75vw; 
+    max-width: 132vh;
+    max-height: 99vh;
+    */
+    
 
     border-collapse: collapse;
     border-radius: 6px;
