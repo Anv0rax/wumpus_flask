@@ -1,6 +1,9 @@
 table {
-    width: fit-content;
-    height: fit-content;
+    width: 64vw;
+    height: 48vw;
+    max-width: 96vh;
+    max-height: 72vh;
+    aspect-ratio: 8/6;
 
     border-collapse: collapse;
     border-radius: 6px;
@@ -10,11 +13,11 @@ table {
 }
 
 tr {
-    height: 80px;
+    height: 15%;
 }
 
 td {
-    width: 80px;
+    width: 10%;
 }
 
 .box {
@@ -26,7 +29,6 @@ td {
     width: 100%;
     height: 100%;
 
-    background-color: #545a5f;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -92,7 +94,7 @@ td {
     width: 50%;
     height: 50%;
 
-    background-image: url(../assets/ingame/32-resized_triggered_bat.png);
+    background-image: url(../assets/ingame/32-resized_bat.png);
     z-index: 4;
 }
 
@@ -135,7 +137,7 @@ td {
 }
 
 .corridor_1 div:first-child {
-    display: flex;
+    display: none;
 
     background-image: url(../assets/ingame/32-edited_corridor_1_bot.png);
 
