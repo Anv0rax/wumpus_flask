@@ -1,0 +1,167 @@
+table {
+    width: fit-content;
+    height: fit-content;
+
+    border-collapse: collapse;
+    border-radius: 6px;
+    outline: 2px solid black;
+
+    background-color: #545a5f;
+}
+
+tr {
+    height: 80px;
+}
+
+td {
+    width: 80px;
+}
+
+.box {
+    display: none;
+    align-items: center;
+
+    position: relative; 
+
+    width: 100%;
+    height: 100%;
+
+    background-color: #545a5f;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    z-index: 0;
+}
+
+.box * {
+    display: block;
+
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    margin: 0 auto;
+}
+
+.explored {
+    display: flex !important;
+}
+
+.normal {
+    background-image: url(../assets/ingame/32-edited_normal.png);
+}
+
+.hole {
+    background-image: url(../assets/ingame/32-edited_hole.png);
+}
+
+.near_hole {
+    background-image: url(../assets/ingame/32-edited_near_hole.png);
+}
+
+.near_wumpus {
+    position: absolute;
+
+    left: 25%;
+
+    width: 50%;
+    height: 50%;
+
+    background-image: url(../assets/ingame/32-resized_near_wumpus.png);
+    z-index: 3;
+}
+
+.wumpus {
+    position: absolute;
+
+    left: 25%;
+
+    width: 50%;
+    height: 50%;
+
+    background-image: url(../assets/ingame/32-resized_wumpus.png);
+    z-index: 3;
+}
+
+.bat {
+    position: absolute;
+
+    left: 25%;
+
+    width: 50%;
+    height: 50%;
+
+    background-image: url(../assets/ingame/32-resized_triggered_bat.png);
+    z-index: 4;
+}
+
+#player {
+    display: block !important;
+
+    width: 50%;
+    height: 50%;
+
+    background-image: url(../assets/ingame/32-resized_player.png);
+
+    z-index: 10;
+}
+
+.top-1 {
+    align-self: flex-start;
+    margin: 0 0 0 50%;
+}
+
+.bot-1 {
+    align-self: flex-end;
+}
+
+.top-2 {
+    align-self: flex-start;
+    margin: 0;
+}
+
+.bot-2 {
+    align-self: flex-end;
+    margin: 0 0 0 25%;
+}
+
+.corridor_1 div:first-child, .corridor_1 div:last-child,
+.corridor_2 div:first-child, .corridor_2 div:last-child {
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+}
+
+.corridor_1 div:first-child {
+    display: flex;
+
+    background-image: url(../assets/ingame/32-edited_corridor_1_bot.png);
+
+    z-index: 2;
+}
+
+.corridor_1 div:last-child {
+    display: flex;
+
+    background-image: url(../assets/ingame/32-edited_corridor_1_top.png);
+
+    z-index: 1;
+}
+
+.corridor_2 div:first-child {
+    display: flex;
+
+    background-image: url(../assets/ingame/32-edited_corridor_2_bot.png);
+
+    z-index: 2;
+}
+
+.corridor_2 div:last-child {
+    display: flex;
+
+    background-image: url(../assets/ingame/32-edited_corridor_2_top.png);
+
+    z-index: 1;
+}

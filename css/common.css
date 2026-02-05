@@ -1,0 +1,55 @@
+:root {
+	--color-primary: #640a34;
+	--color-secondary: #6b0101;
+	--color-text: black;
+	--primary-color: #fff2d4;
+	--secondary-color: #948b7c;
+	--ui-green: #99b681;
+	--ui-red: #eb243b;
+	--ui-pink: #ff8d7c;
+}
+
+/* FONTS */
+@font-face {
+	font-family: basic;
+	src: url('../assets/fonts/xlmonoalt.ttf');
+}
+
+@font-face {
+	font-family: titles;
+	src: url('../assets/fonts/night_wolf.ttf');
+}
+
+@font-face {
+	font-family: main-title;
+	src: url('../assets/fonts/funky_star.ttf');
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    font-weight: normal;
+    box-sizing: border-box;
+}
+
+html {
+	width: 100dvw;
+	height: 100dvh;
+}
+
+body {
+    margin: 0;
+    background-color: rgb(247, 125, 230);
+}
+
+h1 {
+    font-family: main-title;
+}
+
+main {
+    width: 80%;
+    min-height: 80%;
+    margin: 10 auto;
+    display: flex;
+    justify-content: center;
+}
