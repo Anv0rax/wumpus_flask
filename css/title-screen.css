@@ -1,0 +1,80 @@
+:root {
+	--color-primary: #640a34;
+	--color-secondary: #6b0101;
+	--color-text: black;
+	--primary-color: #fff2d4;
+	--secondary-color: #948b7c;
+	--ui-green: #99b681;
+	--ui-red: #eb243b;
+	--ui-pink: #ff8d7c;
+    --ui-yellow : #dbc70d;
+    --transparent: rgba(0, 0, 0, 0);
+}
+
+@font-face {
+	font-family: basic;
+	src: url('../assets/fonts/xlmonoalt.ttf');
+}
+
+@font-face {
+	font-family: titles;
+	src: url('../assets/fonts/night_wolf.ttf');
+}
+
+@font-face {
+	font-family: main-title;
+	src: url('../assets/fonts/funky_star.ttf');
+}
+html, body
+{
+    background-color: var(--color-text);
+    height: 100%;
+}
+
+#container-texts
+{
+    margin: auto;
+    height: 100%;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50vh;
+}
+
+.firsttext, .secondtext
+{
+    color: var(--ui-red);
+    font-family: titles;
+    font-size: 6vh;
+    text-align: center;
+    letter-spacing: 0.5vh;
+    text-shadow : 2px 2px 4px var(--ui-yellow), 0 0 25px var(--ui-yellow), 0 0 5px var(--primary-color);
+}
+
+.secondtext
+{
+    animation : flicker 1s infinite;
+}
+
+.keyPressed
+{
+    animation: flicker 0.2s 10 !important;
+    color : var(--primary-color) !important;
+}
+
+#container-texts.fin-anim
+{
+    animation : none !important;
+}
+
+
+
+@keyframes flicker
+{
+    0%, 100% { opacity: 1;}
+    50% {opacity: 0;}
+}
+
+
