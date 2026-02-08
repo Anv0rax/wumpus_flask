@@ -56,13 +56,20 @@ html {
 	height: 100dvh;
 }
 
-body {
+body>div {
+	display: flex;
+	flex-wrap: wrap;
+
+	width: 100%;
+	min-height: 80%;
+
     margin: 0;
     background-color: rgb(247, 125, 230);
 }
 
 h1 {
     font-family: main-title;
+	padding: 10px;
 }
 
 main {
@@ -72,3 +79,94 @@ main {
     display: flex;
     justify-content: center;
 }
+
+header {
+	display: flex;
+	flex-wrap: wrap;
+
+	padding: 10px 10px;
+
+	background-color: var(--primary-color);
+}
+
+header h1 {
+	width: 100%;
+	text-align: center;
+}
+
+header hr {
+	width: 90%;
+	margin: 10px;
+}
+
+header>div {
+	display: flex;
+
+	border-collapse: collapse;
+}
+
+header div a {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	text-align: center;
+	font-family: titles;
+}
+
+@media only screen and (orientation: landscape) {
+	body>div {
+		flex-direction: row;
+	}
+
+	header {
+		align-content: start;
+
+		width: 180px;
+	}
+
+	header>div {
+		flex-direction: column;
+		justify-content: start;
+
+		width: 80%;
+		height: 85%;
+		max-height: 500px;
+		margin: 5px auto;
+
+		border-collapse: collapse;
+	}
+
+	header div a {
+		height: 15%;
+		width: 100%;
+	}
+}
+
+@media only screen and (orientation: portrait) {
+	body>div {
+		flex-direction: column;
+	}
+
+	header {
+		width: 100%;
+		height: 150px;
+
+		margin: 0 auto ;
+	}
+
+	header>div {
+		justify-content: space-evenly;
+
+		width: 85%;
+		height: 30%;
+
+		border-collapse: collapse;
+	}
+
+	header div a {
+		width: 20%;
+		max-width: 100px;
+		height: 100%;
+	}
+} 
