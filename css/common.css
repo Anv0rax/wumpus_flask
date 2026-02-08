@@ -7,8 +7,21 @@
 	--ui-green: #99b681;
 	--ui-red: #eb243b;
 	--ui-pink: #ff8d7c;
+    --ui-yellow : #dbc70d;
+    --transparent: rgba(0, 0, 0, 0);
+	--border-exp : #00ddff;
+	--bg-difficulty : #0b0116;
+	--bg-grid : #ff00ffcd;
+	--bg-accents : #0400ff32;
+	--exp-bg : #948b7cd7;
+	--form : #000dffc8;
+	--font-dropdowncolor : #0dc0e0;
+	--font-colorexp : white;
+	--hovercolor-submit : rgba(18, 219, 68, 0.908);
+	--easy : lime;
+	--medium : #de9a06;
+	--hard : #9f0808;
 }
-
 /* FONTS */
 @font-face {
 	font-family: basic;
@@ -23,6 +36,12 @@
 @font-face {
 	font-family: main-title;
 	src: url('../assets/fonts/funky_star.ttf');
+}
+
+@font-face /* Police rétro */
+{
+	font-family: retro;
+	src : url('../assets/fonts/PressStart2P-Regular.ttf')
 }
 
 * {

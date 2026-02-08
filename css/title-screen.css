@@ -1,33 +1,6 @@
-:root {
-	--color-primary: #640a34;
-	--color-secondary: #6b0101;
-	--color-text: black;
-	--primary-color: #fff2d4;
-	--secondary-color: #948b7c;
-	--ui-green: #99b681;
-	--ui-red: #eb243b;
-	--ui-pink: #ff8d7c;
-    --ui-yellow : #dbc70d;
-    --transparent: rgba(0, 0, 0, 0);
-}
-
-@font-face {
-	font-family: basic;
-	src: url('../assets/fonts/xlmonoalt.ttf');
-}
-
-@font-face {
-	font-family: titles;
-	src: url('../assets/fonts/night_wolf.ttf');
-}
-
-@font-face {
-	font-family: main-title;
-	src: url('../assets/fonts/funky_star.ttf');
-}
 html, body
 {
-    background-color: var(--color-text);
+    background-color: var(--color-text) !important;
     height: 100%;
 }
 

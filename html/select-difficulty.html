@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Hunt the Wumpus - Difficulté du jeu</title>
+    <link rel="icon" href="../assets/wumpus-discord.png" />
+    <link rel="stylesheet" href="../css/select-difficulty.css" />
+    <link rel="stylesheet" href="../css/common.css" />
+    <script src="../js/select-difficulty.js"></script>
+</head>
+<body>
+    <div>
+        <img id="sound" src="../assets/SoundWhite.png" width="70" height="70">
+    </div>
+    <audio id="son1" preload="auto">
+        <source id="son" src="../assets/sounds/Move.mp3" type="audio/mp3">
+    </audio>
+    <audio id="son2" preload="auto">
+        <source src="../assets/sounds/License move.mp3" type="audio/mp3">
+    </audio>
+    <audio id="son3" preload="auto">
+        <source src="../assets/sounds/License select.mp3" type="audio/mp3">
+    </audio>
+    <form id="form">
+        <h2>Paramètres difficulté</h2>
+        <div class="diff-tuto">
+            <img class="help" src="../assets/QuestionMark.png">
+            <div class="explications">Facile : Une chauve-souris, peu de couloirs.<br><br>Moyen : 2 chauve-souris, plus de couloirs.<br><br>Difficile : 2 chauve-souris, beaucoup de couloirs.</div>
+        </div>
+        <label for="difficulty-choice"><p>Choisis la difficulté !</p></label>
+        <br>
+        <select id="difficulty-choice">
+            <option value="ez">Facile</option>
+            <option value="meh">Moyen</option>
+            <option value="hard">Difficile</option>
+        </select>
+        <p>Mode de jeu</p>
+        <div class="diff-tuto">
+            <img class="help" src="../assets/QuestionMark.png">
+            <div class="explications">Mode Express : Le nombre de salle est réduit. Intensitée beaucoup plus élevée, mais attention les dangers sont plus proches !<br><br>Mode Aveugle : Vous ne voyez que votre case dans le labyrinthe... Fiez vous aux indices donnés ! <br><br>Attention : les deux modes peuvent être séléctionné en même temps.</div>
+        </div>
+        <div class="onoff">
+            <label class="check">Mode Express
+                <input type="checkbox">
+            </label>
+            <label class="check">Mode Aveugle
+                <input type="checkbox">
+            </label>
+        </div>
+        <input id="test" class="validate" type="submit" value="Sauvegarder !">
+    </form>
+    <div class="grid"></div>
+    <div class="overlay"></div>
+</body>
+</html>
