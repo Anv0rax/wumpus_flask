@@ -26,6 +26,7 @@ tr {
 
 td {
     width: 10%;
+    outline: 5px solid black;
 }
 
 .box {
@@ -145,7 +146,7 @@ td {
 }
 
 .corridor_1 div:first-child {
-    display: none;
+    display: flex;
 
     background-image: url(../assets/ingame/32-edited_corridor_1_bot.png);
 

@@ -53,12 +53,12 @@
 
 html, body {
 	width: 100%;
-	min-height: 100vh;
+	min-height: 100%;
 }
 
 h1 {
     font-family: main-title;
-	padding: 10px;
+	font-size: 50px;
 }
 
 a {
@@ -110,6 +110,7 @@ header div a {
 
 	text-align: center;
 	font-family: titles;
+	font-size: 30px;
 }
 
 main {
@@ -141,7 +142,7 @@ footer {
 	header {
 		align-content: start;
 
-		width: 180px;
+		width: 220px;
 	}
 
 	header>div {
@@ -158,7 +159,7 @@ footer {
 
 	header div a {
 		height: 8%;
-		margin: 5px 0;
+		margin: 20px 0;
 		width: 100%;
 	}
 	
@@ -179,15 +180,16 @@ footer {
 		justify-content: center;
 
 		width: 100%;
-		height: 150px;
+		min-height: 160px;
 
 		margin: 0 auto ;
 	}
 
 	header>div {
 		justify-content: space-evenly;
+		flex-wrap: wrap;
 
-		width: 85%;
+		width: 95%;
 		height: 30%;
 
 		border-collapse: collapse;
@@ -195,9 +197,10 @@ footer {
 
 	header div a {
 		width: 15%;
-		max-width: 100px;
+		min-width: 100px;
+		width: fit-content;
 		height: 100%;
-		margin: 0 5px;
+		margin: 0 20px;
 	}
 
 	main {

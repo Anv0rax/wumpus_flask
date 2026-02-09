@@ -4,20 +4,8 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-form {
-    font-family: retro;
-    position: relative;
-    z-index: 999;
-    text-align: center;
-    background-color: var(--form) !important;
-    color: var(--primary-color);
-    text-shadow : 2px 2px 3px var(--color-text);
-    padding : 20px;
-    border-radius: 10px;
-    border: var(--primary-color) 2px solid;
-    letter-spacing: 2px;
+    margin: 0;
+    width: 100%;
 }
 
 #visual_effects {
@@ -26,10 +14,6 @@ form {
 
     flex-grow: 1;
     align-self: stretch;
-}
-
-#functional {
-    position: absolute;
 }
 
 .grid {
@@ -51,19 +35,48 @@ form {
 /* le filtre */
 .overlay {
     position: absolute;
+
     width: 100%;
     height: 100%;
+
     background: radial-gradient(circle, transparent 20%, var(--bg-accents) 80%);
+
     pointer-events: none;
 }
 
-#difficulty-choice {
-    margin : 5%;
-    padding : 10px 20px;
+#functional {
+    position: absolute;
+}
+
+form {
+    position: relative;
+
+    height: 100%;
+    min-height: fit-content;
+    padding : 20px;
+
     font-family: retro;
+    text-align: center;
+    letter-spacing: 2px;
+    color: var(--primary-color);
+    text-shadow : 2px 2px 3px var(--color-text);
+
+    background-color: var(--form) !important;
+    border-radius: 10px;
+    border: var(--primary-color) 2px solid;
+
+    z-index: 999;
+}
+
+#difficulty-choice {
+    margin : 10px auto 50px auto;
+    padding : 10px 20px;
+
+    font-family: retro;
+    letter-spacing: 2px;
+
     border-radius: 20px;
     border: var(--primar) 2px solid;
-    letter-spacing: 2px;
 }
 
 option[value=ez] {
@@ -79,20 +92,24 @@ option[value=hard] {
 }
 
 .diff-tuto {
-    position: relative;
     display : block;
+    position: relative;
+
     width: fit-content;
+
     margin : 10px 10px 10px 47%;
 }
 
 .explications {
     display: none;
     position: absolute;
+
     top : 100%;
     left: 50%;
+    padding : 12px 16px;
+
     transform: translateX(-50%);
     background-color: var(--exp-bg);
-    padding : 12px 16px;
     min-width: none;
     color: var(--font-colorexp);
     text-shadow: 2px 1px var(--bg-grid);
@@ -102,8 +119,10 @@ option[value=hard] {
 
 .diff-tuto:hover .explications {
     display: block !important;
-    z-index: 1;
+
     width: 500px;
+    
+    z-index: 1;
 }
 
 .onoff {
@@ -114,12 +133,17 @@ option[value=hard] {
 }
 
 .onoff input[type="checkbox"] {
+    height: 25px;
+    width: 75px;
+
+    padding-right: 25px;
+
     background-image : 
         -webkit-linear-gradient(hsla(0,0%,0%,.1), hsla(0,0%,100%,.1)),
         -webkit-linear-gradient(left, #f66 50%, rgb(102, 255, 125) 50%);
-        
     background-size: 100% 100%, 200% 100%;
     background-position: 0 0, 15px 0;
+
     border-radius: 25px;
     box-shadow : 
         inset 0 1px 4px hsla(0,0%,0%,.5),
@@ -129,19 +153,21 @@ option[value=hard] {
         0 2px 2px 2px hsla(0,0%,100%,.75);
     
     cursor: pointer;
-    height: 25px;
-    padding-right: 25px;
-    width: 75px;
+
     appearance: none;
-    transition: 0.25s;
-                 
+    transition: 0.25s;         
 }
 
 .onoff input[type="checkbox"]:after {
+    display: block;
+
+    height: 25px;
+    width: 50px;
+
     background-color: #eee;
     background-image: -webkit-linear-gradient(hsla(0,0%,100%,.1), hsla(0,0%,0%,.1));
+    
     border-radius: 25px;
-
     box-shadow: 
         inset 0 1px 1px 1px hsla(0,0%,100%,1),
         inset 0 -1px 1px 1px hsla(0,0%,0%,.25),
@@ -149,9 +175,6 @@ option[value=hard] {
         0 0 2px hsla(0,0%,0%,.25);
     
     content: '';
-    display: block;
-    height: 25px;
-    width: 50px;
 }
 
 .onoff input[type="checkbox"]:checked {
@@ -161,31 +184,39 @@ option[value=hard] {
 }
 
 .validate {
-    font-family: retro;
     padding: 10px;
     margin: 10px;
+
+    font-family: retro;
+
     transition : transform 1s ease;
 }
 
 .validate:hover {
-    background-color: var(--hovercolor-submit);
     color: var(--primary-color);
+
+    background-color: var(--hovercolor-submit);
+
     transform: scale(1.1);
 }
 
 #sound {
     position: absolute;
-    top: 0;
-    right : 0;
+
     padding : 10px;
     margin: 20px;
-    z-index: 10;
+
+    top: 0;
+    right : 0;
+
     transition: transform 1s ease;
+    z-index: 10;
 }
 
 #sound:hover {
-    transform: scale(1.3);
     background: radial-gradient(circle, rgba(34, 0, 255, 0.71) 20%, transparent 80%);
+
+    transform: scale(1.3);
 }
 
 
@@ -202,8 +233,9 @@ option[value=hard] {
 
 @media (max-height : 634px) {
     .explications  {
-        font-size: 10px;
         width : 300px;
+
+        font-size: 10px;
     }
 }
 
@@ -217,21 +249,24 @@ option[value=hard] {
     }
 
     h2,.diff-tuto,p,.onoff,.validate, #difficulty-choice {
-        font-size: 12px;
         padding: 2px;
+
+        font-size: 12px;
     }
 }
 
 @media (max-height : 400px) {
     .help {
-        height: 16px;
         width: 16px;
+        height: 16px;
     }
 
     h2,.diff-tuto,p,.onoff,.validate, #difficulty-choice {
-        font-size: 8px;
-        padding: 2px;
         display: inline-block;
-        right : 25%
+
+        padding: 2px;
+        right : 25%;
+        
+        font-size: 8px;
     }
 }
