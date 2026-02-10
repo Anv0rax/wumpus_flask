@@ -28,6 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* ======== Le Code ========== */
 
+    let musicVolume = 0.25;
+    let soundVolume = 0.25;
     testMusicPrincipal.volume = 0.05;
     sliderSound.volume = 0.25;
     pLum.textContent = "100%";
@@ -60,12 +62,12 @@ document.addEventListener('DOMContentLoaded', () => {
             sound.src = "../assets/SoundWhite.png";
             EnableSlider(sfx);
             EnableSlider(music);
-            move.volume = 0.25;
-            interact.volume = 0.25;
-            sliderSound.volume = 0.25;
-            sfx.value = 25;
-            music.value = 25;
-            SongVolume(testMusicPrincipal, 0.5)
+            move.volume = soundVolume;
+            interact.volume = soundVolume;
+            sliderSound.volume = soundVolume;
+            sfx.value = soundVolume*100;
+            music.value = musicVolume*100;
+            SongVolume(testMusicPrincipal, musicVolume)
             pSfx.textContent = sfx.value + "%";
             pMusic.textContent = music.value + "%";
         }
@@ -79,17 +81,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     sfx.addEventListener('input', () => {
         PlaySound(sliderSound);
-        const val = sfx.value / 100;
+        var val = sfx.value / 100;
         move.volume = val;
         interact.volume = val;
         sliderSound.volume = val;
+        soundVolume = val;
         pSfx.textContent = sfx.value + "%";
     });
 
     music.addEventListener('input', () => 
     {
         PlaySound(sliderSound);
-        const val = music.value / 100;
+        var val = music.value / 100;
+        musicVolume = val;
         SongVolume(testMusicPrincipal, val);
         pMusic.textContent = music.value + "%";
     });
