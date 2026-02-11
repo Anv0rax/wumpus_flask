@@ -1,0 +1,53 @@
+html, body
+{
+    background-color: var(--color-text) !important;
+    height: 100%;
+}
+
+#container-texts
+{
+    margin: auto;
+    height: 100%;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50vh;
+}
+
+.firsttext, .secondtext
+{
+    color: var(--ui-red);
+    font-family: titles;
+    font-size: 6vh;
+    text-align: center;
+    letter-spacing: 0.5vh;
+    text-shadow : 2px 2px 4px var(--ui-yellow), 0 0 25px var(--ui-yellow), 0 0 5px var(--primary-color);
+}
+
+.secondtext
+{
+    animation : flicker 3s infinite;
+}
+
+.keyPressed
+{
+    animation: flicker 0.2s 10 !important;
+    color : var(--primary-color) !important;
+}
+
+#container-texts.fin-anim
+{
+    animation : none !important;
+}
+
+
+
+@keyframes flicker
+{
+    20%,80% {opacity: 1;}
+    50% {opacity: 0;}
+}
+
+

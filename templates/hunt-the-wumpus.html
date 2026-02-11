@@ -1,0 +1,44 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wumpus - Antoine V</title>
+    <link rel="icon" href="{{url_for('static', filename='assets/wumpus-discord.png')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/common.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/game.css')}}" />
+</head>
+<body>
+    <div id="sidebar">
+        <header>
+            <h1 href="../index.html">Hunt the Wumpus</h1>
+            <hr>
+            <div>
+                <a>Home</a>
+                <a>Play</a>
+                <a>Settings</a>
+                <a>Stats</a>
+            </div>
+        </header>
+        <main>
+            <table>
+                {% for row in grid %}
+                    <tr>
+                        {% for col in row %}
+                            <td>
+                                <div class="box explored {{col}}">
+                                    <div></div>
+                                    {{params | safe}}
+                                    <div></div>
+                                </div>
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </main>
+    </div>
+    <footer>
+
+    </footer>
+</body>
+</html>
