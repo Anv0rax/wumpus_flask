@@ -1,5 +1,8 @@
+#!/usr/bin/env python3
+
 from flask import Flask, render_template
 import random
+import numpy as np
 #from markupsafe import Markup
 
 app = Flask(
@@ -8,58 +11,152 @@ app = Flask(
     static_folder="../static"
 )
 
-EASY = [0,0,0,1,2]
-NORMAL = [0,0,1,2]
+N_ROW = 6
+N_COL = 8
+
+EASY = [0,0,0,0,1,2]
+NORMAL = [0,0,0,1,2]
 HARD = [0,1,2]
 
-def generate_grid(difficulty):
-    matrix = [
-        [ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ],
-        [ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ],
-        [ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ],
-        [ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ],
-        [ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ],
-        [ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ]
-    ]
-    
-    row = 0
+matrix = [[0] * N_COL for _ in range(N_ROW)]
+
+def generate_grid(difficulty) :
+    # North
     col = 0
 
-    while col < len(matrix[0]):
-        matrix[row][col] = random.choice(difficulty)
+    while col < N_COL :
+        matrix[0][col] = random.choice(difficulty)
         col = col+1
     
-    while row < len(matrix):
+    # West
+    row = 0
+
+    while row < N_ROW :
         matrix[row][0] = random.choice(difficulty)
         row = row+1
 
+    # Center
     row = 1
 
-    while row < len(matrix)-1:
+    while row < N_ROW-1:
         col = 1
         while col < len(matrix[row])-1 :
             rand = random.choice(difficulty)
-            while grid_retry_next(matrix, row, col, rand):
+            while check_nw(row, col, rand) :
                 rand = random.choice(difficulty)
+
             matrix[row][col] = rand
             col = col+1
         row = row+1
+
+    # East
+    row = 1
+    col = N_COL-1
+
+    while row < N_ROW-1 :
+        rand = random.choice(difficulty)
+        while check_nw(row, col, rand) or check_ne(row, col, rand) :
+            rand = random.choice(difficulty)
+        matrix[row][col] = rand
+        row = row+1
+
+    # South
+    row = N_ROW-1
+    col = 1
+
+    while col < N_COL-1 :
+        rand = random.choice(difficulty)
+        while check_nw(row, col, rand) or check_ne(row, col, rand) :
+            rand = random.choice(difficulty)
+        matrix[row][col] = rand
+        col = col+1
+
+    # s-e corner
+    rand = random.choice(difficulty)
+    while (check_corner(rand)) :
+        rand = random.choice(difficulty)
+    matrix[row][col] = rand
+    col = col+1
+
     return matrix
 
-def grid_retry_next(matrix, row, col, type) :
+# =============================
+#           Check
+# =============================
+
+def check_nw(row, col, type) :
     retry = False
-    match type:
-        case 1:
-            if matrix[row+1][col] == 2 :
-                if matrix[row][col+1] == 2 :
-                    if (matrix[row+1][col+1] == 1) :
+    match type :
+        case 1 :
+            if matrix[row-1][col] == 2 :
+                if matrix[row][col-1] == 2 :
+                    if (matrix[row-1][col-1] == 1) :
                         retry = True
-        case 2:
-            if matrix[row+1][col] == 1 :
-                if matrix[row][col+1] == 1 :
-                    if (matrix[row+1][col+1] == 2) :
+        case 2 :
+            if matrix[row-1][col] == 1 :
+                if matrix[row][col-1] == 1 :
+                    if (matrix[row-1][col-1] == 2) :
                         retry = True
-    # matrix[(row+1)%N_ROW][(col+1)%N_COL]
+    return retry
+
+def check_ne(row, col, type) :
+    retry = False
+    match type :
+        case 1 :
+            if matrix[row-1][col] == 2 :
+                if matrix[row][0] == 2 :
+                    if (matrix[row-1][0] == 1) :
+                        retry = True
+        case 2 :
+            if matrix[row-1][col] == 1 :
+                if matrix[row][0] == 1 :
+                    if (matrix[row-1][0] == 2) :
+                        retry = True
+    return retry
+
+def check_sw(row, col, type) :
+    retry = False
+    match type :
+        case 1 :
+            if matrix[0][col] == 2 :
+                if matrix[row][col-1] == 2 :
+                    if (matrix[0][col-1] == 1) :
+                        retry = True
+        case 2 :
+            if matrix[0][col] == 1 :
+                if matrix[row][col-1] == 1 :
+                    if (matrix[0][col-1] == 2) :
+                        retry = True
+    return retry
+
+def check_corner(type) :
+    row = N_ROW-1
+    col = N_COL-1
+
+    retry = False
+    match type :
+        case 1 :
+            if matrix[row-1][col] == 2 : #↑
+                if matrix[row][col-1] == 2 : #←
+                    if matrix[row][0] == 2 : #→
+                        if matrix[row-1][col-1] == 1 : #←↑
+                            retry = True
+            if matrix[0][col] == 2 : #↓
+                if matrix[row][col-1] == 2 : #←
+                    if matrix[row][0] == 2 : #→
+                        if matrix[0][0] == 1 : #↓→
+                            retry = True
+        case 2 :
+            if matrix[row-1][col] == 1 : #↑
+                if matrix[row][col-1] == 1 : #←
+                    if matrix[row][0] == 1 : #→
+                        if matrix[row-1][col-1] == 2 : #←↑
+                            retry = True
+            if matrix[0][col] == 1 : #↓
+                if matrix[row][col-1] == 1 : #←
+                    if matrix[row][0] == 1 : #→
+                        if matrix[0][0] == 2 : #↓→
+                            retry = True
     return retry
 
 @app.route("/")
