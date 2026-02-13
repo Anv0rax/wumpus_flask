@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () =>
 
     const checkFs = document.getElementById('checkFs');
     const checkPerf = document.getElementById('checkPerf');
+    
 
     /* ====================================== */
 
@@ -45,14 +46,14 @@ document.addEventListener('DOMContentLoaded', () =>
         sound.addEventListener('click', () => {
         if(sound.src.includes("SoundWhite.png"))
         {
-            sound.src = "../assets/SoundMuteWhite.png";
+            sound.src = "../static/assets/SoundMuteWhite.png";
             move.volume = 0;
             interact.volume = 0;
             validsound.volume = 0;
         }
         else
         {
-            sound.src = "../assets/SoundWhite.png";
+            sound.src = "../static/assets/SoundWhite.png";
             move.volume = 0.5;
             interact.volume = 0.5;
             validsound.volume = 0.5;

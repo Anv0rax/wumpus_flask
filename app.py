@@ -173,5 +173,17 @@ def start():
         grid=matrix,
         params='<div id="player" class="top-1"></div><div class="bat"></div>')
 
+@app.route('/select-difficulty')
+def select() :
+    return render_template("select-difficulty.html")
+
+@app.route('/settings')
+def settings() :
+    return render_template("settings.html")
+
+@app.route('/title-screen')
+def title() :
+    return render_template("title-screen.html")
+
 if __name__ == '__main__' :
     app.run(debug=True)

@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
     sound.addEventListener('click', () => {
         if(sound.src.includes("SoundWhite.png"))
         {
-            sound.src = "../assets/SoundMuteWhite.png";
+            sound.src = "../static/assets/SoundMuteWhite.png";
             move.volume = 0;
             interact.volume = 0;
             sliderSound.volume = 0;
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         else
         {
-            sound.src = "../assets/SoundWhite.png";
+            sound.src = "../static/assets/SoundWhite.png";
             EnableSlider(sfx);
             EnableSlider(music);
             move.volume = soundVolume;

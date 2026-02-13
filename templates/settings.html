@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Hunt the Wumpus - parameters</title>
-    <link rel="icon" href="../assets/wumpus-discord.png" />
-    <link rel="stylesheet" href="../css/common.css" />
-    <link rel="stylesheet" href="../css/settings.css" />
-    <script src="../js/settings.js"></script>
+    <link rel="icon" href="{{url_for('static', filename='assets/wumpus-discord.png')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/common.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/settings.css')}}"/>
+    <script src="{{url_for('static', filename='js/settings.js')}}"></script>
 </head>
 <body>
     <div id="sidebar">
@@ -30,16 +30,16 @@
 
             <div id="functional">
                 <audio id="son1" preload="auto">
-                    <source id="son" src="../assets/sounds/Move.mp3" type="audio/mp3">
+                    <source id="son" src="{{url_for('static', filename='assets/sounds/Move.mp3')}}" type="audio/mp3">
                 </audio>
                 <audio id="son2" preload="auto">
-                    <source src="../assets/sounds/License move.mp3" type="audio/mp3">
+                    <source src="{{url_for('static', filename='assets/sounds/License-move.mp3')}}" type="audio/mp3">
                 </audio>
                 <audio id="son4" preload="auto">
-                    <source src="../assets/sounds/Slider.mp3" type="audio/mp3">
+                    <source src="{{url_for('static', filename='assets/sounds/Slider.mp3')}}" type="audio/mp3">
                 </audio>
                 <audio id="mario" preload="auto" autoplay loop>
-                    <source src="../assets/Songs/Super Mario 64 Soundtrack - Title Theme.mp3" type="audio/mp3">
+                    <source src="{{url_for('static', filename='assets/Songs/Musique-Mario.mp3')}}" type="audio/mp3">
                 </audio>
                 <form id="form">
                     <h2>⚙⚙ Settings ⚙⚙</h2>
@@ -56,7 +56,7 @@
                         <label class="checkSound">
                             <div>
                                 <p>Mute sound & songs</p>
-                                <img id="sound" src="../assets/SoundWhite.png" width="40" height="40">
+                                <img id="sound" src="{{url_for('static', filename='assets/SoundWhite.png')}}" width="40" height="40">
                             </div>
                         </label>
                         <label id="checkPerf" class="check">Performance Mode
