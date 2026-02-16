@@ -1,0 +1,111 @@
+main {
+    background-color: var(--bg-difficulty) !important;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    width: 100%;
+}
+
+#visual_effects {
+    position: relative;
+    width: 100%;
+
+    flex-grow: 1;
+    align-self: stretch;
+} 
+
+.grid {
+    position: absolute;
+
+    width: 150%;
+    height: 150%;
+    
+    background-image: 
+    url('../assets/gif/star-spinning.gif');
+    
+    background-size: 300px 300px ;
+    animation: moveGrid 2s linear infinite;
+}
+
+/* le filtre */
+.overlay {
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    background: radial-gradient(circle, transparent 20%, var(--bg-accents) 80%);
+
+    pointer-events: none;
+}
+
+#functional {
+    position: absolute;
+}
+
+table
+{
+    display: none;
+}
+
+#click
+{
+    color : white;
+    font-weight: bolder;
+    font-family: retro;
+    font-size : 40px;
+    text-align: center;
+    text-shadow: 2px 1px var(--bg-grid);
+}
+
+table,td,th
+{
+    background: var(--leaderboardPrimary-color);
+    font-family: titles;
+    border-collapse: collapse;
+    border: 2px solid var(--leaderboardBorder);
+    padding : 5px;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    text-shadow: 2px 1px var(--bg-grid);
+    font-size: 20px;
+}
+
+tr:hover td, 
+tr:hover th :not(tr:nth-child(1) td)
+{
+    background-color: rgba(215, 220, 224, 0.568);
+    color: white !important;
+    font-size: 2em !important;
+}
+
+tr:nth-child(2) td
+{
+    background-color: rgba(255, 217, 0, 0.663) !important;
+    font-size: 32px  
+}
+
+tr:nth-child(3) td
+{
+    background-color: rgba(192, 192, 192, 0.663) !important;
+    font-size: 28px;    
+}
+
+tr:nth-child(4) td
+{
+    background-color: rgba(210, 105, 30, 0.633) !important;
+    font-size: 24px;
+}
+
+@keyframes moveGrid {
+    from {
+        transform: translate(0, 0);
+    }
+    to {
+        /* Déplacement d'exactement un carreau (c'est sa qui rend l'animation fluide)*/
+        /* X positif = droite, Y négatif = haut */
+        transform: translate(-50px, -50px); 
+    }
+}

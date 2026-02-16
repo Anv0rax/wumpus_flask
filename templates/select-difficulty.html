@@ -7,14 +7,12 @@
     <script src="{{url_for('static', filename='js/select-difficulty.js')}}"></script>
 {% endblock %}
 
-{% block class_play %} class="page_here" {% endblock %}
-
 {% block main_content %}
     <div id="visual_effects">
         <div class="grid"></div>
         <div class="overlay"></div>
     </div>
-    <img id="sound" src="{{url_for('static', filename='assets/SoundWhite.png')}}" width="70" height="70">
+    <img id="soundImage" src="{{url_for('static', filename='assets/SoundWhite.png')}}" width="70" height="70">
 
     <div id="functional">
         <audio id="son1" preload="auto">
@@ -28,35 +26,35 @@
         </audio>
         <form id="form">
             <h2>Game parameters</h2>
-            <div class="diff-tuto">
-                <img class="help" src="{{url_for('static',filename='assets/QuestionMark.png')}}">
-                <div class="explications">Easy : One bat, less corridors, 1 hole.<br><br>Normal : 2 bats, 1 hole.<br><br>Hard : 2 bats, more corridors, 2 holes.</div>
+            <div class="container-explanations">
+                <img class="helpImage" src="{{url_for('static',filename='assets/QuestionMark.png')}}">
+                <div class="explanations">Easy : One bat, less corridors, 1 hole.<br><br>Normal : 2 bats, 1 hole.<br><br>Hard : 2 bats, more corridors, 2 holes.</div>
             </div>
             <label for="difficulty-choice"><p>Select the difficulty</p></label>
             <br>
             <select id="difficulty-choice">
-                <option value="ez">Easy</option>
-                <option value="meh">Normal</option>
+                <option value="easy">Easy</option>
+                <option value="medium">Normal</option>
                 <option value="hard">Hard</option>
             </select>
             <p>Game Mode</p>
-            <div class="diff-tuto">
-                <img class="help" src="{{url_for('static', filename='assets/QuestionMark.png')}}">
-                <div class="explications">
+            <div class="container-explanations">
+                <img class="helpImage" src="{{url_for('static', filename='assets/QuestionMark.png')}}">
+                <div class="explanations">
                     Express Mode : You can't stay in a corridor, you directly go out
                     <br><br>Blind Mode : You only your case. Remember your path, or die...
                     <br><br>Attention : the two modes can be activated
                 </div>
             </div>
-            <div class="onoff">
-                <label class="check">Express Mode
+            <div class="checkButtonMode">
+                <label class="selectGamemode">Express Mode
                     <input type="checkbox">
                 </label>
-                <label class="check">Blind Mode
+                <label class="selectGamemode">Blind Mode
                     <input type="checkbox">
                 </label>
             </div>
-            <input id="test" class="validate" type="submit" value="Play">
+            <input class="validateForm" type="submit" value="Play">
         </form>
     </div>
 {% endblock %}
