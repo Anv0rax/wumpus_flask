@@ -13,10 +13,10 @@
             <h1 href="../index.html">Hunt the Wumpus</h1>
             <hr>
             <div>
-                <a>Home</a>
-                <a>Play</a>
-                <a>Settings</a>
-                <a>Stats</a>
+                <a href="{{url_for('menu')}}">Home</a>
+                <a class="selectedPage">Play</a>
+                <a href="{{url_for('settings')}}">Settings</a>
+                <a href="{{url_for('stats')}}">Stats</a>
             </div>
         </header>
         <main>

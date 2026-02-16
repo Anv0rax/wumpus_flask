@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Hunt the Wumpus - parameters</title>
+    <link rel="icon" href="{{url_for('static', filename='assets/wumpus-discord.png')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/common.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/stats.css')}}"/>
+    <script src="{{url_for('static', filename='js/stats.js')}}"></script>
+</head>
+<body>
+    <div id="sidebar">
+        <header>
+            <h1 href="../index.html">Hunt the Wumpus</h1>
+            <hr>
+            <div>
+                <a href="{{url_for('menu')}}">Home</a>
+                <a href="{{url_for('start')}}">Play</a>
+                <a href="{{url_for('settings')}}">Settings</a>
+                <a class="selectedPage">Stats</a>
+            </div>
+        </header>
+
+        <main>
+            <div id="visual_effects">
+                <div id="deco" class="rings"></div>
+                <div class="grid"></div>
+                <div class="overlay"></div>
+            </div>
+
+            <div id="functional">
+                <audio id="soundTableAnimation" preload="auto">
+                    <source id="son" src="{{url_for('static', filename='assets/sounds/rowSound.mp3')}}" type="audio/mp3">
+                </audio>
+                <p id="click">Cliquez pour ouvrir le classement.</p>
+                <table id="table">
+                <tr>
+                    <th>Position</th>
+                    <th>Temps de jeu</th>
+                    <th>Nombre de victoire</th>
+                    <th>Nombre de défaites</th>
+                    <th>Nom</th>
+                </tr>
+                <tr>
+                    <td><img src="{{url_for('static', filename='assets/1st.png')}}"></td>
+                    <td>900</td>
+                    <td>0</td>
+                    <td>100 h 0 m 0 s</td>
+                    <td>Moi</td>
+                </tr>
+                <tr>
+                    <td><img src="{{url_for('static', filename='assets/2nd.png')}}"></td>
+                    <td>900</td>
+                    <td>0</td>
+                    <td>100 h 0 m 0 s</td>
+                    <td>Moi</td>                    
+                </tr>
+                <tr>
+                    <td><img src="{{url_for('static', filename='assets/3rd.png')}}"></td>
+                    <td>900</td>
+                    <td>0</td>
+                    <td>100 h 0 m 0 s</td>
+                    <td>Moi</td>
+                </tr>
+                <tr>
+                    <td>4th</td>
+                    <td>900</td>
+                    <td>0</td>
+                    <td>100 h 0 m 0 s</td>
+                    <td>Moi</td>
+                </tr>
+                <tr>
+                    <td>5th</td>
+                    <td>900</td>
+                    <td>0</td>
+                    <td>100 h 0 m 0 s</td>
+                    <td>Moi</td>
+                </tr>
+                <tr>
+                    <td>6th</td>
+                    <td>900</td>
+                    <td>0</td>
+                    <td>100 h 0 m 0 s</td>
+                    <td>Moi</td>
+                </tr>
+                <tr>
+                    <td>7th</td>
+                    <td>900</td>
+                    <td>0</td>
+                    <td>100 h 0 m 0 s</td>
+                    <td>Moi</td>
+                </tr>
+                <tr>
+                    <td>8th</td>
+                    <td>900</td>
+                    <td>0</td>
+                    <td>100 h 0 m 0 s</td>
+                    <td>Moi</td>
+                </tr>
+                <tr>
+                    <td>9th</td>
+                    <td>900</td>
+                    <td>0</td>
+                    <td>100 h 0 m 0 s</td>
+                    <td>Moi</td>
+                </tr>
+                <tr>
+                    <td>10th</td>
+                    <td>900</td>
+                    <td>0</td>
+                    <td>100 h 0 m 0 s</td>
+                    <td>Moi</td>
+                </tr>
+                <tr>
+                    <td>11th</td>
+                    <td>900</td>
+                    <td>0</td>
+                    <td>100 h 0 m 0 s</td>
+                    <td>Moi</td>
+                </tr>
+                <tr>
+                    <td>12th</td>
+                    <td>900</td>
+                    <td>0</td>
+                    <td>100 h 0 m 0 s</td>
+                    <td>Moi</td>
+                </tr>
+            </table>
+            </div>
+        </main>
+    </div>
+    <footer></footer>
+</body>
+</html>

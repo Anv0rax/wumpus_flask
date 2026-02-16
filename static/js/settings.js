@@ -1,117 +1,132 @@
-// TODO : Faire en sorte que le son ne soit dépendant que des sliders, et non du code
 // TODO : Essayer de faire le lien entre la page du choix de la difficulté, et que la aussi le son par exemple de la musique soit la même dans le menu paramétres ou dans le menu choix difficulté.
 // TODO : Régler les sliders, leur css.
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    /* ========= Les constantes ==========*/
-    const move = document.getElementById('son1');
-    const interact = document.getElementById('son2');
-    const lowPerf = document.getElementById('deco');
-    const onoff = document.querySelectorAll('.check');
-    const test = document.getElementById('test');
+    /* ========= the const ==========*/
+    const soundOnMove = document.getElementById('son1');
+    const interactSound = document.getElementById('son2');
+    const lowPerformanceMode = document.getElementById('backgroundAnimationRings');
+    const checkBouton = document.querySelectorAll('.check'); 
     const sliderSound = document.getElementById('son4');
-    const testMusicPrincipal = document.getElementById('mario');
+    const mainMusic = document.getElementById('mario');
 
-    const lum = document.getElementById('light');
+    const luminosity = document.getElementById('light');
     const sfx = document.getElementById('sfx');
-    const music = document.getElementById('music');
-    const sound = document.getElementById('sound');
-    const pLum = document.getElementById('pLum');
-    const pSfx = document.getElementById('pSfx');
-    const pMusic = document.getElementById('pMusic');
+    const volumeValueOfmusic = document.getElementById('music');
+    const imageOfSound = document.getElementById('sound');
+    const paragraphLum = document.getElementById('pLum');
+    const paragraphSfx = document.getElementById('pSfx');
+    const paragraphMusic = document.getElementById('pMusic');
 
-    const checkFs = document.getElementById('checkFs');
-    const checkPerf = document.getElementById('checkPerf');
+    const checkFullScreen = document.getElementById('checkFs');
+    const checkPerformanceMode = document.getElementById('checkPerf');
+
+    const sliders = document.querySelectorAll('.slider');
 
     /* =========================================== */
 
-    /* ======== Le Code ========== */
+    /* ======== the code ========== */
 
-    let musicVolume = 0.25;
+    let musicVolume = 0.05;
     let soundVolume = 0.25;
-    testMusicPrincipal.volume = 0.05;
-    sliderSound.volume = 0.25;
-    pLum.textContent = "100%";
-    pSfx.textContent = sfx.value + "%";
-    pMusic.textContent = music.value + "%";
+    mainMusic.volume = musicVolume;
+    sliderSound.volume = soundVolume;
 
-    onoff.forEach((el) => {
+    window.addEventListener('mousedown', () => 
+    {
+        if (mainMusic.paused) 
+        {
+            mainMusic.play();
+        }
+    }, { once: true }); // Because of the Security rules put by Chrome, safari, etc... I'm obliged to force the user to click on the page, because chrome is denying it.
+
+    paragraphLum.textContent = luminosity.value + '%';
+    paragraphSfx.textContent = sfx.value + "%";
+    paragraphMusic.textContent = volumeValueOfmusic.value + "%";
+
+    checkBouton.forEach((el) => {
         el.addEventListener('click', () => {
-            PlaySound(interact)
+            PlaySound(interactSound)
         });
     });
 
-    sound.addEventListener('click', () => {
-        if(sound.src.includes("SoundWhite.png"))
+    sliders.forEach((s) =>
+    {
+        InitSlidersColor(s);
+        UpdateSlidersColor();
+    });
+
+    imageOfSound.addEventListener('click', () => {
+        if(imageOfSound.src.includes("SoundWhite.png"))
         {
-            sound.src = "../static/assets/SoundMuteWhite.png";
-            move.volume = 0;
-            interact.volume = 0;
+            imageOfSound.src = "../static/assets/SoundMuteWhite.png";
+            soundOnMove.volume = 0;
+            interactSound.volume = 0;
             sliderSound.volume = 0;
             sfx.value = 0;
-            music.value = 0;
-            pSfx.textContent = "Mute activé !";
-            pMusic.textContent = "Mute activé !";
+            volumeValueOfmusic.value = 0;
+            paragraphSfx.textContent = "Mute activé !";
+            paragraphMusic.textContent = "Mute activé !";
             DisableSlider(sfx);
-            DisableSlider(music);
-            SongVolume(testMusicPrincipal, music.value);
+            DisableSlider(volumeValueOfmusic);
+            SongVolume(mainMusic, volumeValueOfmusic.value);
         }
         else
         {
-            sound.src = "../static/assets/SoundWhite.png";
-            EnableSlider(sfx);
-            EnableSlider(music);
-            move.volume = soundVolume;
-            interact.volume = soundVolume;
+            imageOfSound.src = "../static/assets/SoundWhite.png";
+            soundOnMove.volume = soundVolume;
+            interactSound.volume = soundVolume;
             sliderSound.volume = soundVolume;
             sfx.value = soundVolume*100;
-            music.value = musicVolume*100;
-            SongVolume(testMusicPrincipal, musicVolume)
-            pSfx.textContent = sfx.value + "%";
-            pMusic.textContent = music.value + "%";
+            volumeValueOfmusic.value = musicVolume*100;
+            EnableSlider(sfx);
+            EnableSlider(volumeValueOfmusic);
+            SongVolume(mainMusic, musicVolume)
+            paragraphSfx.textContent = sfx.value + "%";
+            paragraphMusic.textContent = volumeValueOfmusic.value + "%"; 
         }
     });
 
-    lum.addEventListener('input', () => {
+    luminosity.addEventListener('input', () => {
         PlaySound(sliderSound);
-        UpdateBrightness(lum);
-        pLum.textContent = lum.value  + "%";
+        UpdateBrightness(luminosity);
+        paragraphLum.textContent = luminosity.value  + "%";
     });
 
     sfx.addEventListener('input', () => {
         PlaySound(sliderSound);
         var val = sfx.value / 100;
-        move.volume = val;
-        interact.volume = val;
+        soundOnMove.volume = val;
+        interactSound.volume = val;
         sliderSound.volume = val;
         soundVolume = val;
-        pSfx.textContent = sfx.value + "%";
+        paragraphSfx.textContent = sfx.value + "%";
     });
 
-    music.addEventListener('input', () => 
+    volumeValueOfmusic.addEventListener('input', () => 
     {
         PlaySound(sliderSound);
-        var val = music.value / 100;
+        var val = volumeValueOfmusic.value / 100;
         musicVolume = val;
-        SongVolume(testMusicPrincipal, val);
-        pMusic.textContent = music.value + "%";
+        SongVolume(mainMusic, val);
+        pMusic.textContent = volumeValueOfmusic.value + "%";
     });
 
-    checkPerf.addEventListener('click', (event) => 
+    checkPerformanceMode.addEventListener('click', (event) => 
     {
         const testCheck = event.target.checked;
         if(testCheck == true)
         {
-            lowPerf.style.setProperty('display', 'none', 'important');
+            lowPerformanceMode.style.setProperty('display', 'none', 'important');
         }
         else
         {
-            lowPerf.style.setProperty('display', 'block', 'important');
+            lowPerformanceMode.style.setProperty('display', 'block', 'important');
         }
     });
 
-    checkFs.addEventListener('click', (event) => 
+    checkFullScreen.addEventListener('click', (event) => 
     {
         const testCheck = event.target.checked;
         if(testCheck == true)
@@ -123,12 +138,11 @@ document.addEventListener('DOMContentLoaded', () => {
             CloseFs();
         }
     });
+});
 
     /* ================================================== */
 
-});
-
-    /* ================= Fonctions ==================== */
+    /* ================= Functions ==================== */
 
 function PlaySound(el)
 {
@@ -150,11 +164,14 @@ function ApplyBrightnessToGame(level)
 function DisableSlider(el)
 {
     el.disabled = true;
+    el.style.setProperty('--range-pct', 0 + '%');
 }
 
 function EnableSlider(el)
 {
+    console.log(el.value);
     el.disabled = false;
+    el.style.setProperty('--range-pct', el.value + '%');
 }
 
 function OpenFs()
@@ -182,5 +199,27 @@ function SongVolume(song, volumeSong)
 {
     song.volume = volumeSong;
 }
+
+function InitSlidersColor(event)
+{
+    const initValue = ((event.value - event.min) / (event.max - event.min)) * 100
+    event.style.setProperty('--range-pct', initValue + '%');
+}
+
+function UpdateSlidersColor()
+{
+    const sliders = document.querySelectorAll('.slider');
+    sliders.forEach((s) => 
+    {
+        s.addEventListener('input', function() 
+        {
+            const ratio = (this.value - this.min) / (this.max - this.min) * 100;
+            console.log(ratio);
+            this.style.setProperty('--range-pct', ratio + '%');
+        });
+    })
+}
+
+
 
     /* ===================================== */

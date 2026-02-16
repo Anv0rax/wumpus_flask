@@ -185,5 +185,13 @@ def settings() :
 def title() :
     return render_template("title-screen.html")
 
+@app.route('/stats')
+def stats():
+    return render_template("stats.html")
+
+@app.route('/menu')
+def menu():
+    return render_template('menu.html')
+
 if __name__ == '__main__' :
     app.run(debug=True)

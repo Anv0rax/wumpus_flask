@@ -14,16 +14,16 @@
             <h1 href="../index.html">Hunt the Wumpus</h1>
             <hr>
             <div>
-                <a>Home</a>
-                <a>Play</a>
-                <a>Settings</a>
-                <a>Stats</a>
+                <a href="{{url_for('menu')}}">Home</a>
+                <a href="{{url_for('start')}}">Play</a>
+                <a class="selectedPage">Settings</a>
+                <a href="{{url_for('stats')}}">Stats</a>
             </div>
         </header>
 
         <main>
             <div id="visual_effects">
-                <div id="deco" class="rings"></div>
+                <div id="backgroundAnimationRings" class="backgroundAnimationRings"></div>
                 <div class="grid"></div>
                 <div class="overlay"></div>
             </div>

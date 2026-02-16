@@ -1,4 +1,11 @@
-main {
+ :root
+ {
+    --maskImageSettingsColorBg : radial-gradient(black 75%, transparent 75%);
+	--bgImageSettingsAnimationColor : radial-gradient(rgb(255, 255, 255) 75%, transparent 75%), radial-gradient(white 75%, transparent 75%);
+	--gridColorSettings : repeating-linear-gradient(45deg, var(--gridsettingcolor1) 1%,  var(--gridsettingcolor2) 50%), repeating-linear-gradient(180deg, var(--gridsettingcolor1) 1%,  var(--gridsettingcolor2) 50%),repeating-linear-gradient(315deg, var(--gridsettingcolor1) 1%,  var(--gridsettingcolor2) 50%);
+ }
+ 
+ main {
     background-color: var(--bg-difficulty) !important;
     overflow: hidden;
     display: flex;
@@ -22,18 +29,13 @@ main {
     width: 150%;
     height: 150%;
     
-    background-image:
-    repeating-linear-gradient(45deg, var(--gridsettingcolor1) 1%,  var(--gridsettingcolor2) 50%),
-    repeating-linear-gradient(180deg, var(--gridsettingcolor1) 1%,  var(--gridsettingcolor2) 50%),
-    repeating-linear-gradient(315deg, var(--gridsettingcolor1) 1%,  var(--gridsettingcolor2) 50%);
+    background-image: var(--gridColorSettings);
         
-    /* la taille des carrés dans le fond */
     background-size: 50px 50px;
-
     animation: move-it 5s linear infinite;
 }
 
-.rings
+.backgroundAnimationRings
 {
     position : absolute;
     width: 150%;
@@ -43,25 +45,22 @@ main {
     background-size: 75px 75px;
     background-repeat: repeat;
 
-    mask-image: 
-        radial-gradient(black 75%, transparent 75%);
+    mask-image: var(--maskImageColorBg);
     mask-size: 15% 60%;
     mask-repeat: repeat;
 
-    animation: moveRings 2s linear infinite;
+    animation: moveBackground 2s linear infinite;
     filter: hue-rotate(180deg) saturate(2);
 }
 
-.rings::before
+.backgroundAnimationRings::before
 {
     content: '';
     position: absolute;
     
     width: 100%;
     height: 100%;
-    background-image: 
-        radial-gradient(rgb(255, 255, 255) 75%, transparent 75%),
-        radial-gradient(white 75%, transparent 75%);
+    background-image: var(--bgImageSettingsAnimationColor);
     background-size: 3000% 30%, 1% 0%; /* 1000% 30%, 10% 10%; */
     background-position: 0 0, 10% 100%;
     background-repeat: repeat;
@@ -73,10 +72,12 @@ main {
 /* Target Input */
 .slider {
   appearance: none;
+  -webkit-appearance: none;
   width: 100%;
   padding: 15px;
   background: transparent;
   cursor: pointer;
+  --range-pct : 50%;
 }
 
 /* --- Webkit Browsers --- */
@@ -225,7 +226,7 @@ option[value=hard] {
 
     background-image : 
         -webkit-linear-gradient(hsla(0,0%,0%,.1), hsla(0,0%,100%,.1)),
-        -webkit-linear-gradient(left, #f66 50%, rgb(102, 255, 125) 50%);
+        -webkit-linear-gradient(left, var(--redcolorCheckBox) 50%, var(--greencolorCheckBox) 50%);
     background-size: 100% 100%, 200% 100%;
     background-position: 0 0, 15px 0;
 
@@ -296,7 +297,7 @@ option[value=hard] {
 }
 
 #sound:hover {
-    background: radial-gradient(circle, rgba(34, 0, 255, 0.71) 20%, transparent 80%);
+    background: radial-gradient(circle, var(--hover-effect-muteButton1) 20%, transparent 80%);
 
     transform: scale(1.3);
 }
@@ -365,7 +366,7 @@ option[value=hard] {
     }
 }
 
-@keyframes moveRings
+@keyframes moveBackground
 {
     0%
     {
