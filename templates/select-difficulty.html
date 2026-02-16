@@ -1,78 +1,62 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Hunt the Wumpus - parameters</title>
-    <link rel="icon" href="{{url_for('static', filename='assets/wumpus-discord.png')}}" />
-    <link rel="stylesheet" href="{{url_for('static', filename='css/common.css')}}" />
+{% extends "base.html" %}
+
+{% block page_title %}Difficulty - Hunt the Wumpus{% endblock %}
+
+{% block add_css_js %}
     <link rel="stylesheet" href="{{url_for('static', filename='css/select-difficulty.css')}}" />
     <script src="{{url_for('static', filename='js/select-difficulty.js')}}"></script>
-</head>
-<body>
-    <div id="sidebar">
-        <header>
-            <h1 href="../index.html">Hunt the Wumpus</h1>
-            <hr>
-            <div>
-                <a>Home</a>
-                <a>Play</a>
-                <a>Settings</a>
-                <a>Stats</a>
-            </div>
-        </header>
+{% endblock %}
 
-        <main>
-            <div id="visual_effects">
-                <div class="grid"></div>
-                <div class="overlay"></div>
-            </div>
-            <img id="sound" src="{{url_for('static', filename='assets/SoundWhite.png')}}" width="70" height="70">
+{% block class_play %} class="page_here" {% endblock %}
 
-            <div id="functional">
-                <audio id="son1" preload="auto">
-                    <source id="son" src="{{url_for('static', filename='assets/sounds/Move.mp3')}}" type="audio/mp3">
-                </audio>
-                <audio id="son2" preload="auto">
-                    <source src="{{url_for('static', filename='assets/sounds/License-move.mp3')}}" type="audio/mp3">
-                </audio>
-                <audio id="son3" preload="auto">
-                    <source src="{{url_for('static', filename='assets/sounds/License-select.mp3')}}"type="audio/mp3">
-                </audio>
-                <form id="form">
-                    <h2>Game parameters</h2>
-                    <div class="diff-tuto">
-                        <img class="help" src="{{url_for('static',filename='assets/QuestionMark.png')}}">
-                        <div class="explications">Easy : One bat, less corridors, 1 hole.<br><br>Normal : 2 bats, 1 hole.<br><br>Hard : 2 bats, more corridors, 2 holes.</div>
-                    </div>
-                    <label for="difficulty-choice"><p>Select the difficulty</p></label>
-                    <br>
-                    <select id="difficulty-choice">
-                        <option value="ez">Easy</option>
-                        <option value="meh">Normal</option>
-                        <option value="hard">Hard</option>
-                    </select>
-                    <p>Game Mode</p>
-                    <div class="diff-tuto">
-                        <img class="help" src="{{url_for('static', filename='assets/QuestionMark.png')}}">
-                        <div class="explications">
-                            Express Mode : You can't stay in a corridor, you directly go out
-                            <br><br>Blind Mode : You only your case. Remember your path, or die...
-                            <br><br>Attention : the two modes can be activated
-                        </div>
-                    </div>
-                    <div class="onoff">
-                        <label class="check">Express Mode
-                            <input type="checkbox">
-                        </label>
-                        <label class="check">Blind Mode
-                            <input type="checkbox">
-                        </label>
-                    </div>
-                    <input id="test" class="validate" type="submit" value="Play">
-                </form>
-            </div>
-        </main>
+{% block main_content %}
+    <div id="visual_effects">
+        <div class="grid"></div>
+        <div class="overlay"></div>
     </div>
-    <footer></footer>
-</body>
-</html>
+    <img id="sound" src="{{url_for('static', filename='assets/SoundWhite.png')}}" width="70" height="70">
+
+    <div id="functional">
+        <audio id="son1" preload="auto">
+            <source id="son" src="{{url_for('static', filename='assets/sounds/Move.mp3')}}" type="audio/mp3">
+        </audio>
+        <audio id="son2" preload="auto">
+            <source src="{{url_for('static', filename='assets/sounds/License-move.mp3')}}" type="audio/mp3">
+        </audio>
+        <audio id="son3" preload="auto">
+            <source src="{{url_for('static', filename='assets/sounds/License-select.mp3')}}"type="audio/mp3">
+        </audio>
+        <form id="form">
+            <h2>Game parameters</h2>
+            <div class="diff-tuto">
+                <img class="help" src="{{url_for('static',filename='assets/QuestionMark.png')}}">
+                <div class="explications">Easy : One bat, less corridors, 1 hole.<br><br>Normal : 2 bats, 1 hole.<br><br>Hard : 2 bats, more corridors, 2 holes.</div>
+            </div>
+            <label for="difficulty-choice"><p>Select the difficulty</p></label>
+            <br>
+            <select id="difficulty-choice">
+                <option value="ez">Easy</option>
+                <option value="meh">Normal</option>
+                <option value="hard">Hard</option>
+            </select>
+            <p>Game Mode</p>
+            <div class="diff-tuto">
+                <img class="help" src="{{url_for('static', filename='assets/QuestionMark.png')}}">
+                <div class="explications">
+                    Express Mode : You can't stay in a corridor, you directly go out
+                    <br><br>Blind Mode : You only your case. Remember your path, or die...
+                    <br><br>Attention : the two modes can be activated
+                </div>
+            </div>
+            <div class="onoff">
+                <label class="check">Express Mode
+                    <input type="checkbox">
+                </label>
+                <label class="check">Blind Mode
+                    <input type="checkbox">
+                </label>
+            </div>
+            <input id="test" class="validate" type="submit" value="Play">
+        </form>
+    </div>
+{% endblock %}

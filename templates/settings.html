@@ -1,75 +1,59 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Hunt the Wumpus - parameters</title>
-    <link rel="icon" href="{{url_for('static', filename='assets/wumpus-discord.png')}}" />
-    <link rel="stylesheet" href="{{url_for('static', filename='css/common.css')}}" />
+{% extends "base.html" %}
+
+{% block page_title %}Hunt the Wumpus - parameters{% endblock %}
+
+{% block add_css_js %}
     <link rel="stylesheet" href="{{url_for('static', filename='css/settings.css')}}"/>
     <script src="{{url_for('static', filename='js/settings.js')}}"></script>
-</head>
-<body>
-    <div id="sidebar">
-        <header>
-            <h1 href="../index.html">Hunt the Wumpus</h1>
-            <hr>
-            <div>
-                <a>Home</a>
-                <a>Play</a>
-                <a>Settings</a>
-                <a>Stats</a>
-            </div>
-        </header>
+{% endblock %}
 
-        <main>
-            <div id="visual_effects">
-                <div id="deco" class="rings"></div>
-                <div class="grid"></div>
-                <div class="overlay"></div>
-            </div>
+{% block class_settings %} class="page_here" {% endblock %}
 
-            <div id="functional">
-                <audio id="son1" preload="auto">
-                    <source id="son" src="{{url_for('static', filename='assets/sounds/Move.mp3')}}" type="audio/mp3">
-                </audio>
-                <audio id="son2" preload="auto">
-                    <source src="{{url_for('static', filename='assets/sounds/License-move.mp3')}}" type="audio/mp3">
-                </audio>
-                <audio id="son4" preload="auto">
-                    <source src="{{url_for('static', filename='assets/sounds/Slider.mp3')}}" type="audio/mp3">
-                </audio>
-                <audio id="mario" preload="auto" autoplay loop>
-                    <source src="{{url_for('static', filename='assets/Songs/Musique-Mario.mp3')}}" type="audio/mp3">
-                </audio>
-                <form id="form">
-                    <h2>⚙⚙ Settings ⚙⚙</h2>
-                    <label for="sfx">SFX Sounds</label><br>
-                        <input id="sfx" type="range" class="slider" min="0" max="100" step="5" value="25"><p id="pSfx"></p><br>
-                    <label for="music">Music</label><br>
-                        <input id="music" type="range" class="slider" min="0" max="100" step="5" value="5"><p id="pMusic"></p><br><br><br>
-                    <label for="light">Luminosity</label><br>
-                        <input id="light" type="range" class="slider" min="50" max="150" step="5" value="100"><p id="pLum"></p></label><br>
-                    <div class="onoff">
-                        <label class="check">Dark Mode
-                            <input type="checkbox">
-                        </label><br>
-                        <label class="checkSound">
-                            <div>
-                                <p>Mute sound & songs</p>
-                                <img id="sound" src="{{url_for('static', filename='assets/SoundWhite.png')}}" width="40" height="40">
-                            </div>
-                        </label>
-                        <label id="checkPerf" class="check">Performance Mode
-                            <input type="checkbox">
-                        </label>
-                        <label id="checkFs" class="check">Full Screen
-                            <input type="checkbox">
-                        </label>                      
-                    </div>
-                </form>
-            </div>
-        </main>
+{% block main_content %}
+    <div id="visual_effects">
+        <div id="deco" class="rings"></div>
+        <div class="grid"></div>
+        <div class="overlay"></div>
     </div>
-    <footer></footer>
-</body>
-</html>
+
+    <div id="functional">
+        <audio id="son1" preload="auto">
+            <source id="son" src="{{url_for('static', filename='assets/sounds/Move.mp3')}}" type="audio/mp3">
+        </audio>
+        <audio id="son2" preload="auto">
+            <source src="{{url_for('static', filename='assets/sounds/License-move.mp3')}}" type="audio/mp3">
+        </audio>
+        <audio id="son4" preload="auto">
+            <source src="{{url_for('static', filename='assets/sounds/Slider.mp3')}}" type="audio/mp3">
+        </audio>
+        <audio id="mario" preload="auto" autoplay loop>
+            <source src="{{url_for('static', filename='assets/songs/Musique-Mario.mp3')}}" type="audio/mp3">
+        </audio>
+        <form id="form">
+            <h2>⚙⚙ Settings ⚙⚙</h2>
+            <label for="sfx">SFX Sounds</label><br>
+                <input id="sfx" type="range" class="slider" min="0" max="100" step="5" value="25"><p id="pSfx"></p><br>
+            <label for="music">Music</label><br>
+                <input id="music" type="range" class="slider" min="0" max="100" step="5" value="5"><p id="pMusic"></p><br><br><br>
+            <label for="light">Luminosity</label><br>
+                <input id="light" type="range" class="slider" min="50" max="150" step="5" value="100"><p id="pLum"></p></label><br>
+            <div class="onoff">
+                <label class="check">Dark Mode
+                    <input type="checkbox">
+                </label><br>
+                <label class="checkSound">
+                    <div>
+                        <p>Mute sound & songs</p>
+                        <img id="sound" src="{{url_for('static', filename='assets/SoundWhite.png')}}" width="40" height="40">
+                    </div>
+                </label>
+                <label id="checkPerf" class="check">Performance Mode
+                    <input type="checkbox">
+                </label>
+                <label id="checkFs" class="check">Full Screen
+                    <input type="checkbox">
+                </label>                      
+            </div>
+        </form>
+    </div>
+{% endblock %}

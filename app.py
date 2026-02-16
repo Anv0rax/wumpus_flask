@@ -150,6 +150,12 @@ app = Flask(
     static_folder="static"
 )
 
+app.config["SECRET_KEY"] = ""
+
+@app.errorhandler(404)
+def not_found(e):
+  return render_template("base.html")
+
 @app.route("/")
 def start():
     row = 0
@@ -184,6 +190,10 @@ def settings() :
 @app.route('/title-screen')
 def title() :
     return render_template("title-screen.html")
+
+@app.route('/menu')
+def menu() :
+    return render_template("base.html")
 
 if __name__ == '__main__' :
     app.run(debug=True)
