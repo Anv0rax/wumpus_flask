@@ -14,10 +14,63 @@
             <tr>
                 {% for col in row %}
                     <td>
-                        <div class="box explored {{col}}">
-                            <div></div>
-                            <!--{{params | safe}}-->
-                            <div></div>
+                        {% if col[0] == 0 %}
+                            {% set css_class = 'normal'  %}
+
+                            {% if col[2] %}
+                                {% set divs = '<div id="player"></div>' %}
+                            {% endif %}
+
+                        {% elif col[0] == 1 %}
+                            {% set css_class = 'corridor_1'  %}
+                            {% set ex_top = ' explored' %}
+                            {% set ex_bot = ' explored' %}
+
+                            {% if not col[2] %}
+                            {% elif col[2] == 1 %}
+                                {% set divs = '<div id="player" class="top-1"></div>' %}
+
+                            {% elif col[2] == -1 %}
+                                {% set divs = '<div id="player" class="bot-1"></div>' %}
+                            {% endif %}
+
+                        {% elif col[0] == 2 %}
+                            {% set css_class = 'corridor_2' %}
+                            {% set ex_top = ' explored' %}
+                            {% set ex_bot = ' explored' %}
+
+                            {% if not col[2] %}
+                            {% elif col[2] == 1 %}
+                                {% set divs = '<div id="player" class="top-1"></div>' %}
+
+                            {% elif col[2] == -1 %}
+                                {% set divs = '<div id="player" class="bot-1"></div>' %}
+                            {% endif %}
+                        {% endif %}
+
+                        {% if col[1] %}
+                            {% set css_class = css_class + ' explored' %}
+
+                        {% elif not col[1] %} <!-- To stop testing values below -->
+
+                        {% elif col[1] == 1 %}
+                            {% set css_class = css_class + ' explored' %}
+                            {% set ex_top = ' explored' %}
+
+                        {% elif col[1] == -1 %}
+                            {% set css_class = css_class + ' explored' %}
+                            {% set ex_bot = ' explored' %}
+
+                        {% elif col[1] == 2%}
+                            {% set css_class = css_class + ' explored' %}
+                            {% set ex_top = ' explored' %}
+                            {% set ex_bot = ' explored' %}
+                        {% endif %}
+
+                        <div class="box {{css_class}}">
+                            <div class="{{ex_top}}"></div>
+                            {{divs | safe}}
+                            <div class="{{ex_bot}}"></div>
                         </div>
                     </td>
                 {% endfor %}

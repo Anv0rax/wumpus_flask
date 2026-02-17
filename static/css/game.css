@@ -1,4 +1,6 @@
 table {
+    position: absolute;
+
     width: 64vw;
     height: 48vw; 
     max-width: 96vh;
@@ -11,13 +13,22 @@ table {
     max-width: 132vh;
     max-height: 99vh;
     */
-    
 
-    border-collapse: collapse;
-    border-radius: 6px;
-    outline: 2px solid black;
+    border-collapse: separate;
+    border: 10px solid black;
+    border-radius: 20px;
+    border-spacing: 0;
 
     background-color: #545a5f;
+
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+table * {
+    border: 0;
+    border-collapse: separate;
+    border-spacing: 0;
 }
 
 tr {
@@ -25,8 +36,10 @@ tr {
 }
 
 td {
+    align-items: center;
+    justify-content: center;
+
     width: 10%;
-    outline: 5px solid black;
 }
 
 .box {
@@ -37,6 +50,8 @@ td {
 
     width: 100%;
     height: 100%;
+
+    transform: scale(102%);
 
     background-size: contain;
     background-repeat: no-repeat;
@@ -146,7 +161,7 @@ td {
 }
 
 .corridor_1 div:first-child {
-    display: flex;
+    display: none;
 
     background-image: url(../assets/ingame/32-edited_corridor_1_bot.png);
 
@@ -154,7 +169,7 @@ td {
 }
 
 .corridor_1 div:last-child {
-    display: flex;
+    display: none;
 
     background-image: url(../assets/ingame/32-edited_corridor_1_top.png);
 
@@ -162,7 +177,7 @@ td {
 }
 
 .corridor_2 div:first-child {
-    display: flex;
+    display: none;
 
     background-image: url(../assets/ingame/32-edited_corridor_2_bot.png);
 
@@ -170,7 +185,7 @@ td {
 }
 
 .corridor_2 div:last-child {
-    display: flex;
+    display: none;
 
     background-image: url(../assets/ingame/32-edited_corridor_2_top.png);
 

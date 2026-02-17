@@ -57,7 +57,7 @@ form {
     text-align: center;
     letter-spacing: 2px;
     color: var(--primary-color);
-    text-shadow : 2px 2px 3px var(--color-text);
+    text-shadow : 2px 2px 3px var(--text-color);
 
     background-color: var(--form) !important;
     border-radius: 10px;
@@ -86,7 +86,7 @@ option[value=medium] {
 }
 
 option[value=hard] {
-    color : var(--color-primary);
+    color : var(--primary-color);
 }
 
 .container-explanations {

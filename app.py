@@ -4,14 +4,14 @@ from flask import Flask, render_template
 import random
 #from markupsafe import Markup
 
-N_ROW = 6
-N_COL = 8
-
 EASY = 0
 NORMAL = 1
 HARD = 2
 
-matrix = [[0] * N_COL for _ in range(N_ROW)]
+N_ROW = 6
+N_COL = 8
+
+matrix = [[[0, True, True, 0, 0, 0] for _ in range(N_COL) ] for _ in range(N_ROW) ]
 
 def generate_grid(diff) :
     match diff :
@@ -26,14 +26,14 @@ def generate_grid(diff) :
     col = 0
 
     while col < N_COL :
-        matrix[0][col] = difficulty.pop(random.randint(0, len(difficulty)-1))
+        matrix[0][col][0] = difficulty.pop(random.randint(0, len(difficulty)-1))
         col = col+1
     
     # West
     row = 0
 
     while row < N_ROW :
-        matrix[row][0] = difficulty.pop(random.randint(0, len(difficulty)-1))
+        matrix[row][0][0] = difficulty.pop(random.randint(0, len(difficulty)-1))
         row = row+1
 
     # Center
@@ -46,7 +46,7 @@ def generate_grid(diff) :
             while check_nw(row, col, difficulty[rand]) :
                 rand = random.randint(0, len(difficulty)-1)
 
-            matrix[row][col] = difficulty.pop(rand)
+            matrix[row][col][0] = difficulty.pop(rand)
             col = col+1
         row = row+1
 
@@ -58,7 +58,7 @@ def generate_grid(diff) :
         rand = random.randint(0, len(difficulty)-1)
         while check_nw(row, col, difficulty[rand]) | check_ne(row, col, difficulty[rand]) :
             rand = random.randint(0, len(difficulty)-1)
-        matrix[row][col] = difficulty.pop(rand)
+        matrix[row][col][0] = difficulty.pop(rand)
         row = row+1
 
     # South
@@ -69,7 +69,7 @@ def generate_grid(diff) :
         rand = random.randint(0, len(difficulty)-1)
         while check_nw(row, col, difficulty[rand]) | check_sw(row, col, difficulty[rand]) :
             rand = random.randint(0, len(difficulty)-1)
-        matrix[row][col] = difficulty.pop(rand)
+        matrix[row][col][0] = difficulty.pop(rand)
         col = col+1
 
     # Corner
@@ -79,9 +79,9 @@ def generate_grid(diff) :
         rand = random.randint(0, len(difficulty)-1)
         stop_while = stop_while+1
     if stop_while == 5 :
-        matrix[row][col] = 0
+        matrix[row][col][0] = 0
     else :
-        matrix[row][col] = difficulty.pop(rand)
+        matrix[row][col][0] = difficulty.pop(rand)
     col = col+1
 
     return matrix
@@ -92,36 +92,36 @@ def generate_grid(diff) :
 def check_nw(row, col, type) :
     retry = False
     if type == 2 :
-        if matrix[row-1][col] == 1 :
-            if matrix[row][col-1] == 1 :
-                if (matrix[row-1][col-1] == 2) :
+        if matrix[row-1][col][0] == 1 :
+            if matrix[row][col-1][0] == 1 :
+                if (matrix[row-1][col-1][0] == 2) :
                     retry = True
     return retry
 
 def check_ne(row, col, type) :
     retry = False
     if type == 1 :
-        if matrix[row-1][col] == 2 :
-            if matrix[row][0] == 2 :
-                if (matrix[row-1][0] == 1) :
+        if matrix[row-1][col][0] == 2 :
+            if matrix[row][0][0] == 2 :
+                if (matrix[row-1][0][0] == 1) :
                     retry = True
     return retry
 
 def check_sw(row, col, type) :
     retry = False
     if type == 1 :
-        if matrix[0][col] == 2 :
-            if matrix[row][col-1] == 2 :
-                if (matrix[0][col-1] == 1) :
+        if matrix[0][col][0] == 2 :
+            if matrix[row][col-1][0] == 2 :
+                if (matrix[0][col-1][0] == 1) :
                     retry = True
     return retry
 
 def check_se(row, col, type) :
     retry = False
     if type == 2 :
-        if matrix[0][col] == 1 :
-            if matrix[row][0] == 1 :
-                if (matrix[0][0] == 2) :
+        if matrix[0][col][0] == 1 :
+            if matrix[row][0][0] == 1 :
+                if (matrix[0][0][0] == 2) :
                     retry = True
     return retry
 
@@ -158,22 +158,7 @@ def not_found(e):
 
 @app.route("/")
 def start():
-    row = 0
-    matrix = generate_grid(HARD)
-    while row < len(matrix):
-        colmn = 0
-        while colmn < len(matrix[row]) :
-            match matrix[row][colmn] :
-                case 0:
-                    css_class = "normal"
-                case 1:
-                    css_class = "corridor_1"
-                case 2:
-                    css_class = "corridor_2"
-            matrix[row][colmn] = css_class
-            colmn = colmn+1
-        row = row+1
-    #return render_template("hunt-the-wumpus.html", grid=matrix, params=Markup('<div id="player" class="top-1"></div>'))
+    generate_grid(EASY)
     return render_template(
         "hunt-the-wumpus.html",
         grid=matrix,

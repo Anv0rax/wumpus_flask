@@ -1,6 +1,6 @@
 html, body
 {
-    background-color: var(--color-text) !important;
+    background-color: var(--text-color) !important;
     height: 100%;
 }
 

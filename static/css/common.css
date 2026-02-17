@@ -1,14 +1,16 @@
 :root {
-	--color-primary: #640a34;
-	--color-secondary: #6b0101;
-	--color-text: black;
+	--text-color: black;
+	--text-secondary: #545a5f;
 	--primary-color: #fff2d4;
 	--secondary-color: #948b7c;
+
 	--ui-green: #99b681;
 	--ui-red: #eb243b;
 	--ui-pink: #ff8d7c;
     --ui-yellow : #dbc70d;
+
     --transparent: rgba(0, 0, 0, 0);
+
 	--border-exp : #00ddff;
 	--bg-difficulty : #0b0116;
 	--bg-grid : #ff00ffcd;
@@ -75,17 +77,7 @@ h1 {
 a {
 	cursor: pointer;
 	text-decoration: none;
-	color: black;
-}
-
-a:visited:active
-{
-	color : var(--color-text);
-}
-
-.selectedPage
-{
-	border : 3px var(--ui-red) solid;
+	color: var(--text-color);
 }
 
 #sidebar {
@@ -113,16 +105,21 @@ header {
 header h1 {
 	width: 100%;
 	text-align: center;
+	line-height: 40px;
 }
 
 header a {
 	text-decoration: none;
-	color: inherit;
+	color: var(--text-color);
+	transition: transform 0.2s ease;
 }
 
 header hr {
 	width: 90%;
-	margin: 10px;
+	height: 5px;
+
+	margin: 5px;
+	margin-top: 20px;
 
 	background-color: #000000;
 	border-radius: 6px;
@@ -144,14 +141,25 @@ header div a {
 	font-size: 30px;
 }
 
+header div a:hover {
+	transform: scale(105%);
+	color: var(--text-secondary);
+}
+
+header div .page_here {
+	text-decoration : 3px var(--text-secondary) underline;
+	color: var(--text-secondary);
+}
+
 main {
     display: flex;
-    justify-content: center;
 	align-self: stretch;
+    justify-content: center;
+	align-items: center;
 
 	position: relative;
 
-    width: 80%;
+    width: 100%;
     min-height: 80%;
 
     margin: 0 auto;
@@ -175,7 +183,7 @@ footer {
 	header {
 		align-content: start;
 
-		width: 220px;
+		width: 240px;
 	}
 
 	header>div {
@@ -199,7 +207,7 @@ footer {
 	}
 	
 	main {
-		width: 80%;
+		width: 100%;
 		min-height: 80%;
 	}
 }
@@ -240,7 +248,7 @@ footer {
 	}
 
 	main {
-		width: 80%;
+		width: 100%;
 		min-height: 80%;
 		
 		flex-grow: 1;
