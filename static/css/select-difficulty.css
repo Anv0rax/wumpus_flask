@@ -49,8 +49,11 @@ main {
 form {
     position: relative;
 
-    height: 100%;
-    min-height: fit-content;
+    width: 60vw;
+    max-width: 700px;
+    height: 60vh;
+    /* min-height: 450px; */
+    max-height: 600px;
     padding : 20px;
 
     font-family: retro;
@@ -58,12 +61,20 @@ form {
     letter-spacing: 2px;
     color: var(--primary-color);
     text-shadow : 2px 2px 3px var(--text-color);
+    font-size: min(2.5cqw, 1.5cqh);
 
     background-color: var(--form) !important;
     border-radius: 10px;
     border: var(--primary-color) 2px solid;
 
     z-index: 999;
+
+    container-type: size;
+    container-name: form-settings;
+}
+
+form h2 {
+    font-size: min(9cqw, 6cqh);
 }
 
 #difficulty-choice {
@@ -126,8 +137,7 @@ option[value=hard] {
 .checkButtonMode {
     display: flex;
     flex-direction: column;
-    padding : 20px;
-    gap: 10px;
+    margin: 0.5vh 0;
 }
 
 .checkButtonMode input[type="checkbox"] {
@@ -229,42 +239,9 @@ option[value=hard] {
     }
 }
 
-@media (max-height : 634px) {
-    .explanations  {
-        width : 300px;
-
-        font-size: 10px;
-    }
-}
-
-@media (max-height : 500px) {
-    .explanations {
-        font-size: 8px;
-    }
-
-    #sound {
-        z-index: 1000;
-    }
-
-    h2,.container-explanations,p,.checkButtonMode,.validateForm, #difficulty-choice {
-        padding: 2px;
-
-        font-size: 12px;
-    }
-}
-
-@media (max-height : 400px) {
-    .helpImage {
-        width: 16px;
-        height: 16px;
-    }
-
-    h2,.container-explanations,p,.checkButtonMode,.validateForm, #difficulty-choice {
-        display: inline-block;
-
-        padding: 2px;
-        right : 25%;
-        
-        font-size: 8px;
+@container form-settings (max-width: 1000px) {
+    #text {
+        height: 20%;
+        font-size: min(3.5cqw, 2.5cqh);
     }
 }

@@ -11,85 +11,86 @@ HARD = 2
 N_ROW = 6
 N_COL = 8
 
-matrix = [[[0, True, True, 0, 0, 0] for _ in range(N_COL) ] for _ in range(N_ROW) ]
 
-def generate_grid(diff) :
-    match diff :
+
+def generate_grid(difficulty, n_rows, n_cols) :
+    matrix = [[[0, True, True, 0, 0, 0] for _ in range(n_cols) ] for _ in range(n_rows) ]
+    match difficulty :
         case 0 :
-            difficulty = [0]*40 + [random.choice([1, 2]) for _ in range(14)]
+            choose = [0]*40 + [random.choice([1, 2]) for _ in range(14)]
         case 1 :
-            difficulty = [0]*30 + [random.choice([1, 2]) for _ in range(24)]
+            choose = [0]*30 + [random.choice([1, 2]) for _ in range(24)]
         case 2 :
-            difficulty = [0]*20 + [random.choice([1, 2]) for _ in range(34)]
+            choose = [0]*20 + [random.choice([1, 2]) for _ in range(34)]
 
     # North
     col = 0
 
-    while col < N_COL :
-        matrix[0][col][0] = difficulty.pop(random.randint(0, len(difficulty)-1))
+    while col < n_cols :
+        matrix[0][col][0] = choose.pop(random.randint(0, len(choose)-1))
         col = col+1
     
     # West
     row = 0
 
-    while row < N_ROW :
-        matrix[row][0][0] = difficulty.pop(random.randint(0, len(difficulty)-1))
+    while row < n_rows :
+        matrix[row][0][0] = choose.pop(random.randint(0, len(choose)-1))
         row = row+1
 
     # Center
     row = 1
 
-    while row < N_ROW-1:
+    while row < n_rows-1:
         col = 1
         while col < len(matrix[row])-1 :
-            rand = random.randint(0, len(difficulty)-1)
-            while check_nw(row, col, difficulty[rand]) :
-                rand = random.randint(0, len(difficulty)-1)
+            rand = random.randint(0, len(choose)-1)
+            while check_nw(matrix, row, col, choose[rand]) :
+                rand = random.randint(0, len(choose)-1)
 
-            matrix[row][col][0] = difficulty.pop(rand)
+            matrix[row][col][0] = choose.pop(rand)
             col = col+1
         row = row+1
 
     # East
     row = 1
-    col = N_COL-1
+    col = n_cols-1
 
-    while row < N_ROW-1 :
-        rand = random.randint(0, len(difficulty)-1)
-        while check_nw(row, col, difficulty[rand]) | check_ne(row, col, difficulty[rand]) :
-            rand = random.randint(0, len(difficulty)-1)
-        matrix[row][col][0] = difficulty.pop(rand)
+    while row < n_rows-1 :
+        rand = random.randint(0, len(choose)-1)
+        while check_nw(matrix, row, col, choose[rand]) | check_ne(row, col, choose[rand]) :
+            rand = random.randint(0, len(choose)-1)
+        matrix[row][col][0] = choose.pop(rand)
         row = row+1
 
     # South
-    row = N_ROW-1
+    row = n_rows-1
     col = 1
 
-    while col < N_COL-1 :
-        rand = random.randint(0, len(difficulty)-1)
-        while check_nw(row, col, difficulty[rand]) | check_sw(row, col, difficulty[rand]) :
-            rand = random.randint(0, len(difficulty)-1)
-        matrix[row][col][0] = difficulty.pop(rand)
+    while col < n_cols-1 :
+        rand = random.randint(0, len(choose)-1)
+        while check_nw(matrix, row, col, choose[rand]) | check_sw(row, col, choose[rand]) :
+            rand = random.randint(0, len(choose)-1)
+        matrix[row][col][0] = choose.pop(rand)
         col = col+1
 
     # Corner
-    rand = random.randint(0, len(difficulty)-1)
+    rand = random.randint(0, len(choose)-1)
     stop_while = 0
-    while (check_corner(difficulty[rand])) and stop_while < 5 :
-        rand = random.randint(0, len(difficulty)-1)
+    while (check_corner(matrix, n_rows, n_cols, choose[rand])) and stop_while < 5 :
+        rand = random.randint(0, len(choose)-1)
         stop_while = stop_while+1
     if stop_while == 5 :
         matrix[row][col][0] = 0
     else :
-        matrix[row][col][0] = difficulty.pop(rand)
+        matrix[row][col][0] = choose.pop(rand)
     col = col+1
-
+    
     return matrix
 
 # =============================
 #           Check
 
-def check_nw(row, col, type) :
+def check_nw(matrix, row, col, type) :
     retry = False
     if type == 2 :
         if matrix[row-1][col][0] == 1 :
@@ -98,7 +99,7 @@ def check_nw(row, col, type) :
                     retry = True
     return retry
 
-def check_ne(row, col, type) :
+def check_ne(matrix, row, col, type) :
     retry = False
     if type == 1 :
         if matrix[row-1][col][0] == 2 :
@@ -107,7 +108,7 @@ def check_ne(row, col, type) :
                     retry = True
     return retry
 
-def check_sw(row, col, type) :
+def check_sw(matrix, row, col, type) :
     retry = False
     if type == 1 :
         if matrix[0][col][0] == 2 :
@@ -116,7 +117,7 @@ def check_sw(row, col, type) :
                     retry = True
     return retry
 
-def check_se(row, col, type) :
+def check_se(matrix, row, col, type) :
     retry = False
     if type == 2 :
         if matrix[0][col][0] == 1 :
@@ -125,18 +126,17 @@ def check_se(row, col, type) :
                     retry = True
     return retry
 
-def check_corner(type) :
-    row = N_ROW-1
-    col = N_COL-1
+def check_corner(matrix, n_rows, n_cols, type) :
+    row = n_rows-1
+    col = n_cols-1
 
     retry = False
     match type :
         case 1 :
-            retry = check_ne(row, col, type) | check_sw(row, col, type)
+            retry = check_ne(matrix, row, col, type) | check_sw(matrix, row, col, type)
         case 2 :
-            retry = check_nw(row, col, type) | check_se(row, col, type)
+            retry = check_nw(matrix, row, col, type) | check_se(matrix, row, col, type)
     return retry
-
 
 
 
@@ -158,15 +158,11 @@ def not_found(e):
 
 @app.route("/")
 def start():
-    generate_grid(EASY)
-    return render_template(
-        "hunt-the-wumpus.html",
-        grid=matrix,
-        params='<div id="player" class="top-1"></div><div class="bat"></div>')
+    return render_template("hunt-the-wumpus.html", generate_grid(EASY, N_ROW, N_COL))
 
-@app.route('/select-difficulty')
+@app.route('/select-choose')
 def select() :
-    return render_template("select-difficulty.html")
+    return render_template("select-choose.html")
 
 @app.route('/settings')
 def settings() :
