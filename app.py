@@ -11,8 +11,6 @@ HARD = 2
 N_ROW = 6
 N_COL = 8
 
-
-
 def generate_grid(difficulty, n_rows, n_cols) :
     matrix = [[[0, True, True, 0, 0, 0] for _ in range(n_cols) ] for _ in range(n_rows) ]
     match difficulty :
@@ -57,7 +55,7 @@ def generate_grid(difficulty, n_rows, n_cols) :
 
     while row < n_rows-1 :
         rand = random.randint(0, len(choose)-1)
-        while check_nw(matrix, row, col, choose[rand]) | check_ne(row, col, choose[rand]) :
+        while check_nw(matrix, row, col, choose[rand]) | check_ne(matrix, row, col, choose[rand]) :
             rand = random.randint(0, len(choose)-1)
         matrix[row][col][0] = choose.pop(rand)
         row = row+1
@@ -68,7 +66,7 @@ def generate_grid(difficulty, n_rows, n_cols) :
 
     while col < n_cols-1 :
         rand = random.randint(0, len(choose)-1)
-        while check_nw(matrix, row, col, choose[rand]) | check_sw(row, col, choose[rand]) :
+        while check_nw(matrix, row, col, choose[rand]) | check_sw(matrix, row, col, choose[rand]) :
             rand = random.randint(0, len(choose)-1)
         matrix[row][col][0] = choose.pop(rand)
         col = col+1
@@ -139,7 +137,6 @@ def check_corner(matrix, n_rows, n_cols, type) :
     return retry
 
 
-
 # =============================
 #           Flask
 # =============================
@@ -158,11 +155,11 @@ def not_found(e):
 
 @app.route("/")
 def start():
-    return render_template("hunt-the-wumpus.html", generate_grid(EASY, N_ROW, N_COL))
+    return render_template("hunt-the-wumpus.html", grid=generate_grid(EASY, N_ROW, N_COL))
 
-@app.route('/select-choose')
+@app.route('/select-difficulty')
 def select() :
-    return render_template("select-choose.html")
+    return render_template("select-difficulty.html")
 
 @app.route('/settings')
 def settings() :
