@@ -4,6 +4,8 @@
 
 {% block add_css_js %}
     <link rel="stylesheet" href="{{url_for('static', filename='css/game.css')}}"/>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/move.css')}}"/>
+    <script src="{{url_for('static', filename='js/move.js')}}"></script>
 {% endblock %}
 
 {% block class_home %} class="page_here" {% endblock %}
@@ -15,16 +17,29 @@
                 {% for col in row %}
                     <td>
                         {% if col[0] == 0 %}
-                            {% set css_class = 'normal'  %}
+                            {% set css_class = 'normal' %}
 
                             {% if col[2] %}
                                 {% set divs = '<div id="player"></div>' %}
                             {% endif %}
 
+                            <!---->
+
                         {% elif col[0] == 1 %}
-                            {% set css_class = 'corridor_1'  %}
-                            {% set ex_top = ' explored' %}
-                            {% set ex_bot = ' explored' %}
+                            {% set css_class = 'corridor_1' %}
+
+                            {% if not col[1] %}
+                            
+                            {% elif col[1] == 10 %}
+                                {% set ex_top = ' explored' %}
+
+                            {% elif col[1] == -9 %}
+                                {% set ex_bot = ' explored' %}
+                            
+                            {% elif col[1] %}
+                                {% set ex_top = ' explored' %}
+                                {% set ex_bot = ' explored' %}
+                            {% endif %}
 
                             {% if not col[2] %}
                             {% elif col[2] == 1 %}
@@ -33,31 +48,63 @@
                             {% elif col[2] == -1 %}
                                 {% set divs = '<div id="player" class="bot-1"></div>' %}
                             {% endif %}
+
+                            <!---->
 
                         {% elif col[0] == 2 %}
                             {% set css_class = 'corridor_2' %}
-                            {% set ex_top = ' explored' %}
-                            {% set ex_bot = ' explored' %}
+                            {% if not col[1] %}
+                            
+                            {% elif col[1] == 10 %}
+                                {% set ex_top = ' explored' %}
+
+                            {% elif col[1] == -9 %}
+                                {% set ex_bot = ' explored' %}
+                            
+                            {% elif col[1] %}
+                                {% set ex_top = ' explored' %}
+                                {% set ex_bot = ' explored' %}
+                            {% endif %}
 
                             {% if not col[2] %}
                             {% elif col[2] == 1 %}
-                                {% set divs = '<div id="player" class="top-1"></div>' %}
+                                {% set divs = '<div id="player" class="top-2"></div>' %}
 
                             {% elif col[2] == -1 %}
-                                {% set divs = '<div id="player" class="bot-1"></div>' %}
+                                {% set divs = '<div id="player" class="bot-2"></div>' %}
+                            {% endif %}
+
+                            <!---->
+
+                        {% elif col[0] == 4 %}
+                            {% set css_class = 'near_hole' %}
+
+                            {% if col[2] %}
+                                {% set divs = '<div id="player"></div>' %}
+                            {% endif %}
+
+                            <!---->
+
+                        {% elif col[0] == 8 %}
+                            {% set css_class = 'hole' %}
+
+                            {% if col[2] %}
+                                {% set divs = '<div id="player"></div>' %}
                             {% endif %}
                         {% endif %}
+                        
+                        <!---->
 
-                        {% if col[1] %}
+                        {% if not col[1] %}
+
+                        {% elif col[1] %}
                             {% set css_class = css_class + ' explored' %}
 
-                        {% elif not col[1] %} <!-- To stop testing values below -->
-
-                        {% elif col[1] == 1 %}
+                        {% elif col[1] == 10 %}
                             {% set css_class = css_class + ' explored' %}
                             {% set ex_top = ' explored' %}
 
-                        {% elif col[1] == -1 %}
+                        {% elif col[1] == -9 %}
                             {% set css_class = css_class + ' explored' %}
                             {% set ex_bot = ' explored' %}
 
@@ -77,4 +124,12 @@
             </tr>
         {% endfor %}
     </table>
+    <form id="moving_ig" method="get">
+        <input type="hidden" name="x" id="form_move-x" />
+        <input type="hidden" name="y" id="form_move-y" />
+        <button type="button" class="btn_move_ig" id="btn_move_ig-top">↑</button>
+        <button type="button" class="btn_move_ig" id="btn_move_ig-bot">↓</button>
+        <button type="button" class="btn_move_ig" id="btn_move_ig-left">←</button>
+        <button type="button" class="btn_move_ig" id="btn_move_ig-right">→</button>
+    </form>
 {% endblock %}

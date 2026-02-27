@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, request, session
 import random
-#from markupsafe import Markup
+from werkzeug.security import generate_password_hash, check_password_hash
+import psycopg
 
 EASY = 0
 NORMAL = 1
@@ -12,7 +13,7 @@ N_ROW = 6
 N_COL = 8
 
 def generate_grid(difficulty, n_rows, n_cols) :
-    matrix = [[[0, True, True, 0, 0, 0] for _ in range(n_cols) ] for _ in range(n_rows) ]
+    matrix = [[[0, False, False, 0, 0, 0] for _ in range(n_cols) ] for _ in range(n_rows) ]
     match difficulty :
         case 0 :
             choose = [0]*40 + [random.choice([1, 2]) for _ in range(14)]
@@ -83,6 +84,25 @@ def generate_grid(difficulty, n_rows, n_cols) :
         matrix[row][col][0] = choose.pop(rand)
     col = col+1
     
+    # match matrix[2][5][0] :
+    #     case 1 :
+    #         matrix[2][5][2] = -1
+    #         matrix[2][5][1] = -9
+    #     case 2 :
+    #         matrix[2][5][2] = 1
+    #     case _ :
+    #         matrix[2][5][2] = True
+
+    # match matrix[2][2][0] :
+    #     case 1 :
+    #         matrix[2][2][2] = -1
+    #         matrix[2][2][1] = -9
+    #     case 2 :
+    #         matrix[2][2][2] = 1
+    #         matrix[2][2][1] = 10
+    #     case _ :
+    #         matrix[2][2][2] = True
+
     return matrix
 
 # =============================
@@ -136,6 +156,160 @@ def check_corner(matrix, n_rows, n_cols, type) :
             retry = check_nw(matrix, row, col, type) | check_se(matrix, row, col, type)
     return retry
 
+# =============================
+#           Play
+# ============================= 
+
+def random_init(matrix, n_rows, n_cols, val=128) :
+    retry = True
+    
+    while retry :
+        row = random.randint(0, n_rows-1)
+        col = random.randint(0, n_cols-1)
+        
+        if val == 128 or val == 64 or val == 8 :
+            match matrix[row][col][0] :
+                case 0 :
+                    toReturn = (row, col)
+                    retry = False
+                case 4 :
+                    toReturn = (row, col)
+                    retry = False
+
+        elif val == 32 :
+            match matrix[row][col][0] :
+                case 0 :
+                    toReturn = (row, col)
+                    retry = False
+                case 4 :
+                    toReturn = (row, col)
+                    retry = False
+                case 8 :
+                    toReturn = (row, col)
+                    retry = False
+    return toReturn
+
+def init_player(matrix, n_rows, n_cols) :
+    pos = random_init(matrix, n_rows, n_cols)
+    y = pos[0]
+    x = pos[1]
+    matrix[y][x][2] = True
+    matrix[y][x][1] = True
+    return pos
+
+def verify_difficulty(mode) :
+    try :
+        n = int(mode)
+        if not n in [0, 1, 2] :
+            n = 1
+    except :
+        n = 1
+    return n
+
+def verify_move(move) :
+    try :
+        x, y = move
+        x = int(x)
+        y = int(y)
+        return (not x == y and not x == -y) and (x == 1 or x == 0 or x == -1) and (y == 1 or y == 0 or y == -1) 
+    except :
+        return False
+
+def make_move(matrix, sub, px, py, mx, my, next_x, next_y, val=-1) :
+    possible = False
+    if sub == 2 :
+        match matrix[next_y][next_x][0] :
+            case 1 :
+                if mx == 1 :
+                    matrix[next_y][next_x][sub] = -1
+                    if matrix[next_y][next_x][1] == 0 or matrix[next_y][next_x][1] == 10 : # if we don't see the hole box, see bot
+                        matrix[next_y][next_x][1] += -9 # 10 + -9 == 1 == True
+                    matrix[py][px][sub] = False
+                    possible = True
+                elif mx == -1 :
+                    if matrix[next_y][next_x][1] == 0 or matrix[next_y][next_x][1] == -9 :
+                        matrix[next_y][next_x][1] += 10 # -9 + 10 == 1 == True
+                    matrix[next_y][next_x][sub] = 1
+                    matrix[py][px][sub] = False
+                    possible = True
+                elif my == 1 :
+                    if matrix[next_y][next_x][1] == 0 or matrix[next_y][next_x][1] == -9 :
+                        matrix[next_y][next_x][1] += 10
+                    matrix[next_y][next_x][sub] = 1
+                    matrix[py][px][sub] = False
+                    possible = True
+                elif my == -1 :
+                    if matrix[next_y][next_x][1] == 0 or matrix[next_y][next_x][1] == 10 :
+                        matrix[next_y][next_x][1] += -9
+                    matrix[next_y][next_x][sub] = -1
+                    matrix[py][px][sub] = False
+                    possible = True
+            case 2 :
+                if mx == 1 :
+                    matrix[next_y][next_x][sub] = 1
+                    if matrix[next_y][next_x][1] == 0 or matrix[next_y][next_x][1] == -9 :
+                        matrix[next_y][next_x][1] += 10
+                    matrix[py][px][sub] = False
+                    possible = True
+                elif mx == -1 :
+                    if matrix[next_y][next_x][1] == 0 or matrix[next_y][next_x][1] == 10 :
+                        matrix[next_y][next_x][1] += -9
+                    matrix[next_y][next_x][sub] = -1
+                    matrix[py][px][sub] = False
+                    possible = True
+                elif my == 1 :
+                    if matrix[next_y][next_x][1] == 0 or matrix[next_y][next_x][1] == -9 :
+                        matrix[next_y][next_x][1] += 10
+                    matrix[next_y][next_x][sub] = 1
+                    matrix[py][px][sub] = False
+                    possible = True
+                elif my == -1 :
+                    if matrix[next_y][next_x][1] == 0 or matrix[next_y][next_x][1] == 10 :
+                        matrix[next_y][next_x][1] += -9
+                    matrix[next_y][next_x][sub] = -1
+                    matrix[py][px][sub] = False
+                    possible = True
+            case _ :
+                matrix[next_y][next_x][1] = True
+                matrix[next_y][next_x][sub] = True
+                matrix[py][px][sub] = False
+                possible = True
+    else :
+        matrix[py][px][sub] -= val
+    return possible
+
+def move_item(matrix, n_rows, n_cols, px, py, move, sub=2, explorer=False, val=128) :
+    if verify_move(move) :
+        mx, my = move
+        next_x = (px+mx)%n_cols
+        next_y = (py+my)%n_rows
+        possible = False
+        if explorer :
+            matrix[py][px][1] = False
+        match matrix[py][px][0] :
+            case 1 :
+                if matrix[py][px][2] == 1 and (mx == 1 or my == -1) :
+                    possible = make_move(matrix, sub, px, py, mx, my, next_x, next_y)
+
+                elif matrix[py][px][2] == -1 and (mx == -1 or my == 1) :
+                    possible = make_move(matrix, sub, px, py, mx, my, next_x, next_y)
+
+            case 2 :
+                if matrix[py][px][2] == 1 and (mx == -1 or my == -1) :
+                    possible = make_move(matrix, sub, px, py, mx, my, next_x, next_y)
+
+                elif matrix[py][px][2] == -1 and (mx == 1 or my == 1) :
+                    possible = make_move(matrix, sub, px, py, mx, my, next_x, next_y)
+
+            case _ :
+                possible = make_move(matrix, sub, px, py, mx, my, next_x, next_y)
+
+        if possible :
+            return (next_y, next_x)
+        else :
+            return(py, px)
+
+
 
 # =============================
 #           Flask
@@ -147,15 +321,34 @@ app = Flask(
     static_folder="static"
 )
 
-app.config["SECRET_KEY"] = ""
+app.config["SECRET_KEY"] = "a modifer"
 
 @app.errorhandler(404)
 def not_found(e):
   return render_template("base.html")
 
 @app.route("/")
+def home():
+    return redirect("/start")
+
+@app.route("/start")
 def start():
-    return render_template("hunt-the-wumpus.html", grid=generate_grid(EASY, N_ROW, N_COL))
+    matrix = generate_grid(HARD, N_ROW, N_COL)
+    session["map"] = matrix
+    session["player"] = init_player(matrix, N_ROW, N_COL)
+    return redirect("/play")
+
+@app.route("/play")
+def play():
+    if session["map"] and session["player"] :
+        coord = request.args
+        x = coord.get('x', type=int, default=0)
+        y = coord.get('y', type=int, default=0)
+        if verify_move((x,y)) :
+            session["player"] = move_item(session["map"], N_ROW, N_COL, session["player"][1], session["player"][0], (x, y))
+        return render_template("hunt-the-wumpus.html", grid=session["map"])
+    else :
+        return redirect("/")
 
 @app.route('/select-difficulty')
 def select() :
