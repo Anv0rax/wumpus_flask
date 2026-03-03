@@ -83,25 +83,6 @@ def generate_grid(difficulty, n_rows, n_cols) :
     else :
         matrix[row][col][0] = choose.pop(rand)
     col = col+1
-    
-    # match matrix[2][5][0] :
-    #     case 1 :
-    #         matrix[2][5][2] = -1
-    #         matrix[2][5][1] = -9
-    #     case 2 :
-    #         matrix[2][5][2] = 1
-    #     case _ :
-    #         matrix[2][5][2] = True
-
-    # match matrix[2][2][0] :
-    #     case 1 :
-    #         matrix[2][2][2] = -1
-    #         matrix[2][2][1] = -9
-    #     case 2 :
-    #         matrix[2][2][2] = 1
-    #         matrix[2][2][1] = 10
-    #     case _ :
-    #         matrix[2][2][2] = True
 
     return matrix
 

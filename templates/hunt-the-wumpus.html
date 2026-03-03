@@ -19,8 +19,10 @@
                         {% if not col[1] %}
                             {% set ex = False %}
 
-                        {% elif col[1] %}
+                        {% elif col[1] == True %}
                             {% set css_class = 'explored' %}
+                            {% set ex_top = ' explored' %}
+                            {% set ex_bot = ' explored' %}
                             {% set ex = True %}
 
                         {% elif col[1] == 10 %}
@@ -32,96 +34,67 @@
                             {% set css_class = 'explored' %}
                             {% set ex_bot = ' explored' %}
                             {% set ex = True %}
-
-                        {% elif col[1] == 2%}
-                            {% set css_class = 'explored' %}
-                            {% set ex_top = ' explored' %}
-                            {% set ex_bot = ' explored' %}
-                            {% set ex = True %}
                         {% endif %}
 
                         <!---->
 
-                        {% if ex and col[0] == 0 %}
-                            {% set css_class = css_class + ' normal' %}
+                        {% if ex %}
+                            {% if col[0] == 0 %}
+                                {% set css_class = css_class + ' normal' %}
 
-                            {% if col[2] %}
-                                {% set divs = '<div id="player"></div>' %}
-                            {% endif %}
+                                {% if col[2] %}
+                                    {% set divs = '<div id="player"></div>' %}
+                                {% endif %}
 
-                            <!---->
+                                <!---->
 
-                        {% elif ex and col[0] == 1 %}
-                            {% set css_class = css_class + ' corridor_1' %}
+                            {% elif col[0] == 1 %}
+                                {% set css_class = css_class + ' corridor_1' %}
 
-                            {% if not col[1] %}
-                            
-                            {% elif col[1] == 10 %}
-                                {% set ex_top = ' explored' %}
+                                {% if not col[2] %}
+                                {% elif col[2] == 1 %}
+                                    {% set divs = '<div id="player" class="top-1"></div>' %}
 
-                            {% elif col[1] == -9 %}
-                                {% set ex_bot = ' explored' %}
-                            
-                            {% elif col[1] %}
-                                {% set ex_top = ' explored' %}
-                                {% set ex_bot = ' explored' %}
-                            {% endif %}
+                                {% elif col[2] == -1 %}
+                                    {% set divs = '<div id="player" class="bot-1"></div>' %}
+                                {% endif %}
 
-                            {% if not col[2] %}
-                            {% elif col[2] == 1 %}
-                                {% set divs = '<div id="player" class="top-1"></div>' %}
+                                <!---->
 
-                            {% elif col[2] == -1 %}
-                                {% set divs = '<div id="player" class="bot-1"></div>' %}
-                            {% endif %}
+                            {% elif col[0] == 2 %}
+                                {% set css_class = css_class + ' corridor_2' %}
 
-                            <!---->
+                                {% if not col[2] %}
+                                {% elif col[2] == 1 %}
+                                    {% set divs = '<div id="player" class="top-2"></div>' %}
 
-                        {% elif ex and col[0] == 2 %}
-                            {% set css_class = css_class + ' corridor_2' %}
-                            {% if not col[1] %}
-                            
-                            {% elif col[1] == 10 %}
-                                {% set ex_top = ' explored' %}
+                                {% elif col[2] == -1 %}
+                                    {% set divs = '<div id="player" class="bot-2"></div>' %}
+                                {% endif %}
 
-                            {% elif col[1] == -9 %}
-                                {% set ex_bot = ' explored' %}
-                            
-                            {% elif col[1] %}
-                                {% set ex_top = ' explored' %}
-                                {% set ex_bot = ' explored' %}
-                            {% endif %}
+                                <!---->
 
-                            {% if not col[2] %}
-                            {% elif col[2] == 1 %}
-                                {% set divs = '<div id="player" class="top-2"></div>' %}
+                            {% elif col[0] == 4 %}
+                                {% set css_class = css_class + ' near_hole' %}
 
-                            {% elif col[2] == -1 %}
-                                {% set divs = '<div id="player" class="bot-2"></div>' %}
-                            {% endif %}
+                                {% if col[2] %}
+                                    {% set divs = '<div id="player"></div>' %}
+                                {% endif %}
 
-                            <!---->
+                                <!---->
 
-                        {% elif ex and col[0] == 4 %}
-                            {% set css_class = css_class + ' near_hole' %}
+                            {% elif col[0] == 8 %}
+                                {% set css_class = css_class + ' hole' %}
 
-                            {% if col[2] %}
-                                {% set divs = '<div id="player"></div>' %}
-                            {% endif %}
-
-                            <!---->
-
-                        {% elif ex and col[0] == 8 %}
-                            {% set css_class = css_class + ' hole' %}
-
-                            {% if col[2] %}
-                                {% set divs = '<div id="player"></div>' %}
+                                {% if col[2] %}
+                                    {% set divs = '<div id="player"></div>' %}
+                                {% endif %}
                             {% endif %}
                         {% endif %}
 
                         <div class="box {{css_class}}">
                             <div class="{{ex_top}}"></div>
-                            {{divs | safe}}
+                            {{ divs | safe }}
                             <div class="{{ex_bot}}"></div>
                         </div>
                     </td>
