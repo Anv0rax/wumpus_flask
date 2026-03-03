@@ -16,11 +16,11 @@ def generate_grid(difficulty, n_rows, n_cols) :
     matrix = [[[0, False, False, 0, 0, 0] for _ in range(n_cols) ] for _ in range(n_rows) ]
     match difficulty :
         case 0 :
-            choose = [0]*40 + [random.choice([1, 2]) for _ in range(14)]
+            choose = [0]*(n_rows*n_cols-8) + [random.choice([1, 2]) for _ in range(14)]
         case 1 :
-            choose = [0]*30 + [random.choice([1, 2]) for _ in range(24)]
+            choose = [0]*(n_rows*n_cols-18) + [random.choice([1, 2]) for _ in range(24)]
         case 2 :
-            choose = [0]*20 + [random.choice([1, 2]) for _ in range(34)]
+            choose = [0]*(n_rows*n_cols-28) + [random.choice([1, 2]) for _ in range(34)]
 
     # North
     col = 0
@@ -83,25 +83,6 @@ def generate_grid(difficulty, n_rows, n_cols) :
     else :
         matrix[row][col][0] = choose.pop(rand)
     col = col+1
-    
-    # match matrix[2][5][0] :
-    #     case 1 :
-    #         matrix[2][5][2] = -1
-    #         matrix[2][5][1] = -9
-    #     case 2 :
-    #         matrix[2][5][2] = 1
-    #     case _ :
-    #         matrix[2][5][2] = True
-
-    # match matrix[2][2][0] :
-    #     case 1 :
-    #         matrix[2][2][2] = -1
-    #         matrix[2][2][1] = -9
-    #     case 2 :
-    #         matrix[2][2][2] = 1
-    #         matrix[2][2][1] = 10
-    #     case _ :
-    #         matrix[2][2][2] = True
 
     return matrix
 
@@ -284,8 +265,6 @@ def move_item(matrix, n_rows, n_cols, px, py, move, sub=2, explorer=False, val=1
         next_x = (px+mx)%n_cols
         next_y = (py+my)%n_rows
         possible = False
-        if explorer :
-            matrix[py][px][1] = False
         match matrix[py][px][0] :
             case 1 :
                 if matrix[py][px][2] == 1 and (mx == 1 or my == -1) :
@@ -305,6 +284,8 @@ def move_item(matrix, n_rows, n_cols, px, py, move, sub=2, explorer=False, val=1
                 possible = make_move(matrix, sub, px, py, mx, my, next_x, next_y)
 
         if possible :
+            if explorer :
+                matrix[py][px][1] = False
             return (next_y, next_x)
         else :
             return(py, px)
@@ -333,14 +314,14 @@ def home():
 
 @app.route("/start")
 def start():
-    matrix = generate_grid(HARD, N_ROW, N_COL)
+    matrix = generate_grid(EASY, N_ROW, N_COL)
     session["map"] = matrix
     session["player"] = init_player(matrix, N_ROW, N_COL)
     return redirect("/play")
 
 @app.route("/play")
 def play():
-    if session["map"] and session["player"] :
+    if session.get("map") and session.get("player") :
         coord = request.args
         x = coord.get('x', type=int, default=0)
         y = coord.get('y', type=int, default=0)
