@@ -1,28 +1,24 @@
 window.addEventListener('load', () => { 
 
-    formMoveIg = document.getElementById("moving_ig");
-    xMoveIg = document.getElementById("form_move-x");
-    yMoveIg = document.getElementById("form_move-y");
+    formMoveIg = document.getElementById("ig_moving");
+    xMoveIg = document.getElementById("ig_form_move-x");
+    yMoveIg = document.getElementById("ig_form_move-y");
 
-    // movementTop = event.key
-    // movementBot = event.key
-    // movementLeft = event.key
-    // movementRight = event.key
+    // let movementTop = event.key
+    // let movementBot = event.key
+    // let movementLeft = event.key
+    // let movementRight = event.key
 
     let movementTop = 'space'
     let movementBot = 'space'
     let movementLeft = 'space'
     let movementRight = 'space'
 
-    // formMoveIg.onsubmit = () => {
-    //     verifyFormMoveIg();
-    // }
-
     document.onkeydown = (event) => {
 		pressKey(event);
 	};
 
-    listBtnMoveIg = document.querySelectorAll(".btn_move_ig");
+    listBtnMoveIg = document.querySelectorAll(".ig_btn_move");
 
     function pressKey(event)
     {

@@ -1,4 +1,4 @@
-table {
+#ig_game_grid {
     position: relative;
 
     width: 64vw;
@@ -25,24 +25,25 @@ table {
     box-sizing: content-box;
 }
 
-table * {
+#ig_game_grid * {
     border: 0;
     border-collapse: separate;
     border-spacing: 0;
 }
 
-tr {
+#ig_game_grid tr {
     height: 15%;
 }
 
-td {
+#ig_game_grid td {
     align-items: center;
     justify-content: center;
 
     width: 10%;
+    outline: 2px solid black;
 }
 
-.box {
+#ig_game_grid .box {
     display: none;
     align-items: center;
 
@@ -60,7 +61,7 @@ td {
     z-index: 0;
 }
 
-.box * {
+#ig_game_grid .box * {
     display: block;
 
     background-size: contain;
@@ -70,23 +71,23 @@ td {
     margin: 0 auto;
 }
 
-.explored {
+#ig_game_grid .explored {
     display: flex !important;
 }
 
-.normal {
+#ig_game_grid .normal {
     background-image: url(../assets/ingame/32-edited_normal.png);
 }
 
-.hole {
+#ig_game_grid .hole {
     background-image: url(../assets/ingame/32-edited_hole.png);
 }
 
-.near_hole {
+#ig_game_grid .near_hole {
     background-image: url(../assets/ingame/32-edited_near_hole.png);
 }
 
-.near_wumpus {
+#ig_game_grid .near_wumpus {
     position: absolute;
 
     left: 25%;
@@ -98,7 +99,7 @@ td {
     z-index: 3;
 }
 
-.wumpus {
+#ig_game_grid .wumpus {
     position: absolute;
 
     left: 25%;
@@ -110,7 +111,7 @@ td {
     z-index: 3;
 }
 
-.bat {
+#ig_game_grid .bat {
     position: absolute;
 
     left: 25%;
@@ -122,45 +123,50 @@ td {
     z-index: 4;
 }
 
-#player {
+#ig_game_grid #player {
     display: block !important;
+    position: absolute;
 
     width: 50%;
     height: 50%;
+
+    top: 25%;
+    left: 0;
+    bottom: 0;
+    right: 0;
 
     background-image: url(../assets/ingame/32-resized_player.png);
 
     z-index: 10;
 }
 
-.top-1 {
-    align-self: flex-start;
-    margin: 0 0 0 50%;
+#ig_game_grid .top-1 {
+    top: 0 !important;
+    left: 50% !important;
 }
 
-.bot-1 {
+#ig_game_grid .bot-1 {
     align-self: flex-end;
 }
 
-.top-2 {
-    align-self: flex-start;
-    margin: 0;
+#ig_game_grid .top-2 {
+    top: 0 !important;
+    right: 50% !important;
 }
 
-.bot-2 {
+#ig_game_grid .bot-2 {
     align-self: flex-end;
-    margin: 0 0 0 25%;
 }
 
-.corridor_1 div:first-child, .corridor_1 div:last-child,
-.corridor_2 div:first-child, .corridor_2 div:last-child {
+#ig_game_grid .corridor_1 div:first-child, #ig_game_grid  .corridor_1 div:last-child,
+#ig_game_grid .corridor_2 div:first-child, #ig_game_grid  .corridor_2 div:last-child {
     position: absolute;
 
     width: 100%;
     height: 100%;
 }
 
-.corridor_1 div:first-child {
+#ig_game_grid .corridor_1 div:first-child {
     display: none;
 
     background-image: url(../assets/ingame/32-edited_corridor_1_top.png);
@@ -168,7 +174,7 @@ td {
     z-index: 2;
 }
 
-.corridor_1 div:last-child {
+#ig_game_grid .corridor_1 div:last-child {
     display: none;
 
     background-image: url(../assets/ingame/32-edited_corridor_1_bot.png);
@@ -176,7 +182,7 @@ td {
     z-index: 1;
 }
 
-.corridor_2 div:first-child {
+#ig_game_grid .corridor_2 div:first-child {
     display: none;
 
     background-image: url(../assets/ingame/32-edited_corridor_2_top.png);
@@ -184,7 +190,7 @@ td {
     z-index: 2;
 }
 
-.corridor_2 div:last-child {
+#ig_game_grid .corridor_2 div:last-child {
     display: none;
 
     background-image: url(../assets/ingame/32-edited_corridor_2_bot.png);
