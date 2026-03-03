@@ -35,25 +35,31 @@
     animation: move-it 5s linear infinite;
 }
 
-.backgroundAnimationRings
+#backgroundAnimationRings 
 {
     position : absolute;
     width: 150%;
     height: 150%;
-    background-image: 
-        url('../assets/gif/Ring.webp');
+    background-image: url('../assets/gif/Ring.webp');
     background-size: 75px 75px;
     background-repeat: repeat;
 
-    mask-image: var(--maskImageColorBg);
+    -webkit-mask-image: var(--maskImageSettingsColorBg);
+    mask-image: var(--maskImageSettingsColorBg);
+    
+    -webkit-mask-size: 15% 60%;
     mask-size: 15% 60%;
+    
+    -webkit-mask-repeat: repeat;
     mask-repeat: repeat;
+
+    pointer-events: none;
 
     animation: moveBackground 2s linear infinite;
     filter: hue-rotate(180deg) saturate(2);
 }
 
-.backgroundAnimationRings::before
+#backgroundAnimationRings::before
 {
     content: '';
     position: absolute;
@@ -300,57 +306,6 @@ option[value=hard] {
     background: radial-gradient(circle, var(--hover-effect-muteButton1) 20%, transparent 80%);
 
     transform: scale(1.3);
-}
-
-@keyframes moveGrid {
-    from {
-        transform: translate(0, 0);
-    }
-    to {
-        /* Déplacement d'exactement un carreau (c'est sa qui rend l'animation fluide)*/
-        /* X positif = droite, Y négatif = haut */
-        transform: translate(-50px, -50px); 
-    }
-}
-
-@media (max-height : 634px) {
-    .explications  {
-        width : 300px;
-
-        font-size: 10px;
-    }
-}
-
-@media (max-height : 500px) {
-    .explications {
-        font-size: 8px;
-    }
-
-    #sound {
-        z-index: 1000;
-    }
-
-    h2,.diff-tuto,p,.onoff,.validate, #difficulty-choice {
-        padding: 2px;
-
-        font-size: 12px;
-    }
-}
-
-@media (max-height : 400px) {
-    .help {
-        width: 16px;
-        height: 16px;
-    }
-
-    h2,.diff-tuto,p,.onoff,.validate, #difficulty-choice {
-        display: inline-block;
-
-        padding: 2px;
-        right : 25%;
-        
-        font-size: 8px;
-    }
 }
 
 @keyframes move-it

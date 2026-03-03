@@ -4,22 +4,30 @@ document.addEventListener('DOMContentLoaded', () =>
 {
     const containerWelcomeText = document.getElementById('container-texts');
     const spacePressSound = document.getElementById('son');
+    const form = document.getElementById('connect');
 
     function keyPress(event)
     {
-        const welcomeText = containerWelcomeText.querySelectorAll('.text');
-        welcomeText.forEach(element =>
-            {
-                element.style.animation = 'none';
-                void el.offsetWidth; // Reflox, for the fluidity of the animation blinking.
-                element.classList.add('keyPressed');
-            }
-        )
-        setTimeout( () => { playSound(spacePressSound); }, "500");
-        setTimeout( () => { fadeOut(containerWelcomeText); }, "500");
+        if(event.keyCode == 32)
+        {
+            document.removeEventListener('keydown', keyPress);
+            const welcomeText = containerWelcomeText.querySelectorAll('.text');
+            welcomeText.forEach(element =>
+                {
+                    element.style.animation = 'none';
+                    void element.offsetWidth; // Reflox, for the fluidity of the animation blinking.
+                    element.classList.add('keyPressed');
+                }
+            )
+            setTimeout( () => { playSound(spacePressSound); }, "500");
+            setTimeout( () => { fadeOut(containerWelcomeText); }, "500");
+            form.style.visibility = "visible";
+            
+        }
+
     }
 
-    document.addEventListener('keydown', keyPress, {once: true}); // The parameter once : true is to prevent the user to press multiple time his key, making the sound repeat himself.
+    document.addEventListener('keydown', keyPress); // The parameter once : true is to prevent the user to press multiple time his key, making the sound repeat himself.
 });
 
 /* =============== Fonctions ============== */

@@ -1,5 +1,4 @@
 // TODO : Essayer de faire le lien entre la page du choix de la difficulté, et que la aussi le son par exemple de la musique soit la même dans le menu paramétres ou dans le menu choix difficulté.
-// TODO : Régler les sliders, leur css.
 
 document.addEventListener('DOMContentLoaded', () => {
 
