@@ -1,9 +1,65 @@
+#ig_game_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+}
+
 #ig_moving {
-    width: 150px;
-    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
 }
 
 .ig_btn_move {
-    width: 30px;
-    height: 30px;
+    width: 6.4vw;
+    height: 6.4vw; 
+    max-width: 9.6vh;
+    max-height: 9.6vh;
+}
+
+@media only screen and (aspect-ratio > 8/5) {
+	#ig_game_container {
+        flex-direction: row;
+    }
+
+    #ig_moving {
+        flex-direction: column;
+        
+        width: 8vw;
+        max-width: 12vh;
+        height: 32vw;
+        max-height: 48vh;
+
+        border-radius: 0 20px 20px 0;
+    }
+
+    .ig_btn_move {
+        margin: min(0.8vw, 1.2vh) min(1.6vw, 2.4vh);
+    }
+}
+
+@media only screen and (aspect-ratio <= 8/5) {
+    #ig_game_container {
+        flex-direction: column;
+    }
+
+    #ig_moving {
+        flex-direction: row;
+
+        width: 32vw;
+        max-width: 60vh;
+        height: 8vw;
+        max-height: 12vh;
+
+        border-radius: 20px 0 0 20px;
+    }
+
+    .ig_btn_move {
+        margin: min(1.6vw, 2.4vh) min(0.8vw, 1.2vh);
+    }
 }

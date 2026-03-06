@@ -6,6 +6,7 @@
     max-width: 96vh;
     max-height: 72vh;
     aspect-ratio: 8/6;
+    flex-shrink: 0;
     /*
     if want a full screen mode : 
     width: 100vw;

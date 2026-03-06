@@ -329,11 +329,14 @@ def play():
             session["player"] = move_item(session["map"], N_ROW, N_COL, session["player"][1], session["player"][0], (x, y))
         return render_template("hunt-the-wumpus.html", grid=session["map"])
     else :
-        return redirect("/")
+        return redirect("/select-difficulty")
 
-@app.route('/select-difficulty')
+@app.route('/select-difficulty', methods=["GET", "POST"])
 def select() :
-    return render_template("select-difficulty.html")
+    if request.method == "POST" :
+        return redirect("/start")
+    else :
+        return render_template("select-difficulty.html")
 
 @app.route('/settings')
 def settings() :
