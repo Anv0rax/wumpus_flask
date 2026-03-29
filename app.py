@@ -347,6 +347,10 @@ def title() :
 def stats():
     return render_template("stats.html")
 
+@app.route('/login')
+def login():
+    return render_template("login.html")
+
 @app.route('/menu')
 def menu():
     return render_template('menu.html')
