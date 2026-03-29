@@ -32,6 +32,13 @@
 	--leaderboardPrimary-color : rgba(4, 65, 232, 0.654);
 	--leaderboardBorder : rgb(0, 0, 0);
 	--defaultbrightness : 1;
+
+
+	--cursor-default : url('../assets/cursors/32x32_tile_0026.png'), auto;
+	--cursor-pointer : url('../assets/cursors/32x32_tile_0137.png'), pointer;
+	--cursor-grab : url('../assets/cursors/32x32_tile_0137.png') 16 16, grab;
+	--cursor-grabbing : url('../assets/cursors/32x32_tile_0137.png') 16 16, grabbing;
+	--cursor-text : url('../assets/cursors/32x32_tile_0140.png') 16 16, text;
 }
 /* FONTS */
 @font-face {
@@ -60,6 +67,7 @@
     margin: 0;
     font-weight: normal;
     box-sizing: border-box;
+	cursor: var(--cursor-default);
 }
 
 html, body {
@@ -75,9 +83,13 @@ h1 {
 }
 
 a {
-	cursor: pointer;
+	cursor: var(--cursor-pointer);
 	text-decoration: none;
 	color: var(--text-color);
+}
+
+p {
+	cursor: var(--cursor-text);
 }
 
 #sidebar {
