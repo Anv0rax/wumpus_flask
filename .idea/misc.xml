@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-<<<<<<< HEAD
   <component name="Black">
     <option name="sdkName" value="Python 3.13 (projet_wumpus)" />
   </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.13 (projet_wumpus)" project-jdk-type="Python SDK" />
-=======
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.13 (projet-wumpus)" project-jdk-type="Python SDK" />
->>>>>>> de2ab24f286344d681eee6be5bddea471ba63380
 </project>

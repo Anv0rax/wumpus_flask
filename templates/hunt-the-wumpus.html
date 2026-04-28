@@ -18,7 +18,8 @@
                     {% for col in row %}
                         <td>
                             {% if not col[1] %}
-                                {% set ex = False %}
+                                {% set ex = True %}
+                                {%set css_class = "" %}
 
                             {% elif col[1] == True %}
                                 {% set css_class = 'explored' %}
@@ -104,10 +105,10 @@
             {% endfor %}
         </table>
         <form id="ig_moving" method="get">
-            <button type="submit" class="ig_btn_move" id="ig_btn_move-top" name="y" value="-1">↑</button>
-            <button type="submit" class="ig_btn_move" id="ig_btn_move-bot" name="y" value="1">↓</button>
-            <button type="submit" class="ig_btn_move" id="ig_btn_move-left" name="x" value="-1">←</button>
-            <button type="submit" class="ig_btn_move" id="ig_btn_move-right" name="x" value="1">→</button>
+            <button type="submit" class="ig_btn_move" id="ig_btn_move-top" name="y" value="-1"></button>
+            <button type="submit" class="ig_btn_move" id="ig_btn_move-bot" name="y" value="1"></button>
+            <button type="submit" class="ig_btn_move" id="ig_btn_move-left" name="x" value="-1"></button>
+            <button type="submit" class="ig_btn_move" id="ig_btn_move-right" name="x" value="1"></button>
         </form>
     </div>
 {% endblock %}

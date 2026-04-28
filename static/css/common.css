@@ -222,6 +222,13 @@ footer {
 		width: 100%;
 		min-height: 80%;
 	}
+
+	@media only screen and (height >= 500px) {
+	
+	}
+	@media only screen and (height < 500px) {
+	
+	}
 }
 
 @media only screen and (orientation: portrait) {
@@ -265,4 +272,11 @@ footer {
 		
 		flex-grow: 1;
 	}
-} 
+
+	@media only screen and (width >= 500px) {
+	
+	}
+	@media only screen and (width < 500px) {
+	
+	}
+}
