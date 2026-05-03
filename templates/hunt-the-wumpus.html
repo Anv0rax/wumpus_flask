@@ -54,10 +54,10 @@
                                     {% set css_class = css_class + ' corridor_1' %}
 
                                     {% if not col[2] %}
-                                    {% elif col[2] == 1 %}
+                                    {% elif col[2] == 8 %}
                                         {% set divs = '<div id="player" class="top-1"></div>' %}
 
-                                    {% elif col[2] == -1 %}
+                                    {% elif col[2] == -7 %}
                                         {% set divs = '<div id="player" class="bot-1"></div>' %}
                                     {% endif %}
 
@@ -67,10 +67,10 @@
                                     {% set css_class = css_class + ' corridor_2' %}
 
                                     {% if not col[2] %}
-                                    {% elif col[2] == 1 %}
+                                    {% elif col[2] == 8 %}
                                         {% set divs = '<div id="player" class="top-2"></div>' %}
 
-                                    {% elif col[2] == -1 %}
+                                    {% elif col[2] == -7 %}
                                         {% set divs = '<div id="player" class="bot-2"></div>' %}
                                     {% endif %}
 

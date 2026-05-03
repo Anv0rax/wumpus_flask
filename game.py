@@ -33,15 +33,14 @@ def home():
 
 @app.route("/start")
 def start():
-    matrix = generate_grid(HARD, N_ROW, N_COL)
-    for i in range(1000) :
-        try :
-            maptest = generate_grid(HARD, N_ROW, N_COL)
-            flood_fill_map(maptest, N_ROW, N_COL, HARD)
-        except : 
-            matrix = maptest
+    matrix = generate_grid(HARD)
+    print(flood_fill_map(matrix))
+    while not flood_fill_map(matrix) :
+        matrix = generate_grid(HARD)
+        print("\n\n\n\n\nMap regen\n\n\n\n")
+    # now generate elements
     session["map"] = matrix
-    session["player"] = init_player(matrix, N_ROW, N_COL)
+    session["player"] = init_player(matrix)
     return redirect("/play")
 
 @app.route("/play")
@@ -51,7 +50,9 @@ def play():
         x = coord.get('x', type=int, default=0)
         y = coord.get('y', type=int, default=0)
         if verify_move((x,y)) :
-            session["player"] = move_item(session["map"], N_ROW, N_COL, session["player"][1], session["player"][0], x, y)
+            moved = move_item(session["map"], session["player"][1], session["player"][0], x, y)
+            if moved[0] :
+                session["player"] = (moved[1], moved[2])
         return render_template("hunt-the-wumpus.html", grid=session["map"])
     else :
         return redirect("/select-difficulty")
