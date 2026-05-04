@@ -19,7 +19,7 @@
                         <td>
                             {% if not col[1] %}
                                 {% set ex = True %}
-                                {%set css_class = "" %}
+                                {% set css_class = "" %}
 
                             {% elif col[1] == True %}
                                 {% set css_class = 'explored' %}
@@ -41,11 +41,12 @@
                             
 
                             {% if ex %}
+                                {% set divs = "" %}
                                 {% if col[0] == 0 %}
                                     {% set css_class = css_class + ' normal' %}
 
                                     {% if col[2] %}
-                                        {% set divs = '<div id="player"></div>' %}
+                                        {% set divs = divs + '<div id="player"></div>' %}
                                     {% endif %}
 
                                     
@@ -55,10 +56,10 @@
 
                                     {% if not col[2] %}
                                     {% elif col[2] == 8 %}
-                                        {% set divs = '<div id="player" class="top-1"></div>' %}
+                                        {% set divs = divs + '<div id="player" class="top-1"></div>' %}
 
                                     {% elif col[2] == -7 %}
-                                        {% set divs = '<div id="player" class="bot-1"></div>' %}
+                                        {% set divs = divs + '<div id="player" class="bot-1"></div>' %}
                                     {% endif %}
 
                                     
@@ -68,10 +69,10 @@
 
                                     {% if not col[2] %}
                                     {% elif col[2] == 8 %}
-                                        {% set divs = '<div id="player" class="top-2"></div>' %}
+                                        {% set divs = divs + '<div id="player" class="top-2"></div>' %}
 
                                     {% elif col[2] == -7 %}
-                                        {% set divs = '<div id="player" class="bot-2"></div>' %}
+                                        {% set divs = divs + '<div id="player" class="bot-2"></div>' %}
                                     {% endif %}
 
                                     
@@ -80,7 +81,7 @@
                                     {% set css_class = css_class + ' near_hole' %}
 
                                     {% if col[2] %}
-                                        {% set divs = '<div id="player"></div>' %}
+                                        {% set divs = divs + '<div id="player"></div>' %}
                                     {% endif %}
 
                                     
@@ -89,9 +90,24 @@
                                     {% set css_class = css_class + ' hole' %}
 
                                     {% if col[2] %}
-                                        {% set divs = '<div id="player"></div>' %}
+                                        {% set divs = divs + '<div id="player"></div>' %}
                                     {% endif %}
                                 {% endif %}
+
+                                    
+
+                                {% if col[3] == 16 or col[3] == 80 or col[3] == 272 %}
+                                    {% set divs = divs + '<div class="near_wumpus"></div>' %}
+                                {% endif %}
+
+                                {% if col[3] == 32 %}
+                                    {% set divs = divs + '<div class="wumpus"></div>' %}
+                                {% endif %}
+
+                                {% if col[3] == 64 or col[3] == 80 or col[3] == 256 or col[3] == 272 %}
+                                    {% set divs = divs + '<div class="bat"></div>' %}
+                                {% endif %}
+                                
                             {% endif %}
 
                             <div class="box {{css_class}}">
