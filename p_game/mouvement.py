@@ -4,7 +4,22 @@ from .const import *
 #
 # =========================================================
 
-def move_item(matrix, py, px, my, mx, n_rows=N_ROW, n_cols=N_COL, explorer=False, val=PLAYER) :
+def verify_move(move) :
+    try :
+        y, x = move
+        y = int(y)
+        x = int(x)
+        return (not x == y and not x == -y) \
+           and (x == 1 or x == 0 or x == -1) \
+           and (y == 1 or y == 0 or y == -1) 
+    except :
+        return False
+    
+# =========================================================
+#
+# =========================================================
+
+def move_item(matrix, py, px, my, mx, n_rows=N_ROW, n_cols=N_COL, blind=False, val=PLAYER) :
     next_y = (py + my)%n_rows
     next_x = (px + mx)%n_cols
     possible = False
@@ -29,7 +44,7 @@ def move_item(matrix, py, px, my, mx, n_rows=N_ROW, n_cols=N_COL, explorer=False
             possible = make_move_player(matrix, py, px, my, mx, next_y, next_x)
 
     if possible :
-        if explorer :
+        if blind :
             matrix[py][px][T_VISION] = DONT_SEE
         return (possible, next_y, next_x)
     else :
@@ -45,28 +60,36 @@ def make_move_player(matrix, py, px, my, mx, next_y, next_x) :
         case 1 : # Corridor 1 = C1
             if mx == 1 : # →
                 matrix[next_y][next_x][T_PLAYER] = IS_BOT
-                if matrix[next_y][next_x][T_VISION] == DONT_SEE or matrix[next_y][next_x][T_VISION] == SEE_TOP :
+                if matrix[next_y][next_x][T_VISION] == DONT_SEE \
+                  or matrix[next_y][next_x][T_VISION] == SEE_TOP :
                     matrix[next_y][next_x][T_VISION] += SEE_BOT # 10 + -9 == 1 == True
+                
                 matrix[py][px][T_PLAYER] = IS_NOT_HERE
                 possible = True
 
             elif mx == -1 : # ←
-                if matrix[next_y][next_x][T_VISION] == DONT_SEE or matrix[next_y][next_x][T_VISION] == SEE_BOT :
+                if matrix[next_y][next_x][T_VISION] == DONT_SEE \
+                  or matrix[next_y][next_x][T_VISION] == SEE_BOT :
                     matrix[next_y][next_x][T_VISION] += SEE_TOP # -9 + 10 == 1 == True
+                
                 matrix[next_y][next_x][T_PLAYER] = IS_TOP
                 matrix[py][px][T_PLAYER] = IS_NOT_HERE
                 possible = True
 
             elif my == 1 : # ↓
-                if matrix[next_y][next_x][T_VISION] == DONT_SEE or matrix[next_y][next_x][T_VISION] == SEE_BOT :
+                if matrix[next_y][next_x][T_VISION] == DONT_SEE \
+                  or matrix[next_y][next_x][T_VISION] == SEE_BOT :
                     matrix[next_y][next_x][T_VISION] += SEE_TOP
+                
                 matrix[next_y][next_x][T_PLAYER] = IS_TOP
                 matrix[py][px][T_PLAYER] = IS_NOT_HERE
                 possible = True
 
             elif my == -1 : # ↑
-                if matrix[next_y][next_x][T_VISION] == DONT_SEE or matrix[next_y][next_x][T_VISION] == SEE_TOP :
+                if matrix[next_y][next_x][T_VISION] == DONT_SEE \
+                  or matrix[next_y][next_x][T_VISION] == SEE_TOP :
                     matrix[next_y][next_x][T_VISION] += SEE_BOT
+                
                 matrix[next_y][next_x][T_PLAYER] = IS_BOT
                 matrix[py][px][T_PLAYER] = IS_NOT_HERE
                 possible = True
@@ -74,28 +97,36 @@ def make_move_player(matrix, py, px, my, mx, next_y, next_x) :
         case 2 : # Corridor 2 = C2
             if mx == 1 : # →
                 matrix[next_y][next_x][T_PLAYER] = IS_TOP
-                if matrix[next_y][next_x][T_VISION] == DONT_SEE or matrix[next_y][next_x][T_VISION] == SEE_BOT :
+                if matrix[next_y][next_x][T_VISION] == DONT_SEE \
+                  or matrix[next_y][next_x][T_VISION] == SEE_BOT :
                     matrix[next_y][next_x][T_VISION] += SEE_TOP
+                
                 matrix[py][px][T_PLAYER] = IS_NOT_HERE
                 possible = True
 
             elif mx == -1 : # ←
-                if matrix[next_y][next_x][T_VISION] == DONT_SEE or matrix[next_y][next_x][T_VISION] == SEE_TOP :
+                if matrix[next_y][next_x][T_VISION] == DONT_SEE \
+                  or matrix[next_y][next_x][T_VISION] == SEE_TOP :
                     matrix[next_y][next_x][T_VISION] += SEE_BOT
+                
                 matrix[next_y][next_x][T_PLAYER] = IS_BOT
                 matrix[py][px][T_PLAYER] = IS_NOT_HERE
                 possible = True
 
             elif my == 1 : # ↓
-                if matrix[next_y][next_x][T_VISION] == DONT_SEE or matrix[next_y][next_x][T_VISION] == SEE_BOT :
+                if matrix[next_y][next_x][T_VISION] == DONT_SEE \
+                  or matrix[next_y][next_x][T_VISION] == SEE_BOT :
                     matrix[next_y][next_x][T_VISION] += SEE_TOP
+                
                 matrix[next_y][next_x][T_PLAYER] = IS_TOP
                 matrix[py][px][T_PLAYER] = IS_NOT_HERE
                 possible = True
 
             elif my == -1 : # ↑
-                if matrix[next_y][next_x][T_VISION] == DONT_SEE or matrix[next_y][next_x][T_VISION] == SEE_TOP :
+                if matrix[next_y][next_x][T_VISION] == DONT_SEE \
+                  or matrix[next_y][next_x][T_VISION] == SEE_TOP :
                     matrix[next_y][next_x][T_VISION] += SEE_BOT
+                
                 matrix[next_y][next_x][T_PLAYER] = IS_BOT
                 matrix[py][px][T_PLAYER] = IS_NOT_HERE
                 possible = True
@@ -112,7 +143,7 @@ def make_move_player(matrix, py, px, my, mx, next_y, next_x) :
 #
 # =========================================================
 
-def follow_corridor(matrix, y, x, my, mx, n_rows=N_ROW, n_cols=N_COL, condition=(CAVERN, N_HOLE, HOLE)) :
+def follow_corridor(matrix, y, x, my, mx, blind=False, n_rows=N_ROW, n_cols=N_COL, condition=(CAVERN, N_HOLE, HOLE)) :
     while matrix[y][x][T_BOX] not in condition :
         # Si c2 bas : si mx = -1 alors faut faire my -1
         # Ou + 1 → +1
@@ -129,6 +160,6 @@ def follow_corridor(matrix, y, x, my, mx, n_rows=N_ROW, n_cols=N_COL, condition=
                 temp = -mx
                 mx = -my
                 my = temp
-        (possible, y, x) = move_item(matrix, y, x, my, mx)
+        (possible, y, x) = move_item(matrix, y, x, my, mx, blind=blind)
     
     return (y, x)
