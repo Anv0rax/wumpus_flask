@@ -24,43 +24,55 @@ app = Flask(
 app.config["SECRET_KEY"] = "a modifer"
 
 @app.errorhandler(404)
-def not_found(e):
+def not_found(e) :
   return render_template("base.html")
 
 @app.route("/")
-def home():
+def home() :
     return redirect("/start")
 
 @app.route("/start")
-def start():
-    matrix = generate_grid(HARD)
-    print(flood_fill_map(matrix))
+def start() :
+    difficulty = EASY
+    matrix = generate_grid(difficulty)
     while not flood_fill_map(matrix) :
-        matrix = generate_grid(HARD)
+        matrix = generate_grid(difficulty)
         print("\n\n\n\n\nMap regen\n\n\n\n")
-    # hole_1 = random_init(matrix, val=HOLE)
-    # generate_around_hole(matrix, hole_1)
-    # hole_2 = random_init(matrix, val=HOLE)
-    # generate_around_hole(matrix, hole_2)
-    # matrix[hole_2[0]][hole_2[1]][T_BOX] = HOLE
+
+    hole_1 = random_init(matrix, val=HOLE)
+    generate_around(matrix, hole_1, type=N_HOLE)
+    hole_2 = random_init(matrix, val=HOLE)
+    generate_around(matrix, hole_2, type=N_HOLE)
+
+    wumpus = random_init(matrix, val=WUMPUS)
+    generate_around(matrix, wumpus, type=N_WUMP)
+
+    bat = random_init(matrix, val=BAT)
+    matrix[bat[0]][bat[1]][T_ELEMS] += BAT
+    if difficulty > EASY :
+        bat = random_init(matrix, val=BAT)
+        matrix[bat[0]][bat[1]][T_ELEMS] += BAT
 
     # now generate elements
-    session["map"] = matrix
     session["player"] = init_player(matrix)
+    session["map"] = matrix
     return redirect("/play")
 
 @app.route("/play")
-def play():
+def play() :
     if session.get("map") and session.get("player") :
         coord = request.args
         x = coord.get('x', type=int, default=0)
         y = coord.get('y', type=int, default=0)
-        if verify_move((x,y)) :
-            moved = move_item(session["map"], session["player"][1], session["player"][0], x, y)
+        if verify_move((y,x)) :
+            player = session.get("player")
+            moved = move_item(session["map"], player[0], player[1], y, x)
             if moved[0] :
-                session["player"] = (moved[1], moved[2])
-                if not session["map"][session["player"][0]][session["player"][1]][T_BOX] == CAVERN :
-                    session["player"] = follow_corridor(session["map"], session["player"][1], session["player"][0], x, y)
+                player = (moved[1], moved[2])
+                session["player"] = player
+                if session.get('express', default=False) \
+                 and not session["map"][player[0]][player[1]][T_BOX] == CAVERN :
+                    session["player"] = follow_corridor(session["map"], player[0], player[1], y, x)
         return render_template("hunt-the-wumpus.html", grid=session["map"])
     else :
         return redirect("/select-difficulty")

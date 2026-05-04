@@ -4,29 +4,29 @@ from .const import *
 #
 # =========================================================
 
-def move_item(matrix, px, py, mx, my, n_rows=N_ROW, n_cols=N_COL, explorer=False, val=PLAYER) :
-    next_x = (px + mx)%n_cols
+def move_item(matrix, py, px, my, mx, n_rows=N_ROW, n_cols=N_COL, explorer=False, val=PLAYER) :
     next_y = (py + my)%n_rows
+    next_x = (px + mx)%n_cols
     possible = False
     match matrix[py][px][T_BOX] :
         case 1 : # C1                                     →           ↑
             if matrix[py][px][T_PLAYER] == IS_TOP and (mx == 1 or my == -1) :
-                possible = make_move_player(matrix, px, py, mx, my, next_x, next_y)
+                possible = make_move_player(matrix, py, px, my, mx, next_y, next_x)
 
             #                                                ←           ↓
             elif matrix[py][px][T_PLAYER] == IS_BOT and (mx == -1 or my == 1) :
-                possible = make_move_player(matrix, px, py, mx, my, next_x, next_y)
+                possible = make_move_player(matrix, py, px, my, mx, next_y, next_x)
 
         case 2 : # C2                                     ←           ↑
             if matrix[py][px][T_PLAYER] == IS_TOP and (mx == -1 or my == -1) :
-                possible = make_move_player(matrix, px, py, mx, my, next_x, next_y)
+                possible = make_move_player(matrix, py, px, my, mx, next_y, next_x)
 
             #                                                →           ↓
             elif matrix[py][px][T_PLAYER] == IS_BOT and (mx == 1 or my == 1) :
-                possible = make_move_player(matrix, px, py, mx, my, next_x, next_y)
+                possible = make_move_player(matrix, py, px, my, mx, next_y, next_x)
 
         case _ :
-            possible = make_move_player(matrix, px, py, mx, my, next_x, next_y)
+            possible = make_move_player(matrix, py, px, my, mx, next_y, next_x)
 
     if possible :
         if explorer :
@@ -39,7 +39,7 @@ def move_item(matrix, px, py, mx, my, n_rows=N_ROW, n_cols=N_COL, explorer=False
 #
 # =========================================================
 
-def make_move_player(matrix, px, py, mx, my, next_x, next_y) :
+def make_move_player(matrix, py, px, my, mx, next_y, next_x) :
     possible = False
     match matrix[next_y][next_x][T_BOX] :
         case 1 : # Corridor 1 = C1
@@ -112,7 +112,7 @@ def make_move_player(matrix, px, py, mx, my, next_x, next_y) :
 #
 # =========================================================
 
-def follow_corridor(matrix, x, y, mx, my, n_rows=N_ROW, n_cols=N_COL, condition=(CAVERN, N_HOLE)) :
+def follow_corridor(matrix, y, x, my, mx, n_rows=N_ROW, n_cols=N_COL, condition=(CAVERN, N_HOLE, HOLE)) :
     while matrix[y][x][T_BOX] not in condition :
         # Si c2 bas : si mx = -1 alors faut faire my -1
         # Ou + 1 → +1
@@ -129,6 +129,6 @@ def follow_corridor(matrix, x, y, mx, my, n_rows=N_ROW, n_cols=N_COL, condition=
                 temp = -mx
                 mx = -my
                 my = temp
-        (possible, y, x) = move_item(matrix, x, y, mx, my)
+        (possible, y, x) = move_item(matrix, y, x, my, mx)
     
     return (y, x)
