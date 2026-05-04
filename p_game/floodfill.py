@@ -1,4 +1,5 @@
-from .mouvement import *
+from .mouvement import move_item
+from .elements import init_player
 from .const import *
 
 def flood_fill_map(matrix) :
@@ -57,7 +58,7 @@ def test_all_map_and_hide(matrix, n_rows=N_ROW, n_cols=N_COL) :
         col = 0
         while col < n_cols and playable :
             playable *= matrix[row][col][T_VISION] == 1
-            matrix[row][col][T_VISION] = DONT_SEE
+            # matrix[row][col][T_VISION] = DONT_SEE
             matrix[row][col][T_PLAYER] = IS_NOT_HERE
             col = col+1
         row = row+1

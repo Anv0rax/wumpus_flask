@@ -1,57 +1,8 @@
-import random
 from .const import *
-
-# =========================================================
-#
-# =========================================================
-
-def random_init(matrix, n_rows=N_ROW, n_cols=N_COL, val=PLAYER) :
-    retry = True
-    
-    while retry :
-        row = random.randint(0, n_rows-1)
-        col = random.randint(0, n_cols-1)
-        
-        if val == PLAYER or val == BAT or val == HOLE :
-            match matrix[row][col][T_BOX] :
-                case 0 : # Normal cavern
-                    toReturn = (row, col)
-                    retry = False
-                case 4 : # Near Hole
-                    toReturn = (row, col)
-                    retry = False
-
-        elif val == WUMPUS :
-            match matrix[row][col][T_BOX] :
-                case 0 : # Normal cavern
-                    toReturn = (row, col)
-                    retry = False
-                case 4 : # Near Hole
-                    toReturn = (row, col)
-                    retry = False
-                case 8 : # Hole
-                    toReturn = (row, col)
-                    retry = False
-        else :
-            return False
-    return toReturn
-
-# =========================================================
-#
-# =========================================================
-
-def init_player(matrix, n_rows=N_ROW, n_cols=N_COL) :
-    pos = random_init(matrix)
-    y = pos[0]
-    x = pos[1]
-    matrix[y][x][T_PLAYER] = IS_HERE
-    matrix[y][x][T_VISION] = SEE
-    return pos
     
 # =========================================================
 #
 # =========================================================
-
 
 def move_item(matrix, px, py, mx, my, n_rows=N_ROW, n_cols=N_COL, explorer=False, val=PLAYER) :
     next_x = (px + mx)%n_cols
@@ -156,3 +107,28 @@ def make_move_player(matrix, px, py, mx, my, next_x, next_y) :
             possible = True
 
     return possible
+    
+# =========================================================
+#
+# =========================================================
+
+def follow_corridor(matrix, x, y, mx, my, n_rows=N_ROW, n_cols=N_COL, condition=(CAVERN, N_HOLE)) :
+    while matrix[y][x][T_BOX] not in condition :
+        # Si c2 bas : si mx = -1 alors faut faire my -1
+        # Ou + 1 → +1
+        #C1 faut inverse x et y et tu suis le chemin
+
+        # C2 si c'est x-1 → y+1 donc swap négatif
+
+        match matrix[y][x][T_BOX] :
+            case 1 : # C1
+                temp = mx
+                mx = my
+                my = temp
+            case 2 : # C2
+                temp = -mx
+                mx = -my
+                my = temp
+        (possible, y, x) = move_item(matrix, x, y, mx, my)
+    
+    return (y, x)

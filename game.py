@@ -38,6 +38,12 @@ def start():
     while not flood_fill_map(matrix) :
         matrix = generate_grid(HARD)
         print("\n\n\n\n\nMap regen\n\n\n\n")
+    # hole_1 = random_init(matrix, val=HOLE)
+    # generate_around_hole(matrix, hole_1)
+    # hole_2 = random_init(matrix, val=HOLE)
+    # generate_around_hole(matrix, hole_2)
+    # matrix[hole_2[0]][hole_2[1]][T_BOX] = HOLE
+
     # now generate elements
     session["map"] = matrix
     session["player"] = init_player(matrix)
@@ -53,6 +59,8 @@ def play():
             moved = move_item(session["map"], session["player"][1], session["player"][0], x, y)
             if moved[0] :
                 session["player"] = (moved[1], moved[2])
+                if not session["map"][session["player"][0]][session["player"][1]][T_BOX] == CAVERN :
+                    session["player"] = follow_corridor(session["map"], session["player"][1], session["player"][0], x, y)
         return render_template("hunt-the-wumpus.html", grid=session["map"])
     else :
         return redirect("/select-difficulty")
