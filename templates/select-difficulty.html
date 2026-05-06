@@ -44,9 +44,9 @@
             <label for="difficulty-choice"><p>Select the difficulty</p></label>
             <br>
             <select id="difficulty-choice" name="difficulty">
-                <option value="0">Easy</option>
-                <option value="1">Normal</option>
-                <option value="2">Hard</option>
+                <option value="0" {{ 'selected' if s_diff == 0 else '' }} >Easy</option>
+                <option value="1" {{ 'selected' if s_diff == 1 else '' }} >Normal</option>
+                <option value="2" {{ 'selected' if s_diff == 2 else '' }} >Hard</option>
             </select>
             <p>Game Mode</p>
             <div class="container-explanations">
@@ -59,10 +59,10 @@
             </div>
             <div class="checkButtonMode">
                 <label class="selectGamemode">Express Mode
-                    <input type="checkbox" name="express" value="1">
+                    <input type="checkbox" name="express" value="1" {{ 'checked' if s_express else '' }} >
                 </label>
                 <label class="selectGamemode">Blind Mode
-                    <input type="checkbox" name="blind" value="1">
+                    <input type="checkbox" name="blind" value="1" {{ 'checked' if s_blind else '' }}>
                 </label>
             </div>
             <input class="validateForm" type="submit" value="Play">

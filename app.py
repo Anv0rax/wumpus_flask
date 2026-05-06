@@ -28,14 +28,15 @@ def not_found(e):
 
 @app.route("/")
 def home() :
-    return redirect("/start")
+    return redirect("/select-difficulty")
 
 @app.route("/start")
 def start() :
-    # session["difficulty"] = EASY
-    # session["blind"] = False
-    # session["express"] = False
-    if session.get("difficulty") :
+    print(session["difficulty"])
+    print(session["blind"] )
+    print(session["express"] )
+    print("\n\n\n\n\n\n")
+    if session.get("gamestate") == 0 :
         difficulty = session.get("difficulty")
         matrix = generate_grid(difficulty)
         while not flood_fill_map(matrix) :
@@ -157,7 +158,7 @@ def select() :
 
     if request.method == "POST":
         correct = False
-        coord = request.args
+        coord = request.form
         difficulty = coord.get("difficulty", type=int, default=1)
         express = coord.get("express", type=int, default=0)
         blind = coord.get("blind", type=int, default=0)
@@ -168,12 +169,22 @@ def select() :
             session["difficulty"] = difficulty
             session["express"] = bool(express)
             session["blind"] = bool(blind)
+            session["gamestate"] = 0
+            # Ajouter une game au joueur
             return redirect("/start")
         else :
-            return render_template("select-difficulty.html")
-    else:
-        # Passer l'objet user au template
-        return render_template("select-difficulty.html", user=user)
+            return render_template("select-difficulty.html", 
+                                   s_diff=session.get("difficulty", default=1),
+                                   s_express=session.get("express", default=False), 
+                                   s_blind=session.get("blind", default=False))
+    else :
+       return render_template("select-difficulty.html", 
+                                   s_diff=session.get("difficulty", default=1),
+                                   s_express=session.get("express", default=False), 
+                                   s_blind=session.get("blind", default=False)) 
+    # else:
+    #     # Passer l'objet user au template
+    #     return render_template("select-difficulty.html", user=user)
 
 @app.route('/settings')
 def settings() :
