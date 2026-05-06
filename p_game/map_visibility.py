@@ -1,25 +1,25 @@
 # base , 
 # explored , 
 # player , 
-# elem
+# elems
 
-def reveal_map(matrix, n_rows, n_cols) :
+from .const import *
+
+def reveal_map(matrix, n_rows=N_ROW, n_cols=N_COL) :
     row = 0
-    col = 0
-    while row < n_rows-1:
-        col = 1
-        while col < n_cols-1 :
-            matrix[row][col][1] = True
+    while row < n_rows :
+        col = 0
+        while col < n_cols :
+            matrix[row][col][T_VISION] = SEE
             col = col+1
         row = row+1
 
 
-def hide_map(matrix, n_rows, n_cols) :
+def hide_map(matrix, n_rows=N_ROW, n_cols=N_COL) :
     row = 0
-    col = 0
-    while row < n_rows-1:
-        col = 1
-        while col < n_cols-1 :
-            matrix[row][col][1] = False
+    while row < n_rows :
+        col = 0
+        while col < n_cols :
+            matrix[row][col][T_VISION] = DONT_SEE
             col = col+1
         row = row+1

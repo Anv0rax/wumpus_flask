@@ -1,89 +1,64 @@
-from .mouvement import *
+from .mouvement import move_item
+from .elements import init_player
+from .const import *
 
+def flood_fill_map(matrix) :
+    pos = init_player(matrix)
+    ff_exploring(matrix, pos, 0, +1)
+    ff_exploring(matrix, pos, 0, -1)
+    ff_exploring(matrix, pos, +1, 0)
+    ff_exploring(matrix, pos, -1, 0)
+    return test_all_map(matrix)
 
-def flood_fill_map(matrix, n_rows, n_cols, difficulty) :
-    is_map_explorable(matrix, n_rows, n_cols, (0,0))
-    if not test_all_map(matrix, n_rows, n_cols) :
-        raise Exception("Non valid map")
+# =========================================================
+# 
+# =========================================================
+
+def ff_exploring(matrix, pos, my, mx, n_rows=N_ROW, n_cols=N_COL) :
+    py, px = pos
+
+    next_x = (px + mx)%n_cols
+    next_y = (py + my)%n_rows
+
+    if matrix[next_y][next_x][T_VISION] == True :
+        return
+    elif matrix[next_y][next_x][T_BOX] == C1 :
+        #    →           ↑
+        if (mx == 1 or my == -1) and matrix[next_y][next_x][T_VISION] == SEE_BOT :
+            return
+        #    ←           ↓
+        if (mx == -1 or my == 1) and matrix[next_y][next_x][T_VISION] == SEE_TOP :
+            return
+        
+    elif matrix[next_y][next_x][T_BOX] == C2 :
+        #    ←           ↑
+        if (mx == -1 or my == -1) and matrix[next_y][next_x][T_VISION] == SEE_BOT :
+            return
+        #    →          ↓
+        if (mx == 1 or my == 1) and matrix[next_y][next_x][T_VISION] == SEE_TOP :
+            return
+
+    (possible, now_y, now_x) = move_item(matrix, py, px, my, mx)
+
+    if possible :
+        ff_exploring(matrix, (now_y, now_x), 0, +1)
+        ff_exploring(matrix, (now_y, now_x), 0, -1)
+        ff_exploring(matrix, (now_y, now_x), +1, 0)
+        ff_exploring(matrix, (now_y, now_x), -1, 0)
+
+    matrix[next_y][next_x][T_PLAYER] = IS_NOT_HERE
 
 # =========================================================
 # 
 # =========================================================
     
-def test_all_map(matrix, n_rows, n_cols) :
+def test_all_map(matrix, n_rows=N_ROW, n_cols=N_COL) :
     row = 0
-    col = 0
     playable = True
-    while row < n_rows-1:
-        col = 1
-        while col < n_cols-1 :
-            playable *= matrix[row][col][1]
+    while row < n_rows and playable :
+        col = 0
+        while col < n_cols and playable :
+            playable *= matrix[row][col][T_VISION] == SEE
             col = col+1
         row = row+1
     return playable
-
-# =========================================================
-# 
-# =========================================================
-
-def test_flood_fill(matrix, px, py, mx, my, next_x, next_y) :
-    possible = False
-    if not matrix[next_y][next_x][1] == True :
-        match matrix[next_y][next_x][0] :
-            case 1 :
-                if matrix[py][px][2] == 1 and (mx == 1 or my == -1) :
-                    possible = make_move_player(matrix, px, py, mx, my, next_x, next_y)
-
-                elif matrix[py][px][2] == -1 and (mx == -1 or my == 1) :
-                    possible = make_move_player(matrix, px, py, mx, my, next_x, next_y)
-
-            case 2 :
-                if matrix[py][px][2] == 1 and (mx == -1 or my == -1) :
-                    possible = make_move_player(matrix, px, py, mx, my, next_x, next_y)
-
-                elif matrix[py][px][2] == -1 and (mx == 1 or my == 1) :
-                    possible = make_move_player(matrix, px, py, mx, my, next_x, next_y)
-
-            case _ :
-                possible = make_move_player(matrix, px, py, mx, my, next_x, next_y)
-        if possible :
-            return (possible, next_y, next_x)
-    return (possible, py, px)
-
-# =========================================================
-# 
-# =========================================================
-
-def is_map_explorable(matrix, n_rows, n_cols, pos) :
-    py, px = pos
-
-    if matrix[py][px][1] :
-        return
-    
-    s_px = px
-    s_py = py
-    
-    n_px = px
-    n_py = py
-    
-    e_px = px
-    e_py = py
-
-    w_px = px
-    w_py = py
-
-    can_next = True
-    while (can_next) :
-        (s_can_next, s_py, s_px) = test_flood_fill(matrix, s_px, s_py, 0, +1, s_px, ((s_py+1)%n_rows))
-        (n_can_next, n_py, n_px) = test_flood_fill(matrix, n_px, n_py, 0, -1, n_px, ((n_py-1)%n_rows))
-        (e_can_next, e_py, e_px) = test_flood_fill(matrix, e_px, e_py, +1, 0, ((e_px+1)%n_cols), e_py)
-        (w_can_next, w_py, w_px) = test_flood_fill(matrix, w_px, w_py, -1, 0, ((w_px-1)%n_cols), w_py)
-        if s_can_next :
-            is_map_explorable(matrix, n_rows, n_cols, (s_py, s_px))
-        if n_can_next :
-            is_map_explorable(matrix, n_rows, n_cols, (n_py, n_px))
-        if e_can_next :
-            is_map_explorable(matrix, n_rows, n_cols, (e_py, e_px))
-        if w_can_next :
-            is_map_explorable(matrix, n_rows, n_cols, (w_py, w_px))
-        can_next = s_can_next * n_can_next * e_can_next * w_can_next
