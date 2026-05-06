@@ -21,100 +21,70 @@
         <audio id="soundTableAnimation" preload="auto">
             <source id="son" src="{{url_for('static', filename='assets/sounds/rowSound.mp3')}}" type="audio/mp3">
         </audio>
-        <p id="click">Cliquez pour ouvrir le classement.</p>
+        <p id="click">Click to open the leaderboard.</p>
+
         <table id="table">
-        <tr>
-            <th>Position</th>
-            <th>Temps de jeu</th>
-            <th>Nombre de victoire</th>
-            <th>Nombre de défaites</th>
-            <th>Nom</th>
-        </tr>
-        <tr>
-            <td><img src="{{url_for('static', filename='assets/1st.png')}}"></td>
-            <td>900</td>
-            <td>0</td>
-            <td>100 h 0 m 0 s</td>
-            <td>Moi</td>
-        </tr>
-        <tr>
-            <td><img src="{{url_for('static', filename='assets/2nd.png')}}"></td>
-            <td>900</td>
-            <td>0</td>
-            <td>100 h 0 m 0 s</td>
-            <td>Moi</td>                    
-        </tr>
-        <tr>
-            <td><img src="{{url_for('static', filename='assets/3rd.png')}}"></td>
-            <td>900</td>
-            <td>0</td>
-            <td>100 h 0 m 0 s</td>
-            <td>Moi</td>
-        </tr>
-        <tr>
-            <td>4th</td>
-            <td>900</td>
-            <td>0</td>
-            <td>100 h 0 m 0 s</td>
-            <td>Moi</td>
-        </tr>
-        <tr>
-            <td>5th</td>
-            <td>900</td>
-            <td>0</td>
-            <td>100 h 0 m 0 s</td>
-            <td>Moi</td>
-        </tr>
-        <tr>
-            <td>6th</td>
-            <td>900</td>
-            <td>0</td>
-            <td>100 h 0 m 0 s</td>
-            <td>Moi</td>
-        </tr>
-        <tr>
-            <td>7th</td>
-            <td>900</td>
-            <td>0</td>
-            <td>100 h 0 m 0 s</td>
-            <td>Moi</td>
-        </tr>
-        <tr>
-            <td>8th</td>
-            <td>900</td>
-            <td>0</td>
-            <td>100 h 0 m 0 s</td>
-            <td>Moi</td>
-        </tr>
-        <tr>
-            <td>9th</td>
-            <td>900</td>
-            <td>0</td>
-            <td>100 h 0 m 0 s</td>
-            <td>Moi</td>
-        </tr>
-        <tr>
-            <td>10th</td>
-            <td>900</td>
-            <td>0</td>
-            <td>100 h 0 m 0 s</td>
-            <td>Moi</td>
-        </tr>
-        <tr>
-            <td>11th</td>
-            <td>900</td>
-            <td>0</td>
-            <td>100 h 0 m 0 s</td>
-            <td>Moi</td>
-        </tr>
-        <tr>
-            <td>12th</td>
-            <td>900</td>
-            <td>0</td>
-            <td>100 h 0 m 0 s</td>
-            <td>Moi</td>
-        </tr>
-    </table>
-    </div>
+            <thead>
+                <tr>
+                    <th>Position</th>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Victories</th>
+                    <th>Eaten by the wumpus</th>
+                    <th>Fell into the slime pit</th>
+                    <th>Score</th>
+                    <th>Icone</th>
+                </tr>
+            </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>
+                    {% if loop.index == 1 %}
+                        <img src="{{url_for('static', filename='assets/1st.png')}}" alt="1st">
+                    {% elif loop.index == 2 %}
+                        <img src="{{url_for('static', filename='assets/2nd.png')}}" alt="2nd">
+                    {% elif loop.index == 3 %}
+                        <img src="{{url_for('static', filename='assets/3rd.png')}}" alt="3rd">
+                    {% else %}
+                        {{ loop.index }}th
+                    {% endif %}
+                </td>
+                <td>
+                    {{ user.id }}
+                </td>
+                <td>
+                    {{ user.username }}
+                </td>
+                <td>
+                    {{ user.numberofvictories }}
+                </td>
+                <td>
+                    {{ user.defeats }}
+                </td>
+                <td>
+                    {{ user.fell_slime_pit }}
+                </td>
+                <td>
+                    {{ user.score }}
+                </td>
+                <td>
+                    {% if user.icon %}
+                    <img src="data:image/png;base64,{{ user.icon }}"
+                         alt="{{ user.username }}"
+                         width="64" height="64"
+                         style="border-radius: 50%;">
+                    {% else %}
+                        None
+                    {% endif %}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6">No players in the leaderboard for the moment, please retry later</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+      </table>
     </div>
 {% endblock %}

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block page_title %}Leaderboard - Hunt the Wumpus{% endblock %}
+{% block page_title %}Login - Hunt the Wumpus{% endblock %}
 
 {% block add_css_js %}
     <link rel="stylesheet" href="{{url_for('static', filename='css/common.css')}}" />
@@ -14,51 +14,25 @@
     <div class="login-container">
         <h1>Login</h1>
         <form id="login-form" method="POST" action="/login">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}" role="alert">
+                    {{ message }}
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
             <div id="labels-form">
                 <label class="label" for="username">Username</label>
-                <input class="input" type="text" name="username" placeholder="Username" required autofocus>
+                <input class="input" type="text" name="username" placeholder="Username" autofocus>
                 <label class="label" for="password">Password</label>
-                <input class="input" type="password" name="password" placeholder="Password" required>
-                <div id="icon-preview">
-                    <p>Icon :</p> <img id="user-pixel-art" src="" alt="Your own-made icon" onerror="this.src='/static/assets/Placeholder.png'">
-                </div>
+                <input class="input" type="password" name="password" placeholder="Password">
             </div>
             <div id="buttons-form">
                 <button id="login" type="submit"></button>
-                <button id="register"></button>
-                <button id="showGrid"></button>
-            </div>
-            <div class="container-pixArtMaker">
-                <div class="grid"></div>
-                <div class="palette">
-                    <div class="color" data-color="red"></div>
-                    <div class="color" data-color="white"></div>
-                    <div class="color" data-color="blue"></div>
-                    <div class="color" data-color="green"></div>
-                    <div class="color" data-color="orange"></div>
-                    <div class="color" data-color="pink"></div>
-                    <div class="color" data-color="purple"></div>
-                    <div class="color" data-color="brown"></div>
-                    <div class="color" data-color="black"></div>
-                    <div class="color" data-color="yellow"></div>
-                    <div class="color" data-color="lightgreen"></div>
-                    <div class="color" data-color="lightblue"></div>
-                    <div class="color" data-color="magenta"></div>
-                    <div class="color" data-color="cyan"></div>
-                    <div class="color" data-color="gold"></div>
-                    <div class="color" data-color="silver"></div>
-                    <div class="color" data-color="khaki"></div>
-                    <div class="color" data-color="darkred"></div>                    
-                </div>
-                <div class="pencil-eraserButtons">
-                    <button type="button" id="eraser"></button>
-                    <button type="button" id="pencil"></button>
-                    <button type="button" id="bucket"></button>
-                    <button type="button" id="leave"></button>
-                    <button type="button" id="confirm"></button>
-                </div>
+                <button id="register" type="button"></button>
             </div>
         </form>
     </div>
-
 {% endblock %}

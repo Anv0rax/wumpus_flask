@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block page_title %}Register - Hunt the Wumpus{% endblock %}
+
+{% block add_css_js %}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/common.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/register.css')}}"/>
+    <script src="{{url_for('static', filename='js/login.js')}}"></script>
+{% endblock %}
+
+{% block class_play %} class="page_here" {% endblock %}
+
+{% block main_content %}
+    <div class="login-container">
+        <h1>Create a new account !</h1>
+        <button id="returnLogin" type="button">Go back to the login menu</button>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}" role="alert">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form id="login-form" method="POST" action="/register">
+            <div id="labels-form">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <label for="username" class="label">Username</label>
+                <input id="username" class="input" type="text" name="username" placeholder="Username" required autofocus>
+                <ul id="helpUserName" class="error">
+                    <li class="helpUserNameItem">Maximum 10 characters</li>
+                    <li class="helpUserNameItem">Upper and lower case authorized</li>
+                    <li class="helpUserNameItem">Using underscore is authorized</li>
+                </ul>
+
+                <label for="password" class="label">Password</label>
+                <input id="password" class="input" type="password" name="password" placeholder="Password" required>
+                <ul id="helpPswrd" class="error">
+                    <li class="helpPswrdItem">Maximum 10 characters</li>
+                    <li class="helpPswrdItem">Use at least 1 uppercase</li>
+                    <li class="helpPswrdItem">Use at least 1 lowercase</li>
+                    <li class="helpPswrdItem">Use at least 1 number</li>
+                </ul>
+
+                <label for="confirmPassword" class="label">Confirm Password</label>
+                <input id="confirmPassword" class="input" type="password" name="confirm" placeholder="Confirm Password" required>
+
+                <div id="icon-preview">
+                    <p>Icon :</p>
+                    <img id="user-pixel-art" src="" alt="Your own-made icon" onerror="this.src='/static/assets/Placeholder.png'">
+                </div>
+            </div>
+
+            <div id="buttons-form">
+                <button id="login" type="submit"></button>
+                <button id="showGrid" type="button"></button>
+            </div>
+
+            <input type="hidden" name="icon" id="icon-data">
+
+            <div class="container-pixArtMaker">
+                <div class="grid"></div>
+                <div class="palette">
+                    <div class="color" data-color="red"></div>
+                    <div class="color" data-color="white"></div>
+                    <div class="color" data-color="blue"></div>
+                    <div class="color" data-color="green"></div>
+                    <div class="color" data-color="orange"></div>
+                    <div class="color" data-color="pink"></div>
+                    <div class="color" data-color="purple"></div>
+                    <div class="color" data-color="brown"></div>
+                    <div class="color" data-color="black"></div>
+                    <div class="color" data-color="yellow"></div>
+                    <div class="color" data-color="lightgreen"></div>
+                    <div class="color" data-color="lightblue"></div>
+                    <div class="color" data-color="magenta"></div>
+                    <div class="color" data-color="cyan"></div>
+                    <div class="color" data-color="gold"></div>
+                    <div class="color" data-color="silver"></div>
+                    <div class="color" data-color="khaki"></div>
+                    <div class="color" data-color="darkred"></div>
+                </div>
+                <div class="pencil-eraserButtons">
+                    <button type="button" id="eraser"></button>
+                    <button type="button" id="pencil"></button>
+                    <button type="button" id="bucket"></button>
+                    <button type="button" id="leave"></button>
+                    <button type="button" id="confirm"></button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

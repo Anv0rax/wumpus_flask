@@ -1,14 +1,29 @@
 document.addEventListener('DOMContentLoaded', function()
 {
-    // TODO : savoir enlever le currentColor et currentTool
     let currentColor = "none";
     let currentTool = "pencil";
+    let greenColor = "#18ff03";
+    let redColor = "#ff0000";
+
+    const inputUserName = document.getElementById("username");
+    const inputPswrd = document.getElementById("password");
+    const confirmPswrd = document.getElementById("confirmPassword");
+    const helpUserName = document.getElementById("helpUserName");
+    const helpPassword = document.getElementById("helpPswrd");
+
+    const liHelpUsername = document.querySelectorAll(".helpUserNameItem");
+    const liHelpPswd = document.querySelectorAll(".helpPswrdItem");
+
+    let regexUserName = /^[a-zA-Z0-9_]{3,10}$/
+    let listRegexPswrd = [/^.{3,10}$/, /[A-Z]/, /[a-z]/, /[0-9]/];
 
     function initTools()
     {
         let pencil = document.getElementById('pencil');
         let eraser = document.getElementById('eraser');
         let bucket = document.getElementById('bucket');
+
+        if(!pencil || !eraser || !bucket) return;
 
         pencil.style.filter = 'drop-shadow(0 0 5px #00d4ff)';
 
@@ -73,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function()
 
         if (colors.length > 0) // Remeber that I have a list with the querySelectorAll. Thats means the list can't have a null value! I have to check the length of the list.
         {
-            colors.forEach(color => 
+            colors.forEach(color =>
             {
                 color.addEventListener('click', ChangeColor);
             });
@@ -98,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function()
             }
 
             let cells = document.querySelectorAll('.cell');
-            cells.forEach(cell => 
+            cells.forEach(cell =>
             {
                 cell.addEventListener('click', activate);
                 cell.style.backgroundColor = "transparent";
@@ -134,11 +149,39 @@ document.addEventListener('DOMContentLoaded', function()
         leaveTheGrid = null;
     }
 
+    function initRegisterButton()
+    {
+        let registerBtn = document.getElementById('register');
+        if(registerBtn)
+        {
+            registerBtn.addEventListener('click', function()
+            {
+                window.location.href = '/register';
+            });
+        }
+        registerBtn = null;
+    }
+
+    function initReturnButton()
+    {
+        let returnBtn = document.getElementById('returnLogin');
+        if(returnBtn)
+        {
+            returnBtn.addEventListener('click', function()
+            {
+                window.location.href = '/login';
+            });
+        }
+        returnBtn = null;
+    }
+
     initSaveGrid();
     initColors();
     initGridElement();
     initToggleGrid();
     initLeaveTheGrid();
+    initRegisterButton();
+    initReturnButton();
     initTools();
 
     function Save_Pixart()
@@ -180,16 +223,24 @@ document.addEventListener('DOMContentLoaded', function()
         previewImg.src = dataURL;
         previewImg.style.display = 'block';
 
+        let imgStringBase64 = dataURL.replace(/^data:image\/png;base64,/, "")
+
+        let hiddenInput = document.getElementById("icon-data");
+        if(hiddenInput)
+            hiddenInput.value = imgStringBase64
+
         /* Everything is done, so now I will close the grid window. */
         document.querySelector('.container-pixArtMaker').classList.remove('active');
 
         size = null;
-        cellSize = null;
+        // cellSize = null;
         canvas = null;
         ctx = null;
         cells = null;
         dataURL = null;
         previewImg = null;
+        imgStringBase64 = null;
+        hiddenInput = null;
     }
 
     /* TO HIDE AND SHOW THE GRID */
@@ -228,7 +279,7 @@ document.addEventListener('DOMContentLoaded', function()
         else if(currentTool ==='bucket')
         {
             let cells = document.querySelectorAll('.cell');
-            cells.forEach(cell => 
+            cells.forEach(cell =>
             {
                 cell.addEventListener('click', activate);
                 cell.style.backgroundColor = currentColor;
@@ -264,5 +315,88 @@ document.addEventListener('DOMContentLoaded', function()
         event.target.style.border = "2px solid orange";
 
         allTheOtherColors = null;
+    }
+
+    function checkValidUserName()
+    {
+        if(!inputUserName || !helpUserName)
+            return true;
+        let testInput = inputUserName.value.trim();
+
+        if(regexUserName.test(testInput))
+        {
+            helpUserName.style.color = greenColor;
+            inputUserName.style.color = greenColor;
+            inputUserName.style.borderColor = greenColor;
+            return true;
+        }
+        else
+        {
+            helpUserName.style.color = redColor;
+            inputUserName.style.color = redColor;
+            inputUserName.style.borderColor = redColor;
+            return false;
+        }
+    }
+
+    function checkValidPassword()
+    {
+        if(!inputPswrd || liHelpPswd.length === 0)
+            return true;
+        let nbrErrors = 0;
+        let testInput = inputPswrd.value.trim();
+
+        for(let i = 0; i < listRegexPswrd.length; i++)
+        {
+            if (listRegexPswrd[i].test(testInput)) {
+                liHelpPswd[i].style.color = greenColor;
+            } else {
+                nbrErrors += 1;
+                liHelpPswd[i].style.color = redColor;
+            }
+        }
+
+        if(nbrErrors === 0)
+        {
+            inputPswrd.style.color = greenColor;
+            inputPswrd.style.borderColor = greenColor;
+            return true;
+        }
+        else
+        {
+            inputPswrd.style.color = redColor;
+            inputPswrd.style.borderColor = redColor;
+            return false;
+        }
+    }
+
+    if(inputUserName)
+        inputUserName.addEventListener('keyup', checkValidUserName);
+
+    if(inputPswrd)
+        inputPswrd.addEventListener('keyup', checkValidPassword);
+
+    const loginForm = document.getElementById('login-form');
+
+    if(loginForm)
+    {
+        loginForm.addEventListener('submit', function(event)
+        {
+            let isPswrdValid = checkValidPassword();
+            let isUsernameValid = checkValidUserName();
+
+            let isPswrdConfirmValid = true;
+            if(confirmPswrd && inputPswrd)
+            {
+                isPswrdConfirmValid = (confirmPswrd.value === inputPswrd.value && inputPswrd.value !== "");
+                if(!isPswrdConfirmValid)
+                {
+                    alert("The passwords in confirm password and password are not matching.");
+                }
+
+                if(!isUsernameValid || !isPswrdValid || !isPswrdConfirmValid)
+                    event.preventDefault();
+            }
+        });
     }
 });

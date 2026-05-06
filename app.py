@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
-
-from flask import Flask, render_template, redirect, request, session
+import os
+from flask import Flask, render_template, redirect, request, session, flash
 import random
 from werkzeug.security import generate_password_hash, check_password_hash
 import psycopg
+from psycopg.rows import dict_row
+from db import get_connection
+from dotenv import load_dotenv
 
 EASY = 0
 NORMAL = 1
@@ -28,7 +31,7 @@ def generate_grid(difficulty, n_rows, n_cols) :
     while col < n_cols :
         matrix[0][col][0] = choose.pop(random.randint(0, len(choose)-1))
         col = col+1
-    
+
     # West
     row = 0
 
@@ -139,15 +142,15 @@ def check_corner(matrix, n_rows, n_cols, type) :
 
 # =============================
 #           Play
-# ============================= 
+# =============================
 
 def random_init(matrix, n_rows, n_cols, val=128) :
     retry = True
-    
+
     while retry :
         row = random.randint(0, n_rows-1)
         col = random.randint(0, n_cols-1)
-        
+
         if val == 128 or val == 64 or val == 8 :
             match matrix[row][col][0] :
                 case 0 :
@@ -168,7 +171,7 @@ def random_init(matrix, n_rows, n_cols, val=128) :
                 case 8 :
                     toReturn = (row, col)
                     retry = False
-        else : 
+        else :
             return False
     return toReturn
 
@@ -194,7 +197,7 @@ def verify_move(move) :
         x, y = move
         x = int(x)
         y = int(y)
-        return (not x == y and not x == -y) and (x == 1 or x == 0 or x == -1) and (y == 1 or y == 0 or y == -1) 
+        return (not x == y and not x == -y) and (x == 1 or x == 0 or x == -1) and (y == 1 or y == 0 or y == -1)
     except :
         return False
 
@@ -299,7 +302,7 @@ app = Flask(
     static_folder="static"
 )
 
-app.config["SECRET_KEY"] = "a modifer"
+app.config["SECRET_KEY"] = os.environ["THE_SECRET_KEY"]
 
 @app.errorhandler(404)
 def not_found(e):
@@ -330,10 +333,23 @@ def play():
 
 @app.route('/select-difficulty', methods=["GET", "POST"])
 def select() :
-    if request.method == "POST" :
+    user = None
+
+    # Vérifier si l'utilisateur est connecté dans la session
+    if 'username' in session:
+        try:
+            with get_connection() as conn:
+                with conn.cursor(row_factory=dict_row) as cursor:
+                    cursor.execute("SELECT * FROM user_table WHERE username = %s", (session['username'],))
+                    user = cursor.fetchone()
+        except Exception as e:
+            print(f"Erreur lors de la récupération de l'utilisateur : {e}")
+
+    if request.method == "POST":
         return redirect("/start")
-    else :
-        return render_template("select-difficulty.html")
+    else:
+        # Passer l'objet user au template
+        return render_template("select-difficulty.html", user=user)
 
 @app.route('/settings')
 def settings() :
@@ -345,15 +361,84 @@ def title() :
 
 @app.route('/stats')
 def stats():
-    return render_template("stats.html")
-
-@app.route('/login')
+    users = []
+    try:
+        with get_connection() as conn:
+            with conn.cursor(row_factory=dict_row) as cursor:
+                cursor.execute("SELECT * FROM user_table ORDER BY score DESC LIMIT 12")
+                users = cursor.fetchall()
+    except Exception as e:
+        flash(f"The error [ {e} ] has happened.", "danger")
+    return render_template("stats.html", users = users)
+@app.route('/login' , methods=["GET", "POST"])
 def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        try:
+            with get_connection() as conn:
+                with conn.cursor(row_factory=dict_row) as cursor:
+                    cursor.execute("SELECT * FROM user_table WHERE username = %s", (username,))
+                    user = cursor.fetchone()
+
+                    print("Test : l'utilisateur est trouvé ! --> ", user)
+
+                    if user and check_password_hash(user['pwd_hash'], password):
+                        print("Connection en cours...")
+                        session['user_id'] = user['id']
+                        session['username'] = user['username']
+                        flash("You are connected, welcome back!", "success")
+                        return redirect("/play")
+
+                    else:
+                        flash("Your username or password is incorrect. Please check, and retry.", "danger")
+                        return redirect("/login")
+
+        except Exception as e:
+            flash(f"An error has occured ; {e}", "danger")
     return render_template("login.html")
 
 @app.route('/menu')
 def menu():
     return render_template('menu.html')
+
+@app.route('/register' , methods=["GET", "POST"])
+def register():
+    if request.method == "POST" :
+        username = request.form['username']
+        password = request.form['password']
+
+        pswd_hash = generate_password_hash(password)
+
+        icon_base64 = request.form.get('icon')
+
+        try:
+            with get_connection() as conn:
+                with conn.cursor() as cursor:
+                    cursor.execute("SELECT 1 FROM user_table WHERE username = %s", (username,))
+                    doesExist = cursor.fetchone()
+
+                    if doesExist :
+                        flash("This account name has aleardy been taken.", "danger")
+                        return redirect("/login")
+
+                    cursor.execute("INSERT INTO user_table (username, pwd_hash, icon) VALUES (%s, %s, %s)", (username, pswd_hash, icon_base64))
+                    conn.commit()
+
+                    flash("Your account has been created, you can now log in !", "success")
+                    return redirect("/login")
+
+        except Exception as e:
+            flash(f"An error has occured : {e}", "danger")
+
+    return render_template('register.html')
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    flash("Goodbye!", "success")
+    return redirect("/login")
 
 if __name__ == '__main__' :
     app.run(debug=True)

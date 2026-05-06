@@ -27,6 +27,15 @@
             <source src="{{url_for('static', filename='assets/sounds/License-select.mp3')}}"type="audio/mp3">
         </audio>
         <form id="form">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}" role="alert">
+                    {{ message }}
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
             <h2>Game parameters</h2>
             <div class="container-explanations">
                 <img class="helpImage" src="{{url_for('static',filename='assets/QuestionMark.png')}}">

@@ -3,8 +3,11 @@
     --maskImageSettingsColorBg : radial-gradient(black 75%, transparent 75%);
 	--bgImageSettingsAnimationColor : radial-gradient(rgb(255, 255, 255) 75%, transparent 75%), radial-gradient(white 75%, transparent 75%);
 	--gridColorSettings : repeating-linear-gradient(45deg, var(--gridsettingcolor1) 1%,  var(--gridsettingcolor2) 50%), repeating-linear-gradient(180deg, var(--gridsettingcolor1) 1%,  var(--gridsettingcolor2) 50%),repeating-linear-gradient(315deg, var(--gridsettingcolor1) 1%,  var(--gridsettingcolor2) 50%);
+    --colorTextDisconnectButton : red;
+    --bgrdColorDisconnectButton : rgb(193, 162, 165);
+    --borderColorDisconnectButton : white;
  }
- 
+
  main {
     background-color: var(--bg-difficulty) !important;
     overflow: hidden;
@@ -28,14 +31,14 @@
 
     width: 150%;
     height: 150%;
-    
+
     background-image: var(--gridColorSettings);
-        
+
     background-size: 50px 50px;
     animation: move-it 5s linear infinite;
 }
 
-#backgroundAnimationRings 
+#backgroundAnimationRings
 {
     position : absolute;
     width: 150%;
@@ -46,10 +49,10 @@
 
     -webkit-mask-image: var(--maskImageSettingsColorBg);
     mask-image: var(--maskImageSettingsColorBg);
-    
+
     -webkit-mask-size: 15% 60%;
     mask-size: 15% 60%;
-    
+
     -webkit-mask-repeat: repeat;
     mask-repeat: repeat;
 
@@ -63,7 +66,7 @@
 {
     content: '';
     position: absolute;
-    
+
     width: 100%;
     height: 100%;
     background-image: var(--bgImageSettingsAnimationColor);
@@ -168,11 +171,11 @@ form {
     letter-spacing: 2px;
 
     border-radius: 20px;
-    border: var(--primar) 2px solid;
+    border: var(--primary-color) 2px solid;
 }
 
 option[value=ez] {
-    color : var(--easy);
+    color : var(--ui-green);
 }
 
 option[value=meh] {
@@ -213,7 +216,7 @@ option[value=hard] {
     display: block !important;
 
     width: 500px;
-    
+
     z-index: 1;
 }
 
@@ -230,24 +233,24 @@ option[value=hard] {
 
     padding-right: 25px;
 
-    background-image : 
+    background-image :
         -webkit-linear-gradient(hsla(0,0%,0%,.1), hsla(0,0%,100%,.1)),
         -webkit-linear-gradient(left, var(--redcolorCheckBox) 50%, var(--greencolorCheckBox) 50%);
     background-size: 100% 100%, 200% 100%;
     background-position: 0 0, 15px 0;
 
     border-radius: 25px;
-    box-shadow : 
+    box-shadow :
         inset 0 1px 4px hsla(0,0%,0%,.5),
         inset 0 0 10px hsla(0,0%,0%,.5),
         0 0 0 1px hsla(0,0%,0%,.1),
         0 -1px 2px 2px hsla(0,0%,0%,.25),
         0 2px 2px 2px hsla(0,0%,100%,.75);
-    
+
     cursor: pointer;
 
     appearance: none;
-    transition: 0.25s;         
+    transition: 0.25s;
 }
 
 .onoff input[type="checkbox"]:after {
@@ -258,14 +261,14 @@ option[value=hard] {
 
     background-color: #eee;
     background-image: -webkit-linear-gradient(hsla(0,0%,100%,.1), hsla(0,0%,0%,.1));
-    
+
     border-radius: 25px;
-    box-shadow: 
+    box-shadow:
         inset 0 1px 1px 1px hsla(0,0%,100%,1),
         inset 0 -1px 1px 1px hsla(0,0%,0%,.25),
         0 1px 3px 1px hsla(0,0%,0%,.5),
         0 0 2px hsla(0,0%,0%,.25);
-    
+
     content: '';
 }
 
@@ -317,7 +320,7 @@ option[value=hard] {
     100%
     {
         background-position: 400px 500px;
-        
+
     }
 }
 

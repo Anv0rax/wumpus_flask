@@ -14,18 +14,18 @@ main {
 
     flex-grow: 1;
     align-self: stretch;
-} 
+}
 
 .grid {
     position: absolute;
 
     width: 150%;
-    height: 150%; 
-    
-    background-image: 
+    height: 150%;
+
+    background-image:
         linear-gradient(to right, var(--bg-grid) 2px, transparent 2px),
         linear-gradient(to bottom, var(--bg-grid) 2px, transparent 2px) !important;
-    
+
     background-size: 50px 50px ; /* Dimensions of the background-size. */
     animation: moveGrid 2s linear infinite;
 }
@@ -39,7 +39,7 @@ main {
 
     background: radial-gradient(circle, transparent 20%, var(--bg-accents) 80%);
 
-    pointer-events: none; 
+    pointer-events: none;
 }
 
 #functional {
@@ -130,7 +130,7 @@ option[value=hard] {
     display: block !important;
 
     width: 500px;
-    
+
     z-index: 1;
 }
 
@@ -146,24 +146,24 @@ option[value=hard] {
 
     padding-right: 25px;
 
-    background-image : 
+    background-image :
         -webkit-linear-gradient(hsla(0,0%,0%,.1), hsla(0,0%,100%,.1)),
         -webkit-linear-gradient(left, var(--redcolorCheckBox) 50%, var(--greencolorCheckBox) 50%);
     background-size: 100% 100%, 200% 100%;
     background-position: 0 0, 15px 0;
 
     border-radius: 25px;
-    box-shadow : 
+    box-shadow :
         inset 0 1px 4px hsla(0,0%,0%,.5),
         inset 0 0 10px hsla(0,0%,0%,.5),
         0 0 0 1px hsla(0,0%,0%,.1),
         0 -1px 2px 2px hsla(0,0%,0%,.25),
         0 2px 2px 2px hsla(0,0%,100%,.75);
-    
+
     cursor: pointer;
 
     appearance: none;
-    transition: 0.25s;         
+    transition: 0.25s;
 }
 
 .checkButtonMode input[type="checkbox"]:after {
@@ -174,14 +174,14 @@ option[value=hard] {
 
     background-color: #eee;
     background-image: -webkit-linear-gradient(hsla(0,0%,100%,.1), hsla(0,0%,0%,.1));
-    
+
     border-radius: 25px;
-    box-shadow: 
+    box-shadow:
         inset 0 1px 1px 1px hsla(0,0%,100%,1),
         inset 0 -1px 1px 1px hsla(0,0%,0%,.25),
         0 1px 3px 1px hsla(0,0%,0%,.5),
         0 0 2px hsla(0,0%,0%,.25);
-    
+
     content: '';
 }
 
@@ -235,7 +235,7 @@ option[value=hard] {
     to {
         /* Déplacement d'exactement un carreau (c'est sa qui rend l'animation fluide)*/
         /* X positif = droite, Y négatif = haut */
-        transform: translate(-50px, -50px); 
+        transform: translate(-50px, -50px);
     }
 }
 

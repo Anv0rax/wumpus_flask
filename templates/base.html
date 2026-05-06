@@ -17,16 +17,22 @@
                 <a href="/" {% block class_home %} {% endblock %}>Home</a>
                 <a href="/play" {% block class_play %} {% endblock %}>Play</a>
                 <a href="/settings" {% block class_settings %} {% endblock %}>Settings</a>
-                <a href="" {% block class_stats %} {% endblock %}>Stats</a>
+                <a href="/stats" {% block class_stats %} {% endblock %}>Stats</a>
+                {% if 'user_id' in session %}
+                    <a href="/logout" class="user-disconnect-link">
+                        <span class="user-state">{{ session.get('username') }}</span>
+                        <span class="disconnect-state">DISCONNECT</span>
+                    </a>
+                {% endif %}
             </div>
         </header>
 
         <main>
-            {% block main_content %} 
+            {% block main_content %}
                 <h1>ERROR 404</h1>
                 <br>
                 <img src="{{url_for('static', filename='wumpus-discord.png')}}">
-                <h1><a href="/">Routourner à l'acceuil</a></h1>
+                <h1><a href="/">Retourner à l'acceuil</a></h1>
             {% endblock %}
         </main>
     </div>

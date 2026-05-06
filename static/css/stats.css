@@ -14,17 +14,17 @@ main {
 
     flex-grow: 1;
     align-self: stretch;
-} 
+}
 
 .grid {
     position: absolute;
 
     width: 150%;
     height: 150%;
-    
-    background-image: 
+
+    background-image:
     url('../assets/gif/star-spinning.gif');
-    
+
     background-size: 300px 300px ;
     animation: moveGrid 2s linear infinite;
 }
@@ -73,27 +73,27 @@ table,td,th
     font-size: 20px;
 }
 
-tr:hover td, 
-tr:hover th :not(tr:nth-child(1) td)
+tr:hover td,
+tr:hover th :not(tr:nth-child(0) td)
 {
     background-color: rgba(215, 220, 224, 0.568);
     color: white !important;
     font-size: 2em !important;
 }
 
-tr:nth-child(2) td
+tr:nth-child(1) td
 {
     background-color: rgba(255, 217, 0, 0.663) !important;
-    font-size: 32px  
+    font-size: 32px
+}
+
+tr:nth-child(2) td
+{
+    background-color: rgba(192, 192, 192, 0.663) !important;
+    font-size: 28px;
 }
 
 tr:nth-child(3) td
-{
-    background-color: rgba(192, 192, 192, 0.663) !important;
-    font-size: 28px;    
-}
-
-tr:nth-child(4) td
 {
     background-color: rgba(210, 105, 30, 0.633) !important;
     font-size: 24px;
@@ -106,6 +106,6 @@ tr:nth-child(4) td
     to {
         /* Déplacement d'exactement un carreau (c'est sa qui rend l'animation fluide)*/
         /* X positif = droite, Y négatif = haut */
-        transform: translate(-50px, -50px); 
+        transform: translate(-50px, -50px);
     }
 }
