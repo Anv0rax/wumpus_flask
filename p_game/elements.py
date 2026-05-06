@@ -1,6 +1,6 @@
 import random
 from .const import *
-from .mouvement import *
+from .mouvement import move_item, follow_corridor
 
 # =========================================================
 #

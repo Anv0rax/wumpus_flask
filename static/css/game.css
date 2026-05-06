@@ -20,7 +20,7 @@
     border-radius: 20px;
     border-spacing: 0;
 
-    background-color: #545a5f;
+    background-color: #222250;
 
     overflow: hidden;
     box-sizing: content-box;
@@ -77,15 +77,15 @@
 }
 
 #ig_game_grid .normal {
-    background-image: url(../assets/ingame/32-edited_normal.png);
+    background-image: url(../assets/ingame/nc_320-edited_normal.png);
 }
 
 #ig_game_grid .hole {
-    background-image: url(../assets/ingame/32-edited_hole.png);
+    background-image: url(../assets/ingame/nc_320-edited_hole.png);
 }
 
 #ig_game_grid .near_hole {
-    background-image: url(../assets/ingame/32-edited_near_hole.png);
+    background-image: url(../assets/ingame/nc_320-edited_near_hole.png);
 }
 
 #ig_game_grid .near_wumpus {
@@ -96,8 +96,8 @@
     width: 50%;
     height: 50%;
 
-    background-image: url(../assets/ingame/32-resized_near_wumpus.png);
-    z-index: 3;
+    background-image: url(../assets/ingame/nc_320-resized_near_wumpus.png);
+    z-index: 2;
 }
 
 #ig_game_grid .wumpus {
@@ -108,8 +108,8 @@
     width: 50%;
     height: 50%;
 
-    background-image: url(../assets/ingame/32-resized_wumpus.png);
-    z-index: 3;
+    background-image: url(../assets/ingame/nc_320-resized_wumpus.png);
+    z-index: 4;
 }
 
 #ig_game_grid .bat {
@@ -120,8 +120,8 @@
     width: 50%;
     height: 50%;
 
-    background-image: url(../assets/ingame/32-resized_bat.png);
-    z-index: 4;
+    background-image: url(../assets/ingame/nc_320-resized_bat.png);
+    z-index: 5;
 }
 
 #ig_game_grid #player {
@@ -136,10 +136,22 @@
     bottom: 0;
     right: 0;
 
-    background-image: url(../assets/ingame/32-resized_player.png);
+    background-image: url(../assets/ingame/nc_320-resized_player.png);
+    text-shadow: 0 0 3px #000000;;
 
     z-index: 10;
 }
+
+#ig_game_grid .shooted {
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    background-image: url(../assets/ingame/nc_320-created_blshoot.png);
+    z-index: 3;
+}
+
 
 #ig_game_grid .top-1 {
     top: 0 !important;
@@ -170,7 +182,7 @@
 #ig_game_grid .corridor_1 div:first-child {
     display: none;
 
-    background-image: url(../assets/ingame/32-edited_corridor_1_top.png);
+    background-image: url(../assets/ingame/nc_320-edited_corridor_1_top.png);
 
     z-index: 2;
 }
@@ -178,7 +190,7 @@
 #ig_game_grid .corridor_1 div:last-child {
     display: none;
 
-    background-image: url(../assets/ingame/32-edited_corridor_1_bot.png);
+    background-image: url(../assets/ingame/nc_320-edited_corridor_1_bot.png);
 
     z-index: 1;
 }
@@ -186,7 +198,7 @@
 #ig_game_grid .corridor_2 div:first-child {
     display: none;
 
-    background-image: url(../assets/ingame/32-edited_corridor_2_top.png);
+    background-image: url(../assets/ingame/nc_320-edited_corridor_2_top.png);
 
     z-index: 2;
 }
@@ -194,7 +206,7 @@
 #ig_game_grid .corridor_2 div:last-child {
     display: none;
 
-    background-image: url(../assets/ingame/32-edited_corridor_2_bot.png);
+    background-image: url(../assets/ingame/nc_320-edited_corridor_2_bot.png);
 
     z-index: 1;
 }

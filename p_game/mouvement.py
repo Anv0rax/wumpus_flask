@@ -55,7 +55,7 @@ def move_item(matrix, py, px, my, mx, n_rows=N_ROW, n_cols=N_COL, blind=False, v
 # =========================================================
 
 def make_move_player(matrix, py, px, my, mx, next_y, next_x) :
-    possible = False
+    moved = False
     match matrix[next_y][next_x][T_BOX] :
         case 1 : # Corridor 1 = C1
             if mx == 1 : # →
@@ -65,7 +65,7 @@ def make_move_player(matrix, py, px, my, mx, next_y, next_x) :
                     matrix[next_y][next_x][T_VISION] += SEE_BOT # 10 + -9 == 1 == True
                 
                 matrix[py][px][T_PLAYER] = IS_NOT_HERE
-                possible = True
+                moved = True
 
             elif mx == -1 : # ←
                 if matrix[next_y][next_x][T_VISION] == DONT_SEE \
@@ -74,7 +74,7 @@ def make_move_player(matrix, py, px, my, mx, next_y, next_x) :
                 
                 matrix[next_y][next_x][T_PLAYER] = IS_TOP
                 matrix[py][px][T_PLAYER] = IS_NOT_HERE
-                possible = True
+                moved = True
 
             elif my == 1 : # ↓
                 if matrix[next_y][next_x][T_VISION] == DONT_SEE \
@@ -83,7 +83,7 @@ def make_move_player(matrix, py, px, my, mx, next_y, next_x) :
                 
                 matrix[next_y][next_x][T_PLAYER] = IS_TOP
                 matrix[py][px][T_PLAYER] = IS_NOT_HERE
-                possible = True
+                moved = True
 
             elif my == -1 : # ↑
                 if matrix[next_y][next_x][T_VISION] == DONT_SEE \
@@ -92,7 +92,7 @@ def make_move_player(matrix, py, px, my, mx, next_y, next_x) :
                 
                 matrix[next_y][next_x][T_PLAYER] = IS_BOT
                 matrix[py][px][T_PLAYER] = IS_NOT_HERE
-                possible = True
+                moved = True
 
         case 2 : # Corridor 2 = C2
             if mx == 1 : # →
@@ -102,7 +102,7 @@ def make_move_player(matrix, py, px, my, mx, next_y, next_x) :
                     matrix[next_y][next_x][T_VISION] += SEE_TOP
                 
                 matrix[py][px][T_PLAYER] = IS_NOT_HERE
-                possible = True
+                moved = True
 
             elif mx == -1 : # ←
                 if matrix[next_y][next_x][T_VISION] == DONT_SEE \
@@ -111,7 +111,7 @@ def make_move_player(matrix, py, px, my, mx, next_y, next_x) :
                 
                 matrix[next_y][next_x][T_PLAYER] = IS_BOT
                 matrix[py][px][T_PLAYER] = IS_NOT_HERE
-                possible = True
+                moved = True
 
             elif my == 1 : # ↓
                 if matrix[next_y][next_x][T_VISION] == DONT_SEE \
@@ -120,7 +120,7 @@ def make_move_player(matrix, py, px, my, mx, next_y, next_x) :
                 
                 matrix[next_y][next_x][T_PLAYER] = IS_TOP
                 matrix[py][px][T_PLAYER] = IS_NOT_HERE
-                possible = True
+                moved = True
 
             elif my == -1 : # ↑
                 if matrix[next_y][next_x][T_VISION] == DONT_SEE \
@@ -129,15 +129,15 @@ def make_move_player(matrix, py, px, my, mx, next_y, next_x) :
                 
                 matrix[next_y][next_x][T_PLAYER] = IS_BOT
                 matrix[py][px][T_PLAYER] = IS_NOT_HERE
-                possible = True
+                moved = True
 
         case _ :
             matrix[next_y][next_x][T_VISION] = SEE
             matrix[next_y][next_x][T_PLAYER] = IS_HERE
             matrix[py][px][T_PLAYER] = IS_NOT_HERE
-            possible = True
+            moved = True
 
-    return possible
+    return moved
     
 # =========================================================
 #

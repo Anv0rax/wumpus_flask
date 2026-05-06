@@ -23,6 +23,8 @@ SEE_TOP  = 10
 SEE_BOT  = -9
 SEE      = 1
 
+SHOOT = 4
+
 # ==========
 
 N_ROW = 6
@@ -60,6 +62,8 @@ ADD_TRIG_BAT = TRIG_BAT - BAT
 # 1  = playing
 # 2  = one bat is trigger
 # 3  = walked on a triggered bat
-# -1 = Win with the arc
+
+# -1 = WIN with the arc
 # -2 = dead by wumpus
 # -3 = dead by hole
+# -4 = didn't touch

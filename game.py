@@ -29,7 +29,7 @@ def home() :
 
 @app.route("/start")
 def start() :
-    session["difficulty"] = EASY
+    session["difficulty"] = HARD
     session["blind"] = False
     session["express"] = False
     difficulty = session.get("difficulty")
@@ -59,48 +59,55 @@ def start() :
 
 @app.route("/play")
 def play() :
-    if (session.get("map") and session.get("player") 
-        and session.get("gamestate", default=0) > 0) :
-        coord = request.args
-        x = coord.get("x", type=int, default=0)
-        y = coord.get("y", type=int, default=0)
+    if session.get("map") and session.get("player") :
+        if session.get("gamestate", default=0) > 0 :
+            coord = request.args
+            shoot = coord.get("shoot", type=bool, default=False)
+            x = coord.get("x", type=int, default=0)
+            y = coord.get("y", type=int, default=0)
 
-        if verify_move((y,x)) :
-            player = session.get("player")
-            matrix = session.get("map")
-            moved = move_item(matrix, player[0], player[1], y, x, 
-                              blind=session.get("blind", default=False))
+            if verify_move((y,x)) :
+                player = session.get("player")
+                matrix = session.get("map")
+                if not shoot :
+                    moved = move_item(matrix, player[0], player[1], y, x, 
+                                    blind=session.get("blind", default=False))
 
-            if moved[0] :
-                player = (moved[1], moved[2])
+                    if moved[0] :
+                        player = (moved[1], moved[2])
 
-                if session.get("express", default=False) \
-                 and matrix[player[0]][player[1]][T_BOX] not in (CAVERN, N_HOLE, HOLE) :
-                    player = follow_corridor(matrix, player[0], player[1], y, x, blind=session.get("blind", default=False))
+                        if session.get("express", default=False) \
+                        and matrix[player[0]][player[1]][T_BOX] not in (CAVERN, N_HOLE, HOLE) :
+                            player = follow_corridor(matrix, player[0], player[1], y, x, blind=session.get("blind", default=False))
 
-                session["gamestate"] = check_player(matrix, player)
-                print(session.get("gamestate"))
-                print()
-                print(matrix[player[0]][player[1]])
-                match session.get("gamestate") :
-                    # case 2 : # add to bd
-                    case 3 : # walked on a triggered bat
-                        # remove bat and player
-                        matrix[player[0]][player[1]][T_ELEMS] -= TRIG_BAT
-                        matrix[player[0]][player[1]][T_PLAYER] = IS_NOT_HERE
-                        matrix[player[0]][player[1]][T_VISION] = not session.get("blind", default=False)
-                        # add new bat
-                        bat = random_init(matrix, val=BAT)
-                        matrix[bat[0]][bat[1]][T_ELEMS] += BAT
-                        # move player
-                        player = init_player(matrix)
-    
-            session["player"] = player
-            session["map"] = matrix
+                        session["gamestate"] = check_player(matrix, player)
+                        print(session.get("gamestate"))
+                        print()
+                        print(matrix[player[0]][player[1]])
+                        match session.get("gamestate") :
+                            # case 2 : # add to bd
+                            case 3 : # walked on a triggered bat
+                                # remove bat and player
+                                matrix[player[0]][player[1]][T_ELEMS] -= TRIG_BAT
+                                matrix[player[0]][player[1]][T_PLAYER] = IS_NOT_HERE
+                                matrix[player[0]][player[1]][T_VISION] = not session.get("blind", default=False)
+                                # add new bat
+                                bat = random_init(matrix, val=BAT)
+                                matrix[bat[0]][bat[1]][T_ELEMS] += BAT
+                                # move player
+                                player = init_player(matrix)
+            
+                    session["player"] = player
+                else :
+                    reveal_map(matrix)
+                    player_pos = matrix[player[0]][player[1]][T_PLAYER]
+                    session["gamestate"] = shoot_arrow(matrix, player, y, x)
+                    matrix[player[0]][player[1]][T_PLAYER] = player_pos 
+                session["map"] = matrix
 
-        return render_template("hunt-the-wumpus.html", grid=session["map"])
-    elif session.get("gamestate") < 0 :
-        return render_template("hunt-the-wumpus.html", grid=session["map"])
+            return render_template("hunt-the-wumpus.html", grid=session["map"])
+        elif session.get("gamestate") < 0 :
+            return render_template("hunt-the-wumpus.html", grid=session["map"])
     else :
         return redirect("/select-difficulty")
 
