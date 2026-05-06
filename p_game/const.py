@@ -67,3 +67,4 @@ ADD_TRIG_BAT = TRIG_BAT - BAT
 # -2 = dead by wumpus
 # -3 = dead by hole
 # -4 = didn't touch
+# -9 = completly finished

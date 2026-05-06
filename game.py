@@ -29,7 +29,7 @@ def home() :
 
 @app.route("/start")
 def start() :
-    session["difficulty"] = HARD
+    session["difficulty"] = EASY
     session["blind"] = False
     session["express"] = False
     difficulty = session.get("difficulty")
@@ -81,9 +81,7 @@ def play() :
                             player = follow_corridor(matrix, player[0], player[1], y, x, blind=session.get("blind", default=False))
 
                         session["gamestate"] = check_player(matrix, player)
-                        print(session.get("gamestate"))
-                        print()
-                        print(matrix[player[0]][player[1]])
+                        
                         match session.get("gamestate") :
                             # case 2 : # add to bd
                             case 3 : # walked on a triggered bat
@@ -96,13 +94,38 @@ def play() :
                                 matrix[bat[0]][bat[1]][T_ELEMS] += BAT
                                 # move player
                                 player = init_player(matrix)
-            
+                            case i if i < 0 :
+                                reveal_map(matrix)
+                                # finish_in_db(i)
+                                match i :
+                                    case -1 : # Win
+                                        print("\n\n\nWin")
+                                        # write in BD
+
+                                    case -2 : # Wumpus
+                                        print("\n\n\nLoose by wumpus")
+                                        # write in BD
+
+                                    case -3 : # Hole
+                                        print("\n\n\nLoose by hole")
+                                        # write in BD
+
+                                    case -4 : # Missed
+                                        print("\n\n\nLoose by missing")
+                                        # write in BD
+
+                                session["gamestate"] = -9
+
                     session["player"] = player
                 else :
                     reveal_map(matrix)
                     player_pos = matrix[player[0]][player[1]][T_PLAYER]
                     session["gamestate"] = shoot_arrow(matrix, player, y, x)
                     matrix[player[0]][player[1]][T_PLAYER] = player_pos 
+
+                    print("\n\n\nWIN\n")
+                    # finish_in_db(session.get("gamestate"))
+                    # write in BD
                 session["map"] = matrix
 
             return render_template("hunt-the-wumpus.html", grid=session["map"])
