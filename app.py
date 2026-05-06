@@ -136,6 +136,7 @@ def play() :
 
             return render_template("hunt-the-wumpus.html", grid=session["map"])
         elif session.get("gamestate") < 0 :
+            session["difficulty"] = None
             return render_template("hunt-the-wumpus.html", grid=session["map"])
     else :
         return redirect("/select-difficulty")
