@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 
 from db import get_connection
 from p_game import *
+from private import THE_SECRET_KEY
 
 # =============================
 #           Flask
@@ -20,7 +21,7 @@ app = Flask(
     static_folder="static"
 )
 
-app.config["SECRET_KEY"] = os.environ["THE_SECRET_KEY"]
+app.config["SECRET_KEY"] = THE_SECRET_KEY
 
 @app.errorhandler(404)
 def not_found(e):
