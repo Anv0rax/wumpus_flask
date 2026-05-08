@@ -16,7 +16,7 @@
     */
 
     border-collapse: separate;
-    border: 10px solid black;
+    border: 10px solid #E8E8FF;
     border-radius: 20px;
     border-spacing: 0;
 
@@ -41,7 +41,7 @@
     justify-content: center;
 
     width: 10%;
-    outline: 2px solid black;
+    outline: 2px solid #E8E8FF;
 }
 
 #ig_game_grid .box {

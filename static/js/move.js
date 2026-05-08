@@ -18,10 +18,11 @@ window.addEventListener('load', () => {
     // addListenerBtnMoveIg();
 });
 
-let movementTop = 'space'
-let movementBot = 'space'
-let movementLeft = 'space'
-let movementRight = 'space'
+let movementTop = 'jsp'
+let movementBot = 'jsp'
+let movementLeft = 'jsp'
+let movementRight = 'jsp'
+let switchShoot = 'jsp'
 
 function pressKey(event)
 {
@@ -38,11 +39,16 @@ function pressKey(event)
     else if(event.key === 'ArrowLeft' || event.key === movementLeft)
     {
         event.preventDefault();
-        listBtnMoveIg[2].click();
+        listBtnMoveIg[3].click();
     }
     else if(event.key === 'ArrowRight' || event.key === movementRight)
     {
         event.preventDefault();
-        listBtnMoveIg[3].click();
+        listBtnMoveIg[4].click();
+    }
+    else if(event.key === 'CapsLock' || event.key === movementRight)
+    {
+        event.preventDefault();
+        listBtnMoveIg[2].click();
     }
 }

@@ -16,54 +16,78 @@
 }
 
 .ig_btn_move {
-    width: 6.4vw;
-    height: 6.4vw; 
-    max-width: 9.6vh;
-    max-height: 9.6vh;
+    cursor: var(--cursor-pointer);
+
+    border: 4px solid #E8E8FF;
+    border-radius: 10px;
+    
+    background-color: #4D7AFF;
+    background-size: contain;
     background-size: 100%;
+    background-origin: content-box;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
-/* .keyboard-arrows
-{
-    display: grid;
-    grid-template-columns: repeat(3, 50px);
-    grid-template-rows: repeat(3, 50px);
-    gap: 40px;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+.ig_btn_move:hover {
+    background-color: #B060FF;
+}
+
+#ig_btn_move:focus {
+  box-shadow: 0 0 5px #B060FF;
+}
+
+#ig_shoot {
+    -webkit-appearance: none;
+    appearance: none;
+
+    background-image : url("../assets/cursors/resized_tile_0055.png");
+}
+
+#ig_shoot:checked {
+    background-color: #B060FF;
+    background-image : url("../assets/cursors/resized_tile_0126.png");
+}
+
+/* #ig_shoot {
+    background-image : url("../assets/cursors/resized_tile_0055.png");
+}
+
+#ig_shoot:checked {
+    background-image : url("../assets/cursors/resized_tile_0126.png");
 } */
+
 
 #ig_btn_move-top
 {
     /* grid-column: 2;
     grid-row: 1; */
-    image-rendering: pixelated;
-    background-image: url("../assets/UpArrow.png");
+    /* image-rendering: pixelated; */
+    background-image: url("../assets/cursors/resized_tile_0070.png");
 }
 
 #ig_btn_move-bot
 {
     /* grid-column: 2;
     grid-row: 3; */
-    image-rendering: pixelated;
-    background-image: url("../assets/DownArrow.png");
+    /* image-rendering: pixelated; */
+    background-image: url("../assets/cursors/resized_tile_0071.png");
 }
 
 #ig_btn_move-left
 {
     /* grid-column: 1;
     grid-row : 2; */
-    image-rendering: pixelated;
-    background-image: url("../assets/LeftArrow.png");
+    /* image-rendering: pixelated; */
+    background-image: url("../assets/cursors/resized_tile_0073.png");
 }
 
 #ig_btn_move-right
 {
     /* grid-column : 3;
     grid-row : 2; */
-    image-rendering: pixelated;
-    background-image: url("../assets/RightArrow.png");
+    /* image-rendering: pixelated; */
+    background-image: url("../assets/cursors/resized_tile_0072.png");
 }
 
 @media only screen and (aspect-ratio > 8/5) {
@@ -74,16 +98,23 @@
     #ig_moving {
         flex-direction: column;
         
-        width: 8vw;
-        max-width: 12vh;
-        height: 32vw;
-        max-height: 48vh;
+        width: 12vw;
+        max-width: 18vh;
+        height: 48vw;
+        max-height: 72vh;
 
         border-radius: 0 20px 20px 0;
     }
 
     .ig_btn_move {
+        width: 8vw;
+        height: 8vw;
+        aspect-ratio: 1;
+        max-width: 13vh;
+        max-height: 13vh;
+
         margin: min(0.8vw, 1.2vh) min(1.6vw, 2.4vh);
+        padding: min(0.4vw, 0.6vh) min(0.8vw, 1.2vh);
     }
 }
 
@@ -95,15 +126,22 @@
     #ig_moving {
         flex-direction: row;
 
-        width: 32vw;
-        max-width: 60vh;
-        height: 8vw;
-        max-height: 12vh;
+        width: 64vw;
+        max-width: 96vh;
+        height: 15vw;
+        max-height: 22vh;
 
         border-radius: 20px 0 0 20px;
     }
 
     .ig_btn_move {
+        width: 12vw;
+        height: 12vw;
+        aspect-ratio: 1;
+        max-width: 16vh;
+        max-height: 16vh;
+
         margin: min(1.6vw, 2.4vh) min(0.8vw, 1.2vh);
+        padding: min(0.8vw, 1.2vh) min(0.4vw, 0.6vh);
     }
 }

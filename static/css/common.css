@@ -1,7 +1,7 @@
 :root {
-	--text-color: black;
-	--text-secondary: #545a5f;
-	--primary-color: #fff2d4;
+	--text-secondary: #0D0D1A;
+	--text-color: #E8E8FF;
+	--primary-color: #4D7AFF;
 	--secondary-color: #948b7c;
 
 	--ui-green: #99b681;
@@ -27,7 +27,7 @@
 	--greencolorCheckBox : rgb(102, 255, 125);
 	--redcolorCheckBox : #f66;
 	--orange : #de9a06;
-	--sidebar-color : rgb(247, 125, 230);
+	--sidebar-color : #4A5568;
 	--footer-color : black;
 	--hover-effect-muteButton1 : rgba(34, 0, 255, 0.71);
 	--leaderboardPrimary-color : rgba(4, 65, 232, 0.654);
@@ -66,6 +66,7 @@
 * {
     padding: 0;
     margin: 0;
+	border: 0;
     font-weight: normal;
     box-sizing: border-box;
 	cursor: var(--cursor-default);
@@ -172,7 +173,7 @@ header hr {
 	margin: 5px;
 	margin-top: 20px;
 
-	background-color: #000000;
+	background-color: var(--text-color);
 	border-radius: 6px;
 }
 
@@ -232,7 +233,7 @@ footer {
 	}
 
 	header {
-		align-content: start;
+		align-content: center;
 
 		width: 240px;
 	}
@@ -242,7 +243,6 @@ footer {
 		justify-content: start;
 
 		width: 80%;
-		height: 85%;
 		max-height: 500px;
 
 		margin: 5px auto;
@@ -280,6 +280,7 @@ footer {
 
 	header {
 		justify-content: center;
+        align-items: center;
 
 		width: 100%;
 		min-height: 160px;
