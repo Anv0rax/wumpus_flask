@@ -26,7 +26,7 @@
         <audio id="son3" preload="auto">
             <source src="{{url_for('static', filename='assets/sounds/License-select.mp3')}}"type="audio/mp3">
         </audio>
-        <form id="form">
+        <form id="form" method="post">
             {% with messages = get_flashed_messages(with_categories=true) %}
               {% if messages %}
                 {% for category, message in messages %}
@@ -43,10 +43,10 @@
             </div>
             <label for="difficulty-choice"><p>Select the difficulty</p></label>
             <br>
-            <select id="difficulty-choice">
-                <option value="easy">Easy</option>
-                <option value="medium">Normal</option>
-                <option value="hard">Hard</option>
+            <select id="difficulty-choice" name="difficulty">
+                <option value="0" {{ 'selected' if s_diff == 0 else '' }} >Easy</option>
+                <option value="1" {{ 'selected' if s_diff == 1 else '' }} >Normal</option>
+                <option value="2" {{ 'selected' if s_diff == 2 else '' }} >Hard</option>
             </select>
             <p>Game Mode</p>
             <div class="container-explanations">
@@ -59,10 +59,10 @@
             </div>
             <div class="checkButtonMode">
                 <label class="selectGamemode">Express Mode
-                    <input type="checkbox">
+                    <input type="checkbox" name="express" value="1" {{ 'checked' if s_express else '' }} >
                 </label>
                 <label class="selectGamemode">Blind Mode
-                    <input type="checkbox">
+                    <input type="checkbox" name="blind" value="1" {{ 'checked' if s_blind else '' }}>
                 </label>
             </div>
             <input class="validateForm" type="submit" value="Play">
