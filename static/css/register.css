@@ -13,7 +13,7 @@
     background-color: var(--form);
     text-align: center;
     box-sizing: border-box;
-    border: var(--primary-color) 2px solid;
+    border: var(--blue) 2px solid;
     min-height: 60vh;
     width: min(50vw, 90%);
     display: flex;
@@ -33,8 +33,30 @@
     justify-content: center;
     gap: 10px;
 }
+#returnLogin {
 
-#buttons-form {
+    display: block;
+    margin: 20px auto;
+    background-color: var(--form);
+    color: var(--white);
+    border: 2px solid var(--blue);
+    font-family: retro, sans-serif;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: var(--cursor-pointer);
+    image-rendering: pixelated;
+    transition: all 0.2s ease-in-out;
+}
+
+#returnLogin:hover {
+    background-color: var(--blue);
+    color: var(--white);
+    filter: drop-shadow(0 0 8px var(--blue));
+    transform: scale(1.05);
+}
+
+#buttons-form
+{
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -45,6 +67,7 @@
 .label {
     font-family: retro;
     text-align: start;
+    color: var(--white);
 }
 
 .input {
@@ -57,6 +80,7 @@
     image-rendering: pixelated;
     background-size: 100% 100%;
     border: none;
+    color: var(--white);
 }
 
 #login {
@@ -71,7 +95,7 @@
 }
 
 #login:hover {
-    --colorShadow: #ff0000;
+    --colorShadow: var(--coral);
     background-image: url("../assets/LoginButton-Hover.png");
     filter: drop-shadow(0 0 10px var(--colorShadow));
     animation: led-anim 3s infinite ease-in-out;
@@ -89,7 +113,7 @@
 }
 
 #showGrid:hover {
-    --colorShadow: #18ff03;
+    --colorShadow: var(--mint);
     background-image: url("../assets/Icon-hover.png");
     filter: drop-shadow(0 0 10px var(--colorShadow));
     animation: led-anim 3s infinite ease-in-out;
@@ -105,11 +129,11 @@
     width: 64px;
     height: 64px;
     image-rendering: pixelated;
-    border: 3px double black;
+    border: 3px double var(--night);
 }
 
-/* Pixel art maker - caché par défaut */
-.container-pixArtMaker {
+.container-pixArtMaker
+{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -122,8 +146,9 @@
     z-index: 10;
     width: min(70vw, 700px);
     height: auto;
-    background-color: #878685;
+    background-color: var(--card);
     border-radius: 20px;
+    border: 2px solid var(--blue);
     padding: 20px;
     box-sizing: border-box;
     opacity: 0;
@@ -132,38 +157,18 @@
     transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), visibility 0.4s;
 }
 
-.container-pixArtMaker.active {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: all;
-    transform: translate(-50%, -50%);
-}
-
 .grid {
     display: grid;
     grid-template-columns: repeat(24, 1fr);
     width: min(500px, 60vw);
     height: min(500px, 60vw);
+    background-color: var(--white);
 }
 
 .cell {
-    border: 1px solid rgb(0, 0, 0);
+    border: 1px solid var(--night);
 }
 
-.palette {
-    position: relative;
-    left: auto;
-    bottom: auto;
-    display: grid;
-    width: 100%;
-    height: auto;
-    grid-template-columns: repeat(18, 1fr);
-}
-
-.palette .color {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-}
 
 .palette .color:nth-child(1) { background-color: red; }
 .palette .color:nth-child(2) { background-color: white; }
@@ -193,12 +198,6 @@
     image-rendering: pixelated;
 }
 
-#pencil { background-image: url("../assets/Pencil.png"); }
-#eraser { background-image: url("../assets/Eraser.png"); }
-#bucket { background-image: url("../assets/ColorBucket.png"); }
-#leave { background-image: url("../assets/Leave.png"); background-size: 100% 100%; }
-#confirm { background-image: url("../assets/Confirm.png"); background-size: 100% 100%; }
-
 .error {
     color: red;
     font-family: retro;
@@ -207,6 +206,13 @@
 @keyframes led-anim {
     0% { filter: drop-shadow(0 0 10px var(--colorShadow)); }
     15% { scale: 1.05; }
-    30% { filter: drop-shadow(0 0 10px #ffffff); }
+    30% { filter: drop-shadow(0 0 10px var(--white)); }
     100% { filter: drop-shadow(0 0 10px var(--colorShadow)); }
+}
+
+@media (max-width: 480px) {
+    #returnLogin {
+        margin: 10px auto;
+        padding: 8px 5px;
+    }
 }

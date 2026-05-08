@@ -1,5 +1,9 @@
 main {
-    background-color: var(--bg-difficulty) !important;
+    background:
+        radial-gradient(ellipse at 20% 50%, rgba(255,190,77,0.08) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 20%, rgba(64,200,224,0.10) 0%, transparent 55%),
+        radial-gradient(ellipse at 60% 80%, rgba(77,122,255,0.08) 0%, transparent 50%),
+        linear-gradient(160deg, #1a1040 0%, #0e1a3a 40%, #0a1628 100%) !important;
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -8,41 +12,24 @@ main {
     width: 100%;
 }
 
-#visual_effects {
-    position: relative;
-    width: 100%;
-
-    flex-grow: 1;
-    align-self: stretch;
-}
-
-.grid {
-    position: absolute;
-
-    width: 150%;
-    height: 150%;
-
-    background-image:
-    url('../assets/gif/star-spinning.gif');
-
-    background-size: 300px 300px ;
-    animation: moveGrid 2s linear infinite;
-}
-
-/* le filtre */
-.overlay {
-    position: absolute;
-
-    width: 100%;
-    height: 100%;
-
-    background: radial-gradient(circle, transparent 20%, var(--bg-accents) 80%);
-
-    pointer-events: none;
-}
-
 #functional {
     position: absolute;
+}
+
+.pulse-dot {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0;
+    transform: scale(0);
+    animation: pulseDot var(--dur, 3s) ease-out var(--delay, 0s) infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes pulseDot {
+    0%   { opacity: 0;    transform: scale(0); }
+    15%  { opacity: 0.55; transform: scale(0.4); }
+    100% { opacity: 0;    transform: scale(1); }
 }
 
 table
@@ -76,26 +63,22 @@ table,td,th
 tr:hover td,
 tr:hover th :not(tr:nth-child(0) td)
 {
-    background-color: rgba(215, 220, 224, 0.568);
+    background-color: color-mix(in srgb, var(--white), transparent 33.7%) !important;
     color: white !important;
-    font-size: 2em !important;
 }
 
-tr:nth-child(1) td
-{
-    background-color: rgba(255, 217, 0, 0.663) !important;
-    font-size: 32px
+tr:nth-child(1) td {
+    background-color: color-mix(in srgb, var(--gold), transparent 33.7%) !important;
+    font-size: 32px;
 }
 
-tr:nth-child(2) td
-{
-    background-color: rgba(192, 192, 192, 0.663) !important;
+tr:nth-child(2) td {
+    background-color: color-mix(in srgb, var(--exp-bg), transparent 33.7%) !important;
     font-size: 28px;
 }
 
-tr:nth-child(3) td
-{
-    background-color: rgba(210, 105, 30, 0.633) !important;
+tr:nth-child(3) td {
+    background-color: color-mix(in srgb, var(--coral), transparent 36.7%) !important;
     font-size: 24px;
 }
 

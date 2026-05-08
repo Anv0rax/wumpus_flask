@@ -13,7 +13,7 @@
 {
     background-color: var(--form);
     text-align: center;
-    border: var(--primary-color) 2px solid;
+    border: var(--card) 2px solid;
     min-height: 50vh;
     height: auto;
     width: min(50vw, 90%);
@@ -49,6 +49,7 @@
 {
     font-family: retro;
     text-align: start;
+    color: var(--white);
 }
 
 .input
@@ -62,6 +63,7 @@
     image-rendering: pixelated;
     background-size: 100% 100%;
     border: none;
+    color: var(--white);
 }
 
 #login, #register
@@ -80,17 +82,14 @@
     background-image: url("../assets/LoginButton.png");
 }
 
-#register
-
 #login:hover
 {
-    --colorShadow : #ff0000;
+    --colorShadow : var(--mint);
     image-rendering: pixelated;
     background-image: url("../assets/LoginButton-Hover.png");
     background-size: 100%;
     filter: drop-shadow(0 0 10px var(--colorShadow));
     animation: led-anim 3s infinite ease-in-out;
-
 }
 
 #register
@@ -100,7 +99,7 @@
 
 #register:hover
 {
-    --colorShadow : #00ffff;
+    --colorShadow : var(--cyan);
     image-rendering: pixelated;
     background-image: url("../assets/Register-hover.png");
     background-size: 100%;
@@ -121,7 +120,7 @@
 
 #showGrid:hover
 {
-    --colorShadow : #18ff03;
+    --colorShadow : var(--violet);
     image-rendering: pixelated;
     background-image: url("../assets/Icon-hover.png");
     background-size: 100%;
@@ -137,11 +136,12 @@
     }
     15%
     {
+        /* On garde ton scale d'origine ici pour ne pas casser ton animation */
         scale: 1.05;
     }
     30%
     {
-        filter: drop-shadow(0 0 10px #ffffff);
+        filter: drop-shadow(0 0 10px var(--white));
     }
     100%
     {
@@ -149,223 +149,18 @@
     }
 }
 
-.container-pixArtMaker
-{
-    background-color: rgba(255, 0, 0, 0.424);
-    display: grid;
-    height: 100%;
-    place-items: center;
-
-    position: fixed;
-    top : 50vh;
-    left : 55vw;
-    transform: translate(-50%, -50%);
-    z-index : 10;
-
-    width: 70vw;
-    height: 70vh;
-    background-color: #878685;
-    border-radius: 20px;
-    padding : 20px;
-
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), visibility 0.4s;
-}
-
-.container-pixArtMaker.active
-{
-    opacity: 1;
-    visibility: visible;
-    pointer-events: all;
-    transform: translate(-50%, -50%) scale(1);
-}
-.grid
-{
-    display: grid;
-    grid-template-columns: repeat(24, 1fr);
-    height: 500px;
-    width: 500px;
-}
-
-.cell
-{
-    border: 1px solid rgb(0, 0, 0);
-}
-.palette
-{
-    position: absolute;
-    left : 5vw;
-    bottom: 50vh;
-
-    display: grid;
-    width: 120px;
-    height: 60px;
-
-    grid-template-columns: repeat(6, 1fr);
-
-    .color
-    {
-        &:nth-child(1)
-        {
-            background-color: red;
-        }
-        &:nth-child(2)
-        {
-            background-color: white;
-        }
-        &:nth-child(3)
-        {
-            background-color: blue;
-        }
-        &:nth-child(4)
-        {
-            background-color: green;
-        }
-        &:nth-child(5)
-        {
-            background-color: orange;
-        }
-        &:nth-child(6)
-        {
-            background-color: rgb(246, 153, 168);
-        }
-        &:nth-child(7)
-        {
-            background-color: purple;
-        }
-        &:nth-child(8)
-        {
-            background-color: brown;
-        }
-        &:nth-child(9)
-        {
-            background-color: black;
-        }
-        &:nth-child(10)
-        {
-            background-color: yellow;
-        }
-        &:nth-child(11)
-        {
-            background-color: lightgreen;
-        }
-        &:nth-child(12)
-        {
-            background-color: lightblue;
-        }
-        &:nth-child(13)
-        {
-            background-color: magenta;
-        }
-        &:nth-child(14)
-        {
-            background-color: cyan;
-        }
-        &:nth-child(15)
-        {
-            background-color: gold;
-        }
-        &:nth-child(16)
-        {
-            background-color: silver;
-        }
-        &:nth-child(17)
-        {
-            background-color:khaki;
-        }
-        &:nth-child(18)
-        {
-            background-color: darkred;
-        }
-    }
-}
-
-#pencil
-{
-    background-image: url("../assets/Pencil.png");
-    background-size: 100%;
-    background-color: transparent;
-    border: none;
-    width: 64px;
-    height: 64px;
-    image-rendering: pixelated;
-}
-
-#eraser
-{
-    background-image: url("../assets/Eraser.png");
-    background-size: 100%;
-    background-color: transparent;
-    border: none;
-    width: 64px;
-    height: 64px;
-    image-rendering: pixelated;
-}
-
-#bucket
-{
-    background-image: url("../assets/ColorBucket.png");
-    background-size: 100%;
-    background-color: transparent;
-    border: none;
-    width: 64px;
-    height: 64px;
-    image-rendering: pixelated;
-}
-
-#sizeInput
-{
-    width: 64px;
-    height : 64px;
-    font-size: 20px;
-    text-align: center;
-}
-
-#leave
-{
-    image-rendering: pixelated;
-    width: 64px;
-    height: 64px;
-    background-color: transparent;
-    border: none;
-    background-image: url("../assets/Leave.png");
-    background-size: 100% 100%;
-}
-
-#confirm
-{
-    image-rendering: pixelated;
-    width: 64px;
-    height: 64px;
-    background-color: transparent;
-    border: none;
-    background-image: url("../assets/Confirm.png");
-    background-size: 100% 100%;
-}
-
-#user-pixel-art
-{
-    display: none;
-    width: 128px;
-    height : 128px;
-    image-rendering: pixelated;
-    border : 3px double black;
-}
-
 @keyframes borderPulsing
 {
     0%
     {
-        box-shadow: inset 0 0 0 1.5px black;
+        box-shadow: inset 0 0 0 1.5px var(--night);
     }
     50%
     {
-        box-shadow: inset 0 0 0 1.5px white;
+        box-shadow: inset 0 0 0 1.5px var(--white);
     }
     100%
     {
-        box-shadow: inset 0 0 0 1.5px black;
+        box-shadow: inset 0 0 0 1.5px var(--night);
     }
 }

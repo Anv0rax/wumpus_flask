@@ -7,20 +7,26 @@
     <link rel="stylesheet" href="{{url_for('static', filename='css/common.css')}}">
     {% block add_css_js %} {% endblock %}
 </head>
-<body>
+<body id="global-body">
     <div id="sidebar">
         <header>
             <h1><a href="/">Hunt the Wumpus</a></h1>
             <br>
             <hr>
             <div>
-                <a href="/" {% block class_home %} {% endblock %}>Home</a>
+                <a href="/menu" {% block class_home %} {% endblock %}>Home</a>
                 <a href="/play" {% block class_play %} {% endblock %}>Play</a>
                 <a href="/settings" {% block class_settings %} {% endblock %}>Settings</a>
                 <a href="/stats" {% block class_stats %} {% endblock %}>Stats</a>
                 {% if 'user_id' in session %}
                     <a href="/logout" class="user-disconnect-link">
-                        <span class="user-state">{{ session.get('username') }}</span>
+                        <span class="user-state">
+                            {{ session.get('username') }}
+                            <br>
+                            {% if user and user.icon %}
+                                <img src="data:image/png;base64,{{ user.icon }}" alt="Supposed to be your icon." width="48" height="48">
+                            {% endif %}
+                        </span>
                         <span class="disconnect-state">DISCONNECT</span>
                     </a>
                 {% endif %}

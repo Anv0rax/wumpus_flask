@@ -8,7 +8,7 @@
     <script src="{{url_for('static', filename='js/login.js')}}"></script>
 {% endblock %}
 
-{% block class_play %} class="page_here" {% endblock %}
+{% block class_home %} class="page_here" {% endblock %}
 
 {% block main_content %}
     <div class="login-container">
@@ -39,9 +39,7 @@
                 <label for="username" class="label">Username</label>
                 <input id="username" class="input" type="text" name="username" placeholder="Username" required autofocus>
                 <ul id="helpUserName" class="error">
-                    <li class="helpUserNameItem">Maximum 10 characters</li>
-                    <li class="helpUserNameItem">Upper and lower case authorized</li>
-                    <li class="helpUserNameItem">Using underscore is authorized</li>
+                    <li class="helpUserNameItem">Between 3 and 10 characters, Upper & lower case & underscore & numbers authorized</li>
                 </ul>
 
                 <label for="password" class="label">Password</label>
