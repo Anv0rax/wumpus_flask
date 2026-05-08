@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block page_title %}Hunt the Wumpus{% endblock %}
+
+{% block add_css_js %}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/common.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/main_page.css')}}" />
+    <script src="{{url_for('static', filename='js/main_page.js')}}"></script>
+{% endblock %}
+
+{% block class_home %} class="page_here" {% endblock %}
+
+{% block main_content %}
+    <div class="stars-bg" id="stars"></div>
+
+    <div class="grid-floor"></div>
+
+    <div class="hero">
+
+        <div class="title-wrapper">
+            <h1 class="title-main">HUNT THE<br>WUMPUS</h1>
+            <span class="title-the">WEB GAME</span>
+        </div>
+
+<pre class="wumpus-ascii" aria-hidden="true">
+           +++++++
+       +++++++++++++++
+     +++++  +++++  +++++
+   +++++++ +++++++ +++++++
++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++
+++++   ++++ +++++ ++++   ++++
+++++   +++  +++++  +++   ++++
+++++   +++  +++++  +++   ++++
+++++   ++++ +++++ ++++   ++++
+++++++ +++++++++++++++ ++++++
+ +++++++   +++++++   +++++++
+ +++++++   +++++++   +++++++
+++++ +++++         +++++ ++++
+++     +++         +++     ++
+</pre>
+
+        {% if 'user_id' in session %}
+        <div class="session-badge">▶ WELCOME BACK, {{ user.username }}</div>
+        {% endif %}
+
+        <nav class="nav-buttons">
+            <a href="/play" class="btn-retro btn-primary">▶ &nbsp;Play</a>
+            <a href="/settings" class="btn-retro btn-secondary">⚙ &nbsp;Profile</a>
+            {% if 'user_id' in session %}
+                <a href="/logout" class="btn-retro btn-tertiary">✖ &nbsp;Logout</a>
+            {% else %}
+                <a href="/login" class="btn-retro btn-tertiary">★ &nbsp;Login</a>
+            {% endif %}
+        </nav>
+
+    </div>
+{% endblock %}

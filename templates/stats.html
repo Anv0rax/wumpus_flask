@@ -8,11 +8,11 @@
     <script src="{{url_for('static', filename='js/stats.js')}}"></script>
 {% endblock %}
 
-{% block class_play %} class="page_here" {% endblock %}
+{% block class_stats %} class="page_here" {% endblock %}
 
 {% block main_content %}
     <div id="visual_effects">
-        <div id="deco" class="rings"></div>
+        <div id="deco"></div>
         <div class="grid"></div>
         <div class="overlay"></div>
     </div>
@@ -33,7 +33,7 @@
                     <th>Eaten by the wumpus</th>
                     <th>Fell into the slime pit</th>
                     <th>Score</th>
-                    <th>Icone</th>
+                    <th>Icon</th>
                 </tr>
             </thead>
         <tbody>
@@ -73,7 +73,7 @@
                     <img src="data:image/png;base64,{{ user.icon }}"
                          alt="{{ user.username }}"
                          width="64" height="64"
-                         style="border-radius: 50%;">
+                         style="border-radius: 25%; border: 2px solid white">
                     {% else %}
                         None
                     {% endif %}
@@ -81,7 +81,7 @@
             </tr>
             {% else %}
             <tr>
-                <td colspan="6">No players in the leaderboard for the moment, please retry later</td>
+                <td colspan="8">No players in the leaderboard for the moment, please retry later</td>
             </tr>
             {% endfor %}
         </tbody>

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+import re
 from flask import Flask, render_template, redirect, request, session, flash
 import random
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -304,9 +305,24 @@ app = Flask(
 
 app.config["SECRET_KEY"] = os.environ["THE_SECRET_KEY"]
 
+@app.context_processor
+def inject_user():
+    user = None
+    if 'username' in session :
+        try:
+            with get_connection() as conn:
+                with conn.cursor(row_factory=dict_row) as cursor:
+                    cursor.execute("SELECT * FROM user_table WHERE username = %s", (session['username'],))
+                    user = cursor.fetchone()
+        except Exception as e:
+            print(f"Error, user surely not found : {e}")
+    # La variable 'user' sera maintenant accessible dans TOUS les fichiers .html.
+    # je vais donc pouvoir avoir accès aux infos de l'user quand il est connecté pour pouvoir afficher son image
+    return dict(user=user)
+
 @app.errorhandler(404)
 def not_found(e):
-  return render_template("base.html")
+    return render_template("base.html"), 404
 
 @app.route("/")
 def home():
@@ -318,6 +334,11 @@ def start():
     session["map"] = matrix
     session["player"] = init_player(matrix, N_ROW, N_COL)
     return redirect("/play")
+
+@app.route("/menu")
+def menu():
+    return render_template("main_page.html")
+
 
 @app.route("/play")
 def play():
@@ -333,26 +354,34 @@ def play():
 
 @app.route('/select-difficulty', methods=["GET", "POST"])
 def select() :
-    user = None
-
-    # Vérifier si l'utilisateur est connecté dans la session
-    if 'username' in session:
-        try:
-            with get_connection() as conn:
-                with conn.cursor(row_factory=dict_row) as cursor:
-                    cursor.execute("SELECT * FROM user_table WHERE username = %s", (session['username'],))
-                    user = cursor.fetchone()
-        except Exception as e:
-            print(f"Erreur lors de la récupération de l'utilisateur : {e}")
-
     if request.method == "POST":
         return redirect("/start")
-    else:
-        # Passer l'objet user au template
-        return render_template("select-difficulty.html", user=user)
 
-@app.route('/settings')
-def settings() :
+    return render_template("select-difficulty.html")
+
+
+@app.route('/settings', methods=["GET", "POST"])
+def settings():
+    if 'username' not in session:
+        flash("Please be connected to modify the icon.", "danger")
+        return redirect("/login")
+
+    if request.method == "POST":
+        icon_data = request.form.get("icon")
+        if icon_data:
+            try:
+                with get_connection() as conn:
+                    with conn.cursor() as cursor:
+                        cursor.execute(
+                            "UPDATE user_table SET icon = %s WHERE username = %s",
+                            (icon_data, session['username'])
+                        )
+                        conn.commit()
+                flash("Icon updated !", "success")
+            except Exception as e:
+                flash(f"SQL error : {e}", "danger")
+            return redirect("/settings")
+
     return render_template("settings.html")
 
 @app.route('/title-screen')
@@ -399,38 +428,52 @@ def login():
             flash(f"An error has occured ; {e}", "danger")
     return render_template("login.html")
 
-@app.route('/menu')
-def menu():
-    return render_template('menu.html')
 
-@app.route('/register' , methods=["GET", "POST"])
+
+@app.route('/register', methods=["GET", "POST"])
 def register():
-    if request.method == "POST" :
-        username = request.form['username']
-        password = request.form['password']
+    if request.method == "POST":
+        username = request.form.get('username', '').strip()
+        password = request.form.get('password', '')
+        confirm_password = request.form.get('confirm', '')
+        icon_base64 = request.form.get('icon', '')
 
-        pswd_hash = generate_password_hash(password)
+        if not re.match(r"^[a-zA-Z0-9_]{3,10}$", username):
+            flash("Username must be between 3 and 10 characters (letters, numbers, underscores).", "danger")
+            return redirect("/register")
 
-        icon_base64 = request.form.get('icon')
+        if not (re.match(r"^.{3,10}$", password) and
+                re.search(r"[A-Z]", password) and
+                re.search(r"[a-z]", password) and
+                re.search(r"[0-9]", password)):
+            flash("Password must be 3-10 characters long and contain at least one uppercase, one lowercase, and one number.", "danger")
+            return redirect("/register")
+
+        if password != confirm_password:
+            flash("Passwords are not matching.", "danger")
+            return redirect("/register")
 
         try:
+            pswd_hash = generate_password_hash(password)
             with get_connection() as conn:
                 with conn.cursor() as cursor:
                     cursor.execute("SELECT 1 FROM user_table WHERE username = %s", (username,))
-                    doesExist = cursor.fetchone()
+                    if cursor.fetchone():
+                        flash("This username is already taken.", "danger")
+                        return redirect("/register")
 
-                    if doesExist :
-                        flash("This account name has aleardy been taken.", "danger")
-                        return redirect("/login")
-
-                    cursor.execute("INSERT INTO user_table (username, pwd_hash, icon) VALUES (%s, %s, %s)", (username, pswd_hash, icon_base64))
+                    cursor.execute(
+                        "INSERT INTO user_table (username, pwd_hash, icon) VALUES (%s, %s, %s)",
+                        (username, pswd_hash, icon_base64)
+                    )
                     conn.commit()
 
-                    flash("Your account has been created, you can now log in !", "success")
-                    return redirect("/login")
+            flash("Your account has been created, you can now log in!", "success")
+            return redirect("/login")
 
         except Exception as e:
-            flash(f"An error has occured : {e}", "danger")
+            flash(f"An error occurred: {e}", "danger")
+            return redirect("/register")
 
     return render_template('register.html')
 

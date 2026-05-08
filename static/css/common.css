@@ -1,4 +1,14 @@
 :root {
+    --night:    #0D0D1A;
+    --card:     #222250;
+    --blue:     #4D7AFF;
+    --cyan:     #40C8E0;
+    --mint:     #3DCC6A;
+    --gold:     #FFBE4D;
+    --coral:    #FF5A3D;
+    --violet:   #B060FF;
+    --white:    #E8E8FF;
+
 	--text-color: black;
 	--text-secondary: #545a5f;
 	--primary-color: #fff2d4;
@@ -21,9 +31,9 @@
 	--font-dropdowncolor : #0dc0e0;
 	--font-colorexp : white;
 	--hovercolor-submit : rgba(18, 219, 68, 0.908);
-	--gridsettingcolor1 : /*rgba(212, 5, 253, 0.651);*/ rgba(0, 0, 0, 0.596);
-	--gridsettingcolor2 : /*rgba(38, 2, 240, 0.384);*/ rgba(73, 2, 114, 0.568);
-	--gridsettingcolor3 : rgba(2, 85, 211, 0.561);
+	--gridsettingcolor1 : /*rgba(212, 5, 253, 0.651);*/ rgba(18, 60, 81, 0.6);
+	--gridsettingcolor2 : /*rgba(38, 2, 240, 0.384);*/ rgba(0, 22, 113, 0.38);
+	--gridsettingcolor3 : rgba(81, 185, 250, 0.56);
 	--greencolorCheckBox : rgb(102, 255, 125);
 	--redcolorCheckBox : #f66;
 	--orange : #de9a06;
@@ -101,7 +111,7 @@ p {
 	width: 100%;
 	min-height: 100vh;
 
-    background-color: var(--sidebar-color);
+    background-color: var(--blue);
 }
 .user-disconnect-link
 {

@@ -6,6 +6,7 @@
     --colorTextDisconnectButton : red;
     --bgrdColorDisconnectButton : rgb(193, 162, 165);
     --borderColorDisconnectButton : white;
+    --bckGrdColorPixelArtSetting  : #878685;
  }
 
  main {
@@ -92,9 +93,9 @@
 /* --- Webkit Browsers --- */
 .slider::-webkit-slider-runnable-track {
   height: 20px;
-  background: linear-gradient(to right, #44ff00 var(--range-pct, 0%), #ff0000 var(--range-pct, 0%));
+  background: linear-gradient(to right, var(--mint) var(--range-pct, 0%), var(--coral) var(--range-pct, 0%));
   border-radius: 11px;
-  border: 4px solid #fffaff;
+  border: 4px solid var(--white);
   box-shadow: 0px 2px 1px rgba(0, 0, 0, 0.9);
 }
 
@@ -102,7 +103,7 @@
   -webkit-appearance: none;
   height: 34px;
   width: 34px;
-  background: #ffffff;
+  background: var(--white);
   border-radius: 14px;
   border: 7px solid #99a4a8;
   box-shadow: 0px 4px 16px rgba(0, 179, 255, 0.8);
@@ -112,18 +113,18 @@
 /* --- pour firefox --- */
 .slider::-moz-range-track {
   height: 20px;
-  background: linear-gradient(to right, #44ff00 var(--range-pct, 0%), #ff0000 var(--range-pct, 0%));
+  background: linear-gradient(to right, var(--mint) var(--range-pct, 0%), var(--coral) var(--range-pct, 0%));
   border-radius: 11px;
-  border: 4px solid #fffaff;
+  border: 4px solid var(--white);
   box-shadow: 0px 2px 1px rgba(0, 0, 0, 0.9);
 }
 
 .slider::-moz-range-thumb {
   height: 34px;
   width: 34px;
-  background: #ffffff;
+  background: var(--white);
   border-radius: 14px;
-  border: 7px solid #99a4a8;
+  border: 7px solid var(--text-secondary);
   box-shadow: 0px 4px 16px rgba(0, 179, 255, 0.8);
 }
 
@@ -134,7 +135,7 @@
     width: 100%;
     height: 100%;
 
-    background: radial-gradient(circle, transparent 70%, white 150%);
+    background: radial-gradient(circle, transparent 70%, var(--cyan) 150%);
 
     pointer-events: none;
 }
@@ -163,62 +164,6 @@ form {
     z-index: 999;
 }
 
-#difficulty-choice {
-    margin : 10px auto 50px auto;
-    padding : 10px 20px;
-
-    font-family: retro;
-    letter-spacing: 2px;
-
-    border-radius: 20px;
-    border: var(--primary-color) 2px solid;
-}
-
-option[value=ez] {
-    color : var(--ui-green);
-}
-
-option[value=meh] {
-    color : var(--medium);
-}
-
-option[value=hard] {
-    color : var(--hard);
-}
-
-.diff-tuto {
-    display : block;
-    position: relative;
-
-    width: fit-content;
-
-    margin : 10px 10px 10px 47%;
-}
-
-.explications {
-    display: none;
-    position: absolute;
-
-    top : 100%;
-    left: 50%;
-    padding : 12px 16px;
-
-    transform: translateX(-50%);
-    background-color: var(--exp-bg);
-    min-width: none;
-    color: var(--font-colorexp);
-    text-shadow: 2px 1px var(--bg-grid);
-    border-radius: 20px;
-    border: var(--border-exp) 1px solid;
-}
-
-.diff-tuto:hover .explications {
-    display: block !important;
-
-    width: 500px;
-
-    z-index: 1;
-}
 
 .onoff {
     display: flex;
@@ -259,7 +204,7 @@ option[value=hard] {
     height: 25px;
     width: 50px;
 
-    background-color: #eee;
+    background-color: var(--text-secondary);
     background-image: -webkit-linear-gradient(hsla(0,0%,100%,.1), hsla(0,0%,0%,.1));
 
     border-radius: 25px;
@@ -311,6 +256,120 @@ option[value=hard] {
     transform: scale(1.3);
 }
 
+.pixart-grid
+{
+    display : grid;
+    grid-template-columns: repeat(24, 1fr);
+    width: min(500px, 60vw);
+    height: min(500px, 60vw);
+}
+
+.pixart-grid .cell
+{
+    border: 1px solid rgb(0,0,0);
+}
+
+.container-pixArtMaker
+{
+    display : flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position : absolute;
+    top : 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    width : min(70vw, 700px);
+    height: auto;
+    background-color: var(--bckGrdColorPixelArtSetting);
+    border-radius : 20px;
+    padding : 20px;
+    box-sizing: border-box;
+
+    opacity : 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition : opacity 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), visibility 0.4s;
+}
+
+.container-pixArtMaker.active
+{
+    opacity : 1;
+    visibility: visible;
+    pointer-events: all;
+    transform: translate(-50%, -50%);
+}
+
+.palette {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    display: grid;
+    width: 100%;
+    height: auto;
+    grid-template-columns: repeat(18, 1fr);
+}
+
+.palette .color {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+}
+
+.palette .color:nth-child(1) { background-color: red; }
+.palette .color:nth-child(2) { background-color: white; }
+.palette .color:nth-child(3) { background-color: blue; }
+.palette .color:nth-child(4) { background-color: green; }
+.palette .color:nth-child(5) { background-color: orange; }
+.palette .color:nth-child(6) { background-color: pink; }
+.palette .color:nth-child(7) { background-color: purple; }
+.palette .color:nth-child(8) { background-color: brown; }
+.palette .color:nth-child(9) { background-color: black; }
+.palette .color:nth-child(10) { background-color: yellow; }
+.palette .color:nth-child(11) { background-color: lightgreen; }
+.palette .color:nth-child(12) { background-color: lightblue; }
+.palette .color:nth-child(13) { background-color: magenta; }
+.palette .color:nth-child(14) { background-color: cyan; }
+.palette .color:nth-child(15) { background-color: gold; }
+.palette .color:nth-child(16) { background-color: silver; }
+.palette .color:nth-child(17) { background-color: khaki; }
+.palette .color:nth-child(18) { background-color: darkred; }
+
+#pencil, #eraser, #bucket, #leave, #confirm {
+    background-size: 100%;
+    background-color: transparent;
+    border: none;
+    width: 64px;
+    height: 64px;
+    image-rendering: pixelated;
+}
+
+#pencil { background-image: url("../assets/Pencil.png"); }
+#eraser { background-image: url("../assets/Eraser.png"); }
+#bucket { background-image: url("../assets/ColorBucket.png"); }
+#leave { background-image: url("../assets/Leave.png"); background-size: 100% 100%; }
+#confirm { background-image: url("../assets/Confirm.png"); background-size: 100% 100%; }
+
+#icon-preview {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#user-pixel-art {
+    width: 64px;
+    height: 64px;
+    image-rendering: pixelated;
+    border: 3px double black;
+}
+
+#modifyIcon
+{
+    left : 50%;
+    text-align: center;
+    align-items: center;
+}
 @keyframes move-it
 {
     0%

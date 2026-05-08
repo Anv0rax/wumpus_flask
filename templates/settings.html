@@ -29,7 +29,7 @@
         <audio id="mario" preload="auto" autoplay loop>
             <source src="{{url_for('static', filename='assets/songs/Musique-Mario.mp3')}}" type="audio/mp3">
         </audio>
-        <form id="form">
+        <form id="form" method="POST" action="/settings">
             <h2>⚙⚙ Settings ⚙⚙</h2>
             <label for="sfx">SFX Sounds</label><br>
                 <input id="sfx" type="range" class="slider" min="0" max="100" step="5" value="25"><p id="pSfx"></p><br>
@@ -38,9 +38,6 @@
             <label for="light">Luminosity</label><br>
                 <input id="light" type="range" class="slider" min="50" max="150" step="5" value="100"><p id="pLum"></p></label><br>
             <div class="onoff">
-                <label class="check">Dark Mode
-                    <input type="checkbox">
-                </label><br>
                 <label class="checkSound">
                     <div>
                         <p>Mute sound & songs</p>
@@ -54,7 +51,63 @@
                     <input type="checkbox">
                 </label>
             </div>
+            {% if 'username' in session %}
+            <div class="modifyIcon">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                  {% if messages %}
+                    {% for category, message in messages %}
+                      <div class="alert alert-{{ category }}" role="alert">
+                        {{ message }}
+                      </div>
+                    {% endfor %}
+                  {% endif %}
+                {% endwith %}
 
+                    <div id="buttons-form">
+                        <button id="showGrid" type="button" class="btn">Change icon</button>
+
+                        <button id="saveButton" type="submit" class="btn">Save changes</button>
+                    </div>
+
+                    <div id="icon-preview">
+                        <p>Icon :</p>
+                        <img id="user-pixel-art" src="" alt="Your own-made icon" onerror="this.src='/static/assets/Placeholder.png'">
+                    </div>
+
+                    <input type="hidden" name="icon" id="icon-data">
+
+                    <div class="container-pixArtMaker">
+                        <div class="pixart-grid"></div>
+                        <div class="palette">
+                            <div class="color" data-color="red"></div>
+                            <div class="color" data-color="white"></div>
+                            <div class="color" data-color="blue"></div>
+                            <div class="color" data-color="green"></div>
+                            <div class="color" data-color="orange"></div>
+                            <div class="color" data-color="pink"></div>
+                            <div class="color" data-color="purple"></div>
+                            <div class="color" data-color="brown"></div>
+                            <div class="color" data-color="black"></div>
+                            <div class="color" data-color="yellow"></div>
+                            <div class="color" data-color="lightgreen"></div>
+                            <div class="color" data-color="lightblue"></div>
+                            <div class="color" data-color="magenta"></div>
+                            <div class="color" data-color="cyan"></div>
+                            <div class="color" data-color="gold"></div>
+                            <div class="color" data-color="silver"></div>
+                            <div class="color" data-color="khaki"></div>
+                            <div class="color" data-color="darkred"></div>
+                        </div>
+                        <div class="pencil-eraserButtons">
+                            <button type="button" id="eraser"></button>
+                            <button type="button" id="pencil"></button>
+                            <button type="button" id="bucket"></button>
+                            <button type="button" id="leave"></button>
+                            <button type="button" id="confirm"></button>
+                        </div>
+                    </div>
+            </div>
+            {% endif %}
         </form>
     </div>
 {% endblock %}

@@ -2,8 +2,8 @@ document.addEventListener('DOMContentLoaded', function()
 {
     let currentColor = "none";
     let currentTool = "pencil";
-    let greenColor = "#18ff03";
-    let redColor = "#ff0000";
+    let greenColor = "#3DCC6A";
+    let redColor = "#FF5A3D";
 
     const inputUserName = document.getElementById("username");
     const inputPswrd = document.getElementById("password");
