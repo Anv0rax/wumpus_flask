@@ -26,15 +26,10 @@
         <audio id="son4" preload="auto">
             <source src="{{url_for('static', filename='assets/sounds/Slider.mp3')}}" type="audio/mp3">
         </audio>
-        <audio id="mario" preload="auto" autoplay loop>
-            <source src="{{url_for('static', filename='assets/songs/Musique-Mario.mp3')}}" type="audio/mp3">
-        </audio>
         <form id="form" method="POST" action="/settings">
             <h2>⚙⚙ Settings ⚙⚙</h2>
             <label for="sfx">SFX Sounds</label><br>
                 <input id="sfx" type="range" class="slider" min="0" max="100" step="5" value="25"><p id="pSfx"></p><br>
-            <label for="music">Music</label><br>
-                <input id="music" type="range" class="slider" min="0" max="100" step="5" value="5"><p id="pMusic"></p><br><br><br>
             <label for="light">Luminosity</label><br>
                 <input id="light" type="range" class="slider" min="50" max="150" step="5" value="100"><p id="pLum"></p></label><br>
             <div class="onoff">

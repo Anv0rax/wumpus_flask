@@ -8,15 +8,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const lowPerformanceMode = document.getElementById('backgroundAnimationRings');
     const checkBouton = document.querySelectorAll('.check');
     const sliderSound = document.getElementById('son4');
-    const mainMusic = document.getElementById('mario');
 
     const luminosity = document.getElementById('light');
     const sfx = document.getElementById('sfx');
-    const volumeValueOfmusic = document.getElementById('music');
     const imageOfSound = document.getElementById('sound');
     const paragraphLum = document.getElementById('pLum');
     const paragraphSfx = document.getElementById('pSfx');
-    const paragraphMusic = document.getElementById('pMusic');
 
     const checkFullScreen = document.getElementById('checkFs');
     const checkPerformanceMode = document.getElementById('checkPerf');
@@ -30,22 +27,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const redColor = "#ff0000";
     /* ======== the code ========== */
 
-    let musicVolume = 0.05;
     let soundVolume = 0.25;
-    mainMusic.volume = musicVolume;
     sliderSound.volume = soundVolume;
 
-    window.addEventListener('mousedown', () =>
-    {
-        if (mainMusic.paused)
-        {
-            mainMusic.play();
-        }
-    }, { once: true }); // Because of the Security rules put by Chrome, safari, etc... I'm obliged to force the user to click on the page, because chrome is denying it.
 
     paragraphLum.textContent = luminosity.value + '%';
     paragraphSfx.textContent = sfx.value + "%";
-    paragraphMusic.textContent = volumeValueOfmusic.value + "%";
 
     checkBouton.forEach((el) => {
         el.addEventListener('click', () => {
@@ -67,12 +54,8 @@ document.addEventListener('DOMContentLoaded', () => {
             interactSound.volume = 0;
             sliderSound.volume = 0;
             sfx.value = 0;
-            volumeValueOfmusic.value = 0;
             paragraphSfx.textContent = "Mute activé !";
-            paragraphMusic.textContent = "Mute activé !";
             DisableSlider(sfx);
-            DisableSlider(volumeValueOfmusic);
-            SongVolume(mainMusic, volumeValueOfmusic.value);
         }
         else
         {
@@ -81,12 +64,8 @@ document.addEventListener('DOMContentLoaded', () => {
             interactSound.volume = soundVolume;
             sliderSound.volume = soundVolume;
             sfx.value = soundVolume*100;
-            volumeValueOfmusic.value = musicVolume*100;
             EnableSlider(sfx);
-            EnableSlider(volumeValueOfmusic);
-            SongVolume(mainMusic, musicVolume)
             paragraphSfx.textContent = sfx.value + "%";
-            paragraphMusic.textContent = volumeValueOfmusic.value + "%";
         }
     });
 
@@ -106,14 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
         paragraphSfx.textContent = sfx.value + "%";
     });
 
-    volumeValueOfmusic.addEventListener('input', () =>
-    {
-        PlaySound(sliderSound);
-        var val = volumeValueOfmusic.value / 100;
-        musicVolume = val;
-        SongVolume(mainMusic, val);
-        pMusic.textContent = volumeValueOfmusic.value + "%";
-    });
 
     checkPerformanceMode.addEventListener('click', (event) =>
     {
@@ -440,10 +411,6 @@ function CloseFs()
     }
 }
 
-function SongVolume(song, volumeSong)
-{
-    song.volume = volumeSong;
-}
 
 function InitSlidersColor(event)
 {

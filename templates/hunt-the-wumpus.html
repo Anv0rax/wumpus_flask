@@ -54,7 +54,7 @@
                                     {% if col[2] %}
                                         {% set divs = divs + '<div id="player"></div>' %}
                                     {% endif %}
-   
+
 
                                 {% elif col[0] == 1 %}
                                     {% set css_class = css_class + ' corridor_1' %}
@@ -78,7 +78,7 @@
                                     {% elif col[2] == -7 %}
                                         {% set divs = divs + '<div id="player" class="bot-2"></div>' %}
                                     {% endif %}
-        
+
 
                                 {% elif col[0] == 4 %}
                                     {% set css_class = css_class + ' near_hole' %}
@@ -96,7 +96,7 @@
                                     {% endif %}
                                 {% endif %}
 
-                                    
+
 
                                 {% if col[3] == 16 or col[3] == 80 or col[3] == 272 %}
                                     {% set divs = divs + '<div class="near_wumpus"></div>' %}
@@ -109,7 +109,7 @@
                                 {% if col[3] == 64 or col[3] == 80 or col[3] == 256 or col[3] == 272 %}
                                     {% set divs = divs + '<div class="bat"></div>' %}
                                 {% endif %}
-                                
+
                             {% endif %}
 
                             <div class="box {{css_class}}">
@@ -122,6 +122,33 @@
                 </tr>
             {% endfor %}
         </table>
+        {% if session['gamestate'] == -9 %}
+            <div id="ig_end_screen">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                                <h3>{{ message }}</h3>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <div class="ig_end_actions">
+                    <a href="/select-difficulty" class="btn_end" id="btn_replay">Replay</a>
+                    <a href="/stats" class="btn_end" id="btn_leaderboard">Leaderboard</a>
+                    <a href="/menu" class="btn_end" id="btn_menu">Main menu</a>
+                </div>
+            </div>
+                <div class="ig_end_actions">
+                    <a href="/select-difficulty" class="btn_end" id="btn_replay">Replay</a>
+                    <a href="/stats" class="btn_end" id="btn_leaderboard">Leaderboard</a>
+                    <a href="/menu" class="btn_end" id="btn_menu">Main menu</a>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if session['gamestate'] != -9 %}
         <form id="ig_moving" method="get">
             <button type="submit" class="ig_btn_move" id="ig_btn_move-top" name="y" value="-1"></button>
             <button type="submit" class="ig_btn_move" id="ig_btn_move-bot" name="y" value="1"></button>
@@ -129,5 +156,6 @@
             <button type="submit" class="ig_btn_move" id="ig_btn_move-left" name="x" value="-1"></button>
             <button type="submit" class="ig_btn_move" id="ig_btn_move-right" name="x" value="1"></button>
             </form>
+        {% endif %}
     </div>
 {% endblock %}

@@ -22,69 +22,78 @@
             <source id="son" src="{{url_for('static', filename='assets/sounds/rowSound.mp3')}}" type="audio/mp3">
         </audio>
         <p id="click">Click to open the leaderboard.</p>
-
-        <table id="table">
-            <thead>
+        <div id="table-wrapper">
+            <table id="table">
+                <thead>
+                    <tr>
+                        <th>Position</th>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Victories</th>
+                        <th>Eaten by the wumpus</th>
+                        <th>Wasted arrows</th>
+                        <th>Fell into the slime pit</th>
+                        <th>Bat encounters</th>
+                        <th>Score</th>
+                        <th>Icon</th>
+                    </tr>
+                </thead>
+            <tbody>
+                {% for user in users %}
                 <tr>
-                    <th>Position</th>
-                    <th>ID</th>
-                    <th>Username</th>
-                    <th>Victories</th>
-                    <th>Eaten by the wumpus</th>
-                    <th>Fell into the slime pit</th>
-                    <th>Score</th>
-                    <th>Icon</th>
+                    <td>
+                        {% if loop.index == 1 %}
+                            <img src="{{url_for('static', filename='assets/1st.png')}}" alt="1st">
+                        {% elif loop.index == 2 %}
+                            <img src="{{url_for('static', filename='assets/2nd.png')}}" alt="2nd">
+                        {% elif loop.index == 3 %}
+                            <img src="{{url_for('static', filename='assets/3rd.png')}}" alt="3rd">
+                        {% else %}
+                            {{ loop.index }}th
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ user.id }}
+                    </td>
+                    <td>
+                        {{ user.username }}
+                    </td>
+                    <td>
+                        {{ user.numberofvictories }}
+                    </td>
+                    <td>
+                        {{ user.defeats }}
+                    </td>
+                    <td>
+                        {{ user.missed }}
+                    </td>
+                    <td>
+                        {{ user.fell_slime_pit }}
+                    </td>
+                    <td>
+                        {{ user.bat_touched }}
+                    </td>
+                    <td>
+                        {{ user.score }}
+                    </td>
+                    <td>
+                        {% if user.icon %}
+                        <img src="data:image/png;base64,{{ user.icon }}"
+                             alt="{{ user.username }}"
+                             width="64" height="64"
+                             style="border-radius: 25%; border: 2px solid white">
+                        {% else %}
+                            None
+                        {% endif %}
+                    </td>
                 </tr>
-            </thead>
-        <tbody>
-            {% for user in users %}
-            <tr>
-                <td>
-                    {% if loop.index == 1 %}
-                        <img src="{{url_for('static', filename='assets/1st.png')}}" alt="1st">
-                    {% elif loop.index == 2 %}
-                        <img src="{{url_for('static', filename='assets/2nd.png')}}" alt="2nd">
-                    {% elif loop.index == 3 %}
-                        <img src="{{url_for('static', filename='assets/3rd.png')}}" alt="3rd">
-                    {% else %}
-                        {{ loop.index }}th
-                    {% endif %}
-                </td>
-                <td>
-                    {{ user.id }}
-                </td>
-                <td>
-                    {{ user.username }}
-                </td>
-                <td>
-                    {{ user.numberofvictories }}
-                </td>
-                <td>
-                    {{ user.defeats }}
-                </td>
-                <td>
-                    {{ user.fell_slime_pit }}
-                </td>
-                <td>
-                    {{ user.score }}
-                </td>
-                <td>
-                    {% if user.icon %}
-                    <img src="data:image/png;base64,{{ user.icon }}"
-                         alt="{{ user.username }}"
-                         width="64" height="64"
-                         style="border-radius: 25%; border: 2px solid white">
-                    {% else %}
-                        None
-                    {% endif %}
-                </td>
-            </tr>
-            {% else %}
-            <tr>
-                <td colspan="8">No players in the leaderboard for the moment, please retry later</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-      </table>
+                {% else %}
+                <tr>
+                    <td colspan="8">No players in the leaderboard for the moment, please retry later</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+      </div>
     </div>
 {% endblock %}
