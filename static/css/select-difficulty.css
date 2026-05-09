@@ -1,187 +1,243 @@
 main {
-    background-color: var(--bg-difficulty) !important;
+    background-color: var(--night);
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0;
     width: 100%;
+    min-height: 100%;
 }
 
 #visual_effects {
-    position: relative;
-    width: 100%;
-
-    flex-grow: 1;
-    align-self: stretch;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
 }
 
 .grid {
     position: absolute;
-
     width: 150%;
     height: 150%;
-
     background-image:
-        linear-gradient(to right, var(--bg-grid) 2px, transparent 2px),
-        linear-gradient(to bottom, var(--bg-grid) 2px, transparent 2px) !important;
-
-    background-size: 50px 50px ; /* Dimensions of the background-size. */
+        linear-gradient(to right, var(--coral) 2px, transparent 2px),
+        linear-gradient(to bottom, var(--coral) 2px, transparent 2px) !important;
+    background-size: 50px 50px;
     animation: moveGrid 2s linear infinite;
 }
 
-/* the filter of the page, that make shadow around the screen */
 .overlay {
     position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, transparent 20%, rgba(77, 122, 255, 0.2) 80%);
+}
 
-    width: 100%;
-    height: 100%;
+#soundImage {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: clamp(40px, 6vw, 70px);
+    height: clamp(40px, 6vw, 70px);
+    padding: 8px;
+    margin: clamp(8px, 2vw, 20px);
+    z-index: 10;
+    border-radius: 50%;
+    cursor: var(--cursor-pointer);
+    transition: transform 0.3s ease, background 0.3s ease;
+}
 
-    background: radial-gradient(circle, transparent 20%, var(--bg-accents) 80%);
-
-    pointer-events: none;
+#soundImage:hover {
+    background: radial-gradient(circle, rgba(77, 122, 255, 0.5) 20%, transparent 80%);
+    transform: scale(1.3);
 }
 
 #functional {
-    position: absolute;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: clamp(4px, 1.5vw, 16px);
 }
 
 form {
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    container-type: size;
+    container-name: card;
 
-    width: 60vw;
-    max-width: 700px;
-    height: 60vh;
-    /* min-height: 450px; */
-    max-height: 600px;
-    padding : 20px;
+    width: min(520px, 92vw);
+    height: min(520px, 86vh);
+
+    padding: 2cqh 3cqw;
+    overflow: hidden;
 
     font-family: retro;
+    font-size: clamp(8px, 3cqh, 13px);
     text-align: center;
-    letter-spacing: 2px;
-    color: var(--primary-color);
-    text-shadow : 2px 2px 3px var(--text-color);
-    font-size: min(2.5cqw, 1.5cqh);
-
-    background-color: var(--form) !important;
-    border-radius: 10px;
-    border: var(--primary-color) 2px solid;
-
-    z-index: 999;
-
-    container-type: size;
-    container-name: form-settings;
+    letter-spacing: 1.5px;
+    line-height: 1.9;
+    color: var(--white);
+    text-shadow: 0 0 8px rgba(77, 122, 255, 0.6);
+    background-color: rgba(34, 34, 80, 0.93);
+    border-radius: 14px;
+    border: 2px solid var(--blue);
+    box-shadow: 0 0 40px rgba(77, 122, 255, 0.2), inset 0 0 60px rgba(13, 13, 26, 0.4);
 }
 
 form h2 {
-    font-size: min(9cqw, 6cqh);
+    font-family: titles;
+    font-size: clamp(18px, 9cqh, 40px);
+    color: var(--coral);
+    text-shadow: 0 0 12px var(--blue);
+    margin-bottom: 2cqh;
+    letter-spacing: 3px;
+}
+
+.alert {
+    padding: 1cqh 2cqw;
+    margin-bottom: 1cqh;
+    border-radius: 6px;
+    font-size: clamp(6px, 1.8cqh, 11px);
+    color: var(--white);
+    background-color: rgba(255, 90, 61, 0.25);
+    border: 1px solid var(--coral);
+}
+
+label > p, form > p {
+    font-size: clamp(8px, 2.8cqh, 12px);
+    margin: 1.2cqh 0 0.5cqh 0;
+    color: var(--white);
+    cursor: var(--cursor-default);
 }
 
 #difficulty-choice {
-    margin : 10px auto 50px auto;
-    padding : 10px 20px;
+    display: block;
+
+    padding: 1cqh 2.5cqw;
+    margin: 0.8cqh auto 1.5cqh auto;
 
     font-family: retro;
+    font-size: clamp(8px, 2.5cqh, 12px);
     letter-spacing: 2px;
 
+    color: var(--white);
+
+    background-color: var(--night);
     border-radius: 20px;
-    border: var(--primary-color) 2px solid;
+    border: 2px solid var(--blue);
+    outline: none;
+
+    cursor: var(--cursor-pointer);
+
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-option[value=easy] {
-    color : var(--greencolorCheckBox);
+#difficulty-choice:hover, #difficulty-choice:focus {
+    border-color: var(--cyan);
+    box-shadow: 0 0 10px rgba(64, 200, 224, 0.4);
 }
 
-option[value=medium] {
-    color : var(--orange);
-}
-
-option[value=hard] {
-    color : var(--primary-color);
-}
+option[value="0"] { color: var(--mint); }
+option[value="1"] { color: var(--gold); }
+option[value="2"] { color: var(--coral); }
 
 .container-explanations {
-    display : block;
+    display: block;
     position: relative;
-
     width: fit-content;
+    margin: 0.4cqh auto;
+    cursor: var(--cursor-pointer);
+}
 
-    margin : 10px 10px 10px 47%;
+.helpImage {
+    width: clamp(16px, 4cqh, 26px);
+    height: clamp(16px, 4cqh, 26px);
+    opacity: 0.65;
+    transition: opacity 0.2s ease;
+}
+
+.container-explanations:hover .helpImage {
+    opacity: 1;
 }
 
 .explanations {
     display: none;
     position: absolute;
-
-    top : 100%;
+    top: 110%;
     left: 50%;
-    padding : 12px 16px;
-
     transform: translateX(-50%);
-    background-color: var(--exp-bg);
-    min-width: none;
-    color: var(--font-colorexp);
-    text-shadow: 2px 1px var(--bg-grid);
-    border-radius: 20px;
-    border: var(--border-exp) 1px solid;
+    z-index: 100;
+    width: clamp(160px, 55cqw, 400px);
+    padding: 1.5cqh 2cqw;
+    font-size: clamp(6px, 1.6cqh, 10px);
+    line-height: 1.8;
+    color: var(--white);
+    text-align: left;
+    background-color: rgba(34, 34, 80, 0.98);
+    border-radius: 12px;
+    border: 1px solid var(--cyan);
+    box-shadow: 0 0 20px rgba(64, 200, 224, 0.25);
 }
 
 .container-explanations:hover .explanations {
-    display: block !important;
-
-    width: 500px;
-
-    z-index: 1;
+    display: block;
 }
 
 .checkButtonMode {
     display: flex;
     flex-direction: column;
-    margin: 0.5vh 0;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: clamp(8px, 3cqh, 24px);
+    margin: 0.8cqh 0;
+}
+
+.selectGamemode {
+    display: flex;
+    align-items: center;
+    gap: clamp(6px, 1.5cqw, 14px);
+    font-size: clamp(8px, 2.8cqh, 12px);
+    color: var(--white);
+    cursor: var(--cursor-pointer);
+    white-space: nowrap;
 }
 
 .checkButtonMode input[type="checkbox"] {
-    height: 25px;
-    width: 75px;
-
-    padding-right: 25px;
-
-    background-image :
-        -webkit-linear-gradient(hsla(0,0%,0%,.1), hsla(0,0%,100%,.1)),
-        -webkit-linear-gradient(left, var(--redcolorCheckBox) 50%, var(--greencolorCheckBox) 50%);
+    appearance: none;
+    height: clamp(20px, 5cqh, 28px);
+    width: clamp(58px, 14cqh, 82px);
+    flex-shrink: 0;
+    background-image:
+        linear-gradient(hsla(0,0%,0%,.1), hsla(0,0%,100%,.1)),
+        linear-gradient(to right, var(--coral) 50%, var(--mint) 50%);
     background-size: 100% 100%, 200% 100%;
     background-position: 0 0, 15px 0;
-
-    border-radius: 25px;
-    box-shadow :
+    border-radius: 26px;
+    box-shadow:
         inset 0 1px 4px hsla(0,0%,0%,.5),
         inset 0 0 10px hsla(0,0%,0%,.5),
         0 0 0 1px hsla(0,0%,0%,.1),
-        0 -1px 2px 2px hsla(0,0%,0%,.25),
-        0 2px 2px 2px hsla(0,0%,100%,.75);
-
-    cursor: pointer;
-
-    appearance: none;
-    transition: 0.25s;
+        0 2px 2px 2px hsla(0,0%,100%,.15);
+    cursor: var(--cursor-pointer);
+    transition: background-position 0.25s ease;
 }
 
-.checkButtonMode input[type="checkbox"]:after {
+.checkButtonMode input[type="checkbox"]::after {
     display: block;
-
-    height: 25px;
-    width: 50px;
-
-    background-color: #eee;
-    background-image: -webkit-linear-gradient(hsla(0,0%,100%,.1), hsla(0,0%,0%,.1));
-
-    border-radius: 25px;
+    height: clamp(20px, 5cqh, 28px);
+    width: clamp(38px, 10cqh, 56px);
+    background-color: #ddd;
+    background-image: linear-gradient(hsla(0,0%,100%,.15), hsla(0,0%,0%,.1));
+    border-radius: 26px;
     box-shadow:
-        inset 0 1px 1px 1px hsla(0,0%,100%,1),
-        inset 0 -1px 1px 1px hsla(0,0%,0%,.25),
-        0 1px 3px 1px hsla(0,0%,0%,.5),
-        0 0 2px hsla(0,0%,0%,.25);
-
+        inset 0 1px 1px hsla(0,0%,100%,1),
+        inset 0 -1px 1px hsla(0,0%,0%,.25),
+        0 1px 3px hsla(0,0%,0%,.5);
     content: '';
 }
 
@@ -192,56 +248,48 @@ option[value=hard] {
 }
 
 .validateForm {
-    padding: 10px;
-    margin: 10px;
+    display: inline-block;
+
+    padding: 1.5cqh 4cqw;
+    margin-top: 2cqh;
 
     font-family: retro;
-
-    transition : transform 1s ease;
+    font-size: clamp(8px, 2.8cqh, 12px);
+    letter-spacing: 2px;
+    color: var(--white);
+    background-color: rgba(77, 122, 255, 0.15);
+    border: 2px solid var(--blue);
+    border-radius: 8px;
+    cursor: var(--cursor-pointer);
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .validateForm:hover {
-    color: var(--primary-color);
-
-    background-color: var(--hovercolor-submit);
-
-    transform: scale(1.1);
+    background-color: rgba(61, 204, 106, 0.3);
+    border-color: var(--mint);
+    color: var(--mint);
+    box-shadow: 0 0 14px rgba(61, 204, 106, 0.45);
+    transform: scale(1.06);
 }
-
-#soundImage {
-    position: absolute;
-
-    padding : 10px;
-    margin: 20px;
-
-    top: 0;
-    right : 0;
-
-    transition: transform 1s ease;
-    z-index: 10;
-}
-
-#soundImage:hover {
-    background: radial-gradient(circle, rgba(34, 0, 255, 0.71) 20%, transparent 80%);
-
-    transform: scale(1.3);
-}
-
 
 @keyframes moveGrid {
-    from {
-        transform: translate(0, 0);
-    }
-    to {
-        /* Déplacement d'exactement un carreau (c'est sa qui rend l'animation fluide)*/
-        /* X positif = droite, Y négatif = haut */
-        transform: translate(-50px, -50px);
-    }
+    from { transform: translate(0, 0); }
+    to   { transform: translate(-50px, -50px); }
 }
 
-@container form-settings (max-width: 1000px) {
-    #text {
-        height: 20%;
-        font-size: min(3.5cqw, 2.5cqh);
+@media only screen and (max-width: 360px) {
+    form {
+        border-radius: 8px;
+        letter-spacing: 1px;
+    }
+
+    .checkButtonMode {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .explanations {
+        left: 0;
+        transform: none;
     }
 }

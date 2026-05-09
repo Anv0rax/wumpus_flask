@@ -45,7 +45,7 @@ def not_found(e):
 
 @app.route("/")
 def home() :
-    return redirect("/select-difficulty")
+    return redirect("/menu")
 
 @app.route("/start")
 def start() :

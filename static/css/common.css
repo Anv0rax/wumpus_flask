@@ -324,11 +324,122 @@ footer {
 
 		flex-grow: 1;
 	}
+}
 
-	@media only screen and (width >= 500px) {
+@media only screen and (orientation: portrait) and (width < 500px) {
 
-	}
-	@media only screen and (width < 500px) {
+    header h1 {
+        font-size: 28px;
+        line-height: 32px;
+    }
 
-	}
+    header div a {
+        font-size: 18px;
+        min-width: 70px;
+        margin: 0 8px;
+    }
+
+    header {
+        min-height: 120px;
+        padding: 8px 6px;
+    }
+
+    header hr {
+        margin-top: 10px;
+    }
+
+    header > div {
+        width: 100%;
+        height: auto;
+        gap: 6px;
+    }
+
+    main {
+        padding: 10px 8px;
+        align-items: flex-start;
+    }
+}
+
+@media only screen and (orientation: portrait) and (width < 360px) {
+
+    header h1 {
+        font-size: 22px;
+        line-height: 26px;
+    }
+
+    header div a {
+        font-size: 14px;
+        min-width: 55px;
+        margin: 0 4px;
+    }
+
+    header {
+        min-height: 100px;
+        padding: 6px 4px;
+    }
+
+    header > div {
+        gap: 4px;
+    }
+
+    main {
+        padding: 6px 4px;
+    }
+
+    footer {
+        height: 120px;
+    }
+}
+
+@media only screen and (orientation: landscape) and (height < 500px) {
+
+    header {
+        width: 160px;
+        padding: 6px 4px;
+    }
+
+    header h1 {
+        font-size: 20px;
+        line-height: 24px;
+    }
+
+    header div a {
+        font-size: 16px;
+        margin: 8px 0;
+    }
+
+    header > div {
+        max-height: 300px;
+        gap: 4px;
+    }
+
+    main {
+        padding: 6px;
+    }
+}
+
+@media only screen and (orientation: landscape) and (height < 360px) {
+
+    header {
+        width: 130px;
+    }
+
+    header h1 {
+        font-size: 16px;
+        line-height: 17px;
+    }
+
+    header div a {
+        font-size: 13px;
+        margin: 4px 0;
+    }
+
+    header hr {
+        margin-top: 6px;
+        height: 3px;
+    }
+
+    footer {
+        height: 80px;
+    }
 }
