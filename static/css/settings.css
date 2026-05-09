@@ -1,4 +1,4 @@
- :root
+:root
  {
     --maskImageSettingsColorBg : radial-gradient(black 75%, transparent 75%);
 	--bgImageSettingsAnimationColor : radial-gradient(rgb(255, 255, 255) 75%, transparent 75%), radial-gradient(white 75%, transparent 75%);
@@ -128,6 +128,7 @@
   box-shadow: 0px 4px 16px rgba(0, 179, 255, 0.8);
 }
 
+
 /* le filtre */
 .overlay {
     position: absolute;
@@ -162,6 +163,47 @@ form {
     border: var(--primary-color) 2px solid;
 
     z-index: 999;
+}
+
+#buttons-form {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+    padding-bottom: 10px;
+}
+
+#buttons-form .btn {
+    font-family: retro;
+    font-size: 12px;
+    padding: 10px 15px;
+    cursor: pointer;
+    border: 4px solid var(--coral);
+    border-radius: 8px;
+    background-color: var(--night);
+    color: var(--coral);
+    text-shadow : 1px 1px 1px var(--text-color);
+
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.4);
+
+    transition: all 0.1s ease;
+    text-transform: uppercase;
+}
+
+#saveButton {
+    color: var(--mint) !important;
+    border: 4px solid var(--mint) !important;
+}
+
+#buttons-form .btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.5);
+    background-color: var(--night);
+}
+
+#buttons-form .btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.4);
 }
 
 
@@ -262,36 +304,36 @@ form {
     grid-template-columns: repeat(24, 1fr);
     width: min(500px, 60vw);
     height: min(500px, 60vw);
+    background-color: rgba(255, 255, 255, 0.22);
 }
 
 .pixart-grid .cell
 {
-    border: 1px solid rgb(0,0,0);
+    border: 1px solid var(--night)
 }
 
-.container-pixArtMaker
-{
-    display : flex;
+.container-pixArtMaker {
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    position : absolute;
-    top : 50%;
+    position: absolute;
+    top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(0.8);
     z-index: 10;
-    width : min(70vw, 700px);
+    width: min(70vw, 700px);
     height: auto;
-    background-color: var(--bckGrdColorPixelArtSetting);
-    border-radius : 20px;
-    padding : 20px;
+    background-color: var(--blue);
+    border-radius: 20px;
+    border: 2px solid var(--white);
+    padding: 20px;
     box-sizing: border-box;
-
-    opacity : 0;
+    opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transition : opacity 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), visibility 0.4s;
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), visibility 0.4s;
 }
 
 .container-pixArtMaker.active
@@ -407,4 +449,19 @@ form {
     {
         background-position: 0% 42%;
     }
+}
+
+@media (max-height: 800px)
+{
+    form
+    {
+        font-size: x-small;
+        height : 50%;
+    }
+
+    #buttons-form .btn
+    {
+        font-size : x-small;
+    }
+
 }

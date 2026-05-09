@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
         soundAnimation.currentTime = 1;
         soundAnimation.play();
         click.style.display = 'none';
-        table.style.display = 'block';
+        table.style.display = 'table';
 
         rows.forEach((row, index) => {
         row.animate(

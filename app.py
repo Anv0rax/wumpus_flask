@@ -24,6 +24,36 @@ app = Flask(
 
 app.config["SECRET_KEY"] = THE_SECRET_KEY
 
+def finish_game(result_code):
+    if 'username' not in session :
+        return
+
+    column_map = {
+        -1: "numberofvictories",
+        -2: "defeats",
+        -3: "fell_slime_pit",
+        -4: "missed",
+        3: "bat_touched"
+    }
+
+    column_to_update = column_map.get(result_code)
+
+    if not column_to_update:
+        return
+
+    points = 0
+    if result_code == -1:
+        points = (session.get('difficulty', 0) + 1) * 10
+
+    try:
+        with get_connection() as conn:
+            with conn.cursor() as cursor:
+                query = f"""UPDATE user_table SET {column_to_update} = {column_to_update} + 1, score = score + %s WHERE username = %s"""
+                cursor.execute(query, (points, session['username']))
+                conn.commit()
+    except Exception as e:
+        print(f"Error, couldn't register the new value of the score : {e}")
+
 @app.context_processor
 def inject_user():
     user = None
@@ -88,6 +118,10 @@ def menu():
 
 @app.route("/play")
 def play() :
+    if 'username' not in session:
+        flash("Please be connected to play !", "danger")
+        return redirect("/login")
+
     if session.get("map") and session.get("player") :
         if session.get("gamestate", default=0) > 0 :
             coord = request.args
@@ -99,7 +133,7 @@ def play() :
                 player = session.get("player")
                 matrix = session.get("map")
                 if not shoot :
-                    moved = move_item(matrix, player[0], player[1], y, x, 
+                    moved = move_item(matrix, player[0], player[1], y, x,
                                     blind=session.get("blind", default=False))
 
                     if moved[0] :
@@ -110,11 +144,12 @@ def play() :
                             player = follow_corridor(matrix, player[0], player[1], y, x, blind=session.get("blind", default=False))
 
                         session["gamestate"] = check_player(matrix, player)
-                        
+
                         match session.get("gamestate") :
                             # case 2 : # add to bd
                             case 3 : # walked on a triggered bat
                                 # remove bat and player
+                                finish_game(3)
                                 matrix[player[0]][player[1]][T_ELEMS] -= TRIG_BAT
                                 matrix[player[0]][player[1]][T_PLAYER] = IS_NOT_HERE
                                 matrix[player[0]][player[1]][T_VISION] = not session.get("blind", default=False)
@@ -123,25 +158,26 @@ def play() :
                                 matrix[bat[0]][bat[1]][T_ELEMS] += BAT
                                 # move player
                                 player = init_player(matrix)
+
                             case i if i < 0 :
                                 reveal_map(matrix)
-                                # finish_in_db(i)
+                                finish_game(i)
                                 match i :
                                     case -1 : # Win
                                         print("\n\n\nWin")
-                                        # write in BD
+                                        flash("YOU WIN ! You have killed the wumpus, congratulations !", "success")
 
                                     case -2 : # Wumpus
                                         print("\n\n\nLoose by wumpus")
-                                        # write in BD
+                                        flash("YOU LOSE ! The wumpus got you.", "danger")
 
                                     case -3 : # Hole
                                         print("\n\n\nLoose by hole")
-                                        # write in BD
+                                        flash("YOU LOSE ! You fell into the slime pit...", "danger")
 
                                     case -4 : # Missed
                                         print("\n\n\nLoose by missing")
-                                        # write in BD
+                                        flash("YOU LOSE ! You shoot your only arrow !", "danger")
 
                                 session["gamestate"] = -9
 
@@ -149,12 +185,21 @@ def play() :
                 else :
                     reveal_map(matrix)
                     player_pos = matrix[player[0]][player[1]][T_PLAYER]
-                    session["gamestate"] = shoot_arrow(matrix, player, y, x)
-                    matrix[player[0]][player[1]][T_PLAYER] = player_pos 
 
-                    print("\n\n\nWIN\n")
-                    # finish_in_db(session.get("gamestate"))
-                    # write in BD
+                    session["gamestate"] = shoot_arrow(matrix, player, y, x)
+                    matrix[player[0]][player[1]][T_PLAYER] = player_pos
+
+                    if session["gamestate"] == -1:
+                        print("\n\n\nWIN\n")
+                        flash("YOU WIN ! You have killed the wumpus, congratulations !", "success")
+                    else:
+                        print("\n\n\nYOU LOSE, MISSED THE WUMPUS !\n")
+                        flash("YOU LOSE ! You shoot your only arrow !", "danger")
+
+                    finish_game(session["gamestate"])
+
+                    session["gamestate"] = -9
+
                 session["map"] = matrix
 
             return render_template("hunt-the-wumpus.html", grid=session["map"])
@@ -166,6 +211,10 @@ def play() :
 
 @app.route('/select-difficulty', methods=["GET", "POST"])
 def select() :
+    if 'username' not in session:
+        flash("Please be connected to play !", "danger")
+        return redirect("/login")
+
     if request.method == "POST":
         correct = False
         coord = request.form
@@ -174,8 +223,8 @@ def select() :
         blind = coord.get("blind", type=int, default=0)
 
         correct = (difficulty in (EASY, NORMAL, HARD) and express in (0,1) and blind in (0,1))
-        
-        if correct : 
+
+        if correct :
             session["difficulty"] = difficulty
             session["express"] = bool(express)
             session["blind"] = bool(blind)
@@ -183,23 +232,19 @@ def select() :
             # Ajouter une game au joueur
             return redirect("/start")
         else :
-            return render_template("select-difficulty.html", 
+            return render_template("select-difficulty.html",
                                    s_diff=session.get("difficulty", default=1),
-                                   s_express=session.get("express", default=False), 
+                                   s_express=session.get("express", default=False),
                                    s_blind=session.get("blind", default=False))
     else :
-       return render_template("select-difficulty.html", 
+       return render_template("select-difficulty.html",
                                    s_diff=session.get("difficulty", default=1),
-                                   s_express=session.get("express", default=False), 
-                                   s_blind=session.get("blind", default=False)) 
+                                   s_express=session.get("express", default=False),
+                                   s_blind=session.get("blind", default=False))
 
 
 @app.route('/settings', methods=["GET", "POST"])
 def settings():
-    if 'username' not in session:
-        flash("Please be connected to modify the icon.", "danger")
-        return redirect("/login")
-
     if request.method == "POST":
         icon_data = request.form.get("icon")
         if icon_data:
@@ -262,8 +307,6 @@ def login():
         except Exception as e:
             flash(f"An error has occured ; {e}", "danger")
     return render_template("login.html")
-
-
 
 @app.route('/register', methods=["GET", "POST"])
 def register():

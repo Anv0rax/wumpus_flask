@@ -283,47 +283,85 @@ footer {
 }
 
 @media only screen and (orientation: portrait) {
-	#sidebar {
-		flex-direction: column;
+    #sidebar {
+       flex-direction: column;
+       width: 100%;
+       min-height: 100vh;
+    }
 
-		width: 100%;
-		min-height: 100vh;
-	}
+    #sidebar a
+    {
+        font-size: 25px;
+    }
 
-	header {
-		justify-content: center;
+    header {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
         align-items: center;
+        text-align: center;
+        width: 100%;
+        min-height: fit-content;
+        height: auto;
+        padding-bottom: 10px;
+        margin: 0 auto;
+    }
 
-		width: 100%;
-		min-height: 160px;
+    header>div {
+       justify-content: space-evenly;
+       flex-wrap: wrap;
+       width: 95%;
+       height: auto;
+       border-collapse: collapse;
+    }
 
-		margin: 0 auto ;
-	}
+    header div a {
+       width: fit-content;
+       min-width: 100px;
+       margin: 10px 20px;
+    }
 
-	header>div {
-		justify-content: space-evenly;
-		flex-wrap: wrap;
+    .user-disconnect-link {
+        position: relative;
+        left: auto;
+        bottom: auto;
+        margin: 10px;
 
-		width: 95%;
-		height: 30%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
 
-		border-collapse: collapse;
-	}
+        padding: 8px 15px;
+        width: fit-content;
+        min-width: 90px;
+        height: 60px;
+    }
 
-	header div a {
-		width: fit-content;
-		min-width: 100px;
-		height: 100%;
+    .user-disconnect-link img {
+        width: 40px !important;
+        height: 40px !important;
+        border-radius: 4px;
+        order: 2;
+    }
 
-		margin: 0 20px;
-	}
+    .user-disconnect-link .user-state,
+    .user-disconnect-link .disconnect-state {
+        order: 1;
+        font-size: 14px;
+        text-align: center;
+        flex: 0 1 auto;
+    }
 
-	main {
-		width: 100%;
-		min-height: 80%;
+    main {
+       width: 100%;
+       min-height: 80%;
+       flex-grow: 1;
+    }
 
-		flex-grow: 1;
-	}
+		/* flex-grow: 1;
+	} */
 }
 
 @media only screen and (orientation: portrait) and (width < 500px) {
