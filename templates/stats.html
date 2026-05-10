@@ -16,18 +16,15 @@
         <div class="grid"></div>
         <div class="overlay"></div>
     </div>
-
-    <div id="functional">
         <audio id="soundTableAnimation" preload="auto">
-            <source id="son" src="{{url_for('static', filename='assets/sounds/rowSound.mp3')}}" type="audio/mp3">
+            <source id="son" src="{{url_for('static', filename='assets/sounds/Slider.mp3')}}" type="audio/mp3">
         </audio>
-        <p id="click">Click to open the leaderboard.</p>
+    <div id="functional">
         <div id="table-wrapper">
             <table id="table">
                 <thead>
                     <tr>
                         <th>Position</th>
-                        <th>ID</th>
                         <th>Username</th>
                         <th>Victories</th>
                         <th>Eaten by the wumpus</th>
@@ -51,9 +48,6 @@
                         {% else %}
                             {{ loop.index }}th
                         {% endif %}
-                    </td>
-                    <td>
-                        {{ user.id }}
                     </td>
                     <td>
                         {{ user.username }}

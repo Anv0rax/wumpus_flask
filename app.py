@@ -245,6 +245,10 @@ def select() :
 
 @app.route('/settings', methods=["GET", "POST"])
 def settings():
+    if 'username' not in session :
+        flash("Please, log into the site or create a account to see your account.", "danger")
+        return redirect("/login")
+
     if request.method == "POST":
         icon_data = request.form.get("icon")
         if icon_data:
@@ -261,7 +265,20 @@ def settings():
                 flash(f"SQL error : {e}", "danger")
             return redirect("/settings")
 
-    return render_template("settings.html")
+    user_ranks = None
+    try:
+        with get_connection() as conn:
+            with conn.cursor(row_factory=dict_row) as cursor:
+                query = "SELECT username, RANK() OVER (ORDER BY score DESC) as rank_score, RANK() OVER (ORDER BY numberofvictories DESC) as rank_wins, RANK() OVER (ORDER BY defeats ASC) as rank_survivor, RANK() OVER (ORDER BY bat_touched DESC) as rank_bats, RANK() OVER (ORDER BY missed ASC) as rank_missed, RANK() OVER (ORDER BY fell_slime_pit ASC) as rank_slime FROM user_table"
+                cursor.execute(query)
+                all_players_ranks = cursor.fetchall()
+
+                user_ranks = next((r for r in all_players_ranks if r['username'] == session['username']), None)
+
+    except Exception as e:
+        print(f"Error fetching ranks: {e}")
+
+    return render_template("settings.html",ranks=user_ranks)
 
 @app.route('/title-screen')
 def title() :

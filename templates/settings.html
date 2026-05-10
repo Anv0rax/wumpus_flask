@@ -10,6 +10,17 @@
 {% block class_settings %} class="page_here" {% endblock %}
 
 {% block main_content %}
+{% macro format_rank(rank_val) -%}
+    {% if rank_val == 1 %}
+        <span class="rank-1">🥇 #1</span>
+    {% elif rank_val == 2 %}
+        <span class="rank-2">🥈 #2</span>
+    {% elif rank_val == 3 %}
+        <span class="rank-3">🥉 #3</span>
+    {% else %}
+        <span class="rank-default">#{{ rank_val }}</span>
+    {% endif %}
+{%- endmacro %}
     <div id="visual_effects">
         <div id="backgroundAnimationRings"></div>
         <div class="grid"></div>
@@ -17,36 +28,39 @@
     </div>
 
     <div id="functional">
-        <audio id="son1" preload="auto">
-            <source id="son" src="{{url_for('static', filename='assets/sounds/Move.mp3')}}" type="audio/mp3">
-        </audio>
-        <audio id="son2" preload="auto">
-            <source src="{{url_for('static', filename='assets/sounds/License-move.mp3')}}" type="audio/mp3">
-        </audio>
-        <audio id="son4" preload="auto">
-            <source src="{{url_for('static', filename='assets/sounds/Slider.mp3')}}" type="audio/mp3">
-        </audio>
         <form id="form" method="POST" action="/settings">
-            <h2>⚙⚙ Settings ⚙⚙</h2>
-            <label for="sfx">SFX Sounds</label><br>
-                <input id="sfx" type="range" class="slider" min="0" max="100" step="5" value="25"><p id="pSfx"></p><br>
-            <label for="light">Luminosity</label><br>
-                <input id="light" type="range" class="slider" min="50" max="150" step="5" value="100"><p id="pLum"></p></label><br>
-            <div class="onoff">
-                <label class="checkSound">
-                    <div>
-                        <p>Mute sound & songs</p>
-                        <img id="sound" src="{{url_for('static', filename='assets/SoundWhite.png')}}" width="40" height="40">
-                    </div>
-                </label>
-                <label id="checkPerf" class="check">Performance Mode
-                    <input type="checkbox">
-                </label>
-                <label id="checkFs" class="check">Full Screen
-                    <input type="checkbox">
-                </label>
+            <h2>⚙⚙ Your profile, {{ user.username }} ⚙⚙</h2>
+            <div class="profile-stats">
+                <img id="user-pixel-art"
+                 src="data:image/png;base64,{{ user.icon }}"
+                 alt="Your own-made icon"
+                 onerror="this.src='/static/assets/Placeholder.png'"
+                 style="image-rendering: pixelated; width: 100px; height: 100px;">
+            <div>
+                <p>🌍 Total Score 🌍 : {{ user.score }}</p>
+                <p>You have more score when you win games !<br>Your rank is {{ format_rank(ranks.rank_score) }}</p>
+                <br>
+
+                <p>🏆 Number of victories 🏆 : {{ user.numberofvictories }}</p>
+                <p>In terms of victories, you are at rank {{ format_rank(ranks.rank_wins) }}</p>
+                <br>
+
+                <p>💀 Number of times you've been eaten by the wumpus 💀 : {{ user.defeats }}</p>
+                <p>Less deaths means higher rank. <br>In terms of wumpus deaths, you are at rank {{ format_rank(ranks.rank_survivor) }}</p>
+                <br>
+
+                <p>🟩 Number of times you've fell into the slime pit 🟩 : {{ user.fell_slime_pit }}</p>
+                <p>Fewer falls = higher in the rankings<br> You are then at rank {{ format_rank(ranks.rank_slime) }}</p>
+                <br>
+
+                <p>🎯 Number of times you missed the wumpus 🎯 : {{ user.missed }}</p>
+                <p>More precise you are, higher you will be in the rankings<br> You are then at rank {{ format_rank(ranks.rank_missed) }}</p>
+                <br>
+
+                <p>🦇 Number of bats touched 🦇 : {{ user.bat_touched }}</p>
+                <p>More bats touched = higher ranking<br> You are at rank {{ format_rank(ranks.rank_bats) }}</p>
             </div>
-            {% if 'username' in session %}
+            </div>
             <div class="modifyIcon">
                 {% with messages = get_flashed_messages(with_categories=true) %}
                   {% if messages %}
@@ -102,7 +116,66 @@
                         </div>
                     </div>
             </div>
-            {% endif %}
         </form>
     </div>
 {% endblock %}
+
+    <!--<div id="functional">
+        <audio id="son1" preload="auto">
+            <source id="son" src="{{url_for('static', filename='assets/sounds/Move.mp3')}}" type="audio/mp3">
+        </audio>
+        <audio id="son2" preload="auto">
+            <source src="{{url_for('static', filename='assets/sounds/License-move.mp3')}}" type="audio/mp3">
+        </audio>
+        <audio id="son4" preload="auto">
+            <source src="{{url_for('static', filename='assets/sounds/Slider.mp3')}}" type="audio/mp3">
+        </audio>
+        <form id="form" method="POST" action="/settings">
+            <h2>⚙⚙ Settings ⚙⚙</h2>
+            <label for="sfx">SFX Sounds</label><br>
+                <input id="sfx" type="range" class="slider" min="0" max="100" step="5" value="25"><p id="pSfx"></p><br>
+            <label for="light">Luminosity</label><br>
+                <input id="light" type="range" class="slider" min="50" max="150" step="5" value="100"><p id="pLum"></p></label><br>
+            <div class="onoff">
+                <label class="checkSound">
+                    <div>
+                        <p>Mute sound & songs</p>
+                        <img id="sound" src="{{url_for('static', filename='assets/SoundWhite.png')}}" width="40" height="40">
+                    </div>
+                </label>
+                <label id="checkPerf" class="check">Performance Mode
+                    <input type="checkbox">
+                </label>
+                <label class="check">Disable grid in-game
+                    <input type="checkbox" id="checkGrid" >
+                </label>
+            </div>-->    <!--<div id="functional">
+        <audio id="son1" preload="auto">
+            <source id="son" src="{{url_for('static', filename='assets/sounds/Move.mp3')}}" type="audio/mp3">
+        </audio>
+        <audio id="son2" preload="auto">
+            <source src="{{url_for('static', filename='assets/sounds/License-move.mp3')}}" type="audio/mp3">
+        </audio>
+        <audio id="son4" preload="auto">
+            <source src="{{url_for('static', filename='assets/sounds/Slider.mp3')}}" type="audio/mp3">
+        </audio>
+        <form id="form" method="POST" action="/settings">
+            <h2>⚙⚙ Settings ⚙⚙</h2>
+            <label for="sfx">SFX Sounds</label><br>
+                <input id="sfx" type="range" class="slider" min="0" max="100" step="5" value="25"><p id="pSfx"></p><br>
+            <label for="light">Luminosity</label><br>
+                <input id="light" type="range" class="slider" min="50" max="150" step="5" value="100"><p id="pLum"></p></label><br>
+            <div class="onoff">
+                <label class="checkSound">
+                    <div>
+                        <p>Mute sound & songs</p>
+                        <img id="sound" src="{{url_for('static', filename='assets/SoundWhite.png')}}" width="40" height="40">
+                    </div>
+                </label>
+                <label id="checkPerf" class="check">Performance Mode
+                    <input type="checkbox">
+                </label>
+                <label class="check">Disable grid in-game
+                    <input type="checkbox" id="checkGrid" >
+                </label>
+            </div>-->

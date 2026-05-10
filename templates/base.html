@@ -16,7 +16,7 @@
             <div>
                 <a href="/menu" {% block class_home %} {% endblock %}>Home</a>
                 <a href="/play" {% block class_play %} {% endblock %}>Play</a>
-                <a href="/settings" {% block class_settings %} {% endblock %}>Settings</a>
+                <a href="/settings" {% block class_settings %} {% endblock %}>Profile</a>
                 <a href="/stats" {% block class_stats %} {% endblock %}>Stats</a>
                 {% if 'user_id' in session %}
                     <a href="/logout" class="user-disconnect-link">
@@ -24,7 +24,7 @@
                             {{ session.get('username') }}
                             <br>
                             {% if user and user.icon %}
-                                <img src="data:image/png;base64,{{ user.icon }}" alt="Supposed to be your icon." width="30" height="30">
+                                <img src="data:image/png;base64,{{ user.icon }}" alt="Supposed to be your icon." width="44" height="44" style="image-rendering: pixelated" >
                             {% endif %}
                         </span>
                         <span class="disconnect-state">DISCONNECT</span>

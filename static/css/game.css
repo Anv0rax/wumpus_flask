@@ -41,6 +41,9 @@
     justify-content: center;
 
     width: 10%;
+}
+
+body:not(.no_grid) #ig_game_grid td {
     outline: 2px solid #E8E8FF;
 }
 
