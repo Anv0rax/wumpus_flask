@@ -1,3 +1,7 @@
+main {
+    background-color: var(--grey) !important;
+}
+
 #ig_game_grid {
     position: relative;
 
@@ -16,7 +20,7 @@
     */
 
     border-collapse: separate;
-    border: 10px solid #E8E8FF;
+    border: 10px solid var(--white);
     border-radius: 20px;
     border-spacing: 0;
 
@@ -41,7 +45,7 @@
     justify-content: center;
 
     width: 10%;
-    outline: 2px solid #E8E8FF;
+    outline: 2px solid var(--white);
 }
 
 #ig_game_grid .box {
@@ -211,32 +215,111 @@
     z-index: 1;
 }
 
+
+#ig_game_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+}
+
+#ig_moving {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+}
+
+.ig_btn_move {
+    cursor: var(--cursor-pointer);
+
+    border: 4px solid var(--white);
+    border-radius: 10px;
+    
+    background-color: var(--blue);
+    background-size: contain;
+    background-size: 100%;
+    background-origin: content-box;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.ig_btn_move:hover {
+    background-color: var(--violet);
+}
+
+#ig_btn_move:focus {
+  box-shadow: 0 0 5px var(--violet);
+}
+
+#ig_shoot {
+    -webkit-appearance: none;
+    appearance: none;
+
+    background-image : url("../assets/cursors/resized_tile_0055.png");
+}
+
+#ig_shoot:checked {
+    background-color: var(--violet);
+    background-image : url("../assets/cursors/resized_tile_0126.png");
+}
+
+
+#ig_btn_move-top
+{
+    background-image: url("../assets/cursors/resized_tile_0070.png");
+}
+
+#ig_btn_move-bot
+{
+    background-image: url("../assets/cursors/resized_tile_0071.png");
+}
+
+#ig_btn_move-left
+{
+    background-image: url("../assets/cursors/resized_tile_0073.png");
+}
+
+#ig_btn_move-right
+{
+    background-image: url("../assets/cursors/resized_tile_0072.png");
+}
+
 #ig_end_screen {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    
+    margin: min(0.8vw, 1.2vh) min(1.6vw, 2.4vh);
+    padding: min(1.6vw, 2.4vh);
+
     background-color: rgba(34, 34, 80, 0.80);
-    padding: 30px;
-    margin-top: 20px;
     border: 5px double var(--white);
 }
 
 .ig_end_actions {
     display: flex;
-    gap: 15px; /* Espace entre les boutons */
-    margin-top: 20px;
+    flex-direction: column;
+
+    gap: min(1.6vw, 2.4vh);
 }
 
 .btn_end
 {
     font-family : titles;
+    padding: min(0.8vw, 1.2vh);
+
     text-align : center;
-    padding: 10px 20px;
-    background-color: #444;
     color: white;
     text-decoration: none;
+
+    background-color: #444;
     border-radius: 5px;
+
     transition: background 0.3s;
 }
 
@@ -260,70 +343,78 @@
     border : 3px solid var(--cyan);
 }
 
-.alert-danger {
-    font-family: titles;
-    color: var(--coral);
-    padding: 15px;
-    margin: 10px 0;
-    border-radius: 8px;
-    text-shadow: 1px 1px 2px black;
-}
 
-.alert-success {
-    font-family: titles;
-    color: var(--mint);
-    padding: 15px;
-    margin: 10px 0;
-    border-radius: 8px;
-    text-shadow: 1px 1px 2px black;
-}
+@media only screen and (aspect-ratio > 8/5) {
+	#ig_game_container {
+        flex-direction: row;
+    }
 
-@media only screen and (orientation: landscape)
-{
-    #ig_end_screen
-    {
-        margin-left: 20px;
+    #ig_moving {
+        flex-direction: column;
+        
+        width: 12vw;
+        max-width: 18vh;
+        height: 48vw;
+        max-height: 72vh;
+
+        border-radius: 0 20px 20px 0;
+    }
+
+    .ig_btn_move {
+        width: 8vw;
+        height: 8vw;
+        aspect-ratio: 1;
+        max-width: 13vh;
+        max-height: 13vh;
+
+        margin: min(0.8vw, 1.2vh) min(1.6vw, 2.4vh);
+        padding: min(0.4vw, 0.6vh) min(0.8vw, 1.2vh);
     }
 }
 
-@media screen and (max-width: 1300px), screen and (max-height: 600px) {
+@media screen and (aspect-ratio <= 8/5) {
+    #ig_game_container {
+        flex-direction: column;
+    }
+
+    #ig_moving {
+        flex-direction: row;
+
+        width: 64vw;
+        max-width: 96vh;
+        height: 15vw;
+        max-height: 22vh;
+
+        border-radius: 20px 0 0 20px;
+    }
+
+    .ig_btn_move {
+        width: 12vw;
+        height: 12vw;
+        aspect-ratio: 1;
+        max-width: 16vh;
+        max-height: 16vh;
+
+        margin: min(1.6vw, 2.4vh) min(0.8vw, 1.2vh);
+        padding: min(0.8vw, 1.2vh) min(0.4vw, 0.6vh);
+    }
 
     #ig_end_screen {
-        padding: 15px;      /* On réduit l'espacement interne */
-        min-width: 180px;   /* On lui permet d'être plus fin */
-        margin-left: 10px;  /* On réduit la marge avec la grille */
+        min-width: 180px;
     }
 
-    .ig_end_actions {
-        flex-direction: column; /* LES BOUTONS PASSENT L'UN SOUS L'AUTRE */
-        gap: 8px;              /* On réduit l'espace entre les boutons */
+    #ig_end_screen .ig_end_actions {
+        flex-direction: row;
         width: 100%;
     }
 
-    .btn_end {
-        font-size: 0.8rem;    /* On réduit la taille du texte */
-        padding: 8px 10px;    /* Boutons plus petits */
+    #ig_end_screen .btn_end {
+        font-size: 0.8rem;
         width: 100%;
         box-sizing: border-box;
     }
 
-    /* Optionnel : on réduit aussi un peu la taille du titre dans l'écran de fin */
     #ig_end_screen h3 {
         font-size: 1rem;
-        margin-bottom: 10px;
-    }
-}
-
-@media screen and (max-width: 1000px), screen and (max-height: 600px)
-{
-    .ig_end_actions
-    {
-        flex-direction: row;
-    }
-
-    .alert-danger, .alert-success
-    {
-        margin : 0;
-        padding : 0;
     }
 }

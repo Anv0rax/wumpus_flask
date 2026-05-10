@@ -8,7 +8,7 @@ import psycopg
 from psycopg.rows import dict_row
 from dotenv import load_dotenv
 
-from db import get_connection
+from db import *
 from p_game import *
 from private import THE_SECRET_KEY
 
@@ -23,36 +23,6 @@ app = Flask(
 )
 
 app.config["SECRET_KEY"] = THE_SECRET_KEY
-
-def finish_game(result_code):
-    if 'username' not in session :
-        return
-
-    column_map = {
-        -1: "numberofvictories",
-        -2: "defeats",
-        -3: "fell_slime_pit",
-        -4: "missed",
-        3: "bat_touched"
-    }
-
-    column_to_update = column_map.get(result_code)
-
-    if not column_to_update:
-        return
-
-    points = 0
-    if result_code == -1:
-        points = (session.get('difficulty', 0) + 1) * 10
-
-    try:
-        with get_connection() as conn:
-            with conn.cursor() as cursor:
-                query = f"""UPDATE user_table SET {column_to_update} = {column_to_update} + 1, score = score + %s WHERE username = %s"""
-                cursor.execute(query, (points, session['username']))
-                conn.commit()
-    except Exception as e:
-        print(f"Error, couldn't register the new value of the score : {e}")
 
 @app.context_processor
 def inject_user():
@@ -79,10 +49,6 @@ def home() :
 
 @app.route("/start")
 def start() :
-    print(session["difficulty"])
-    print(session["blind"] )
-    print(session["express"] )
-    print("\n\n\n\n\n\n")
     if session.get("gamestate") == 0 :
         difficulty = session.get("difficulty")
         matrix = generate_grid(difficulty)
@@ -115,12 +81,16 @@ def start() :
 def menu():
     return render_template("main_page.html")
 
+@app.route("/Antoine")
+def Antoine() :
+    print(generate_password_hash("Test1234="))
+    return redirect("/select-difficulty")
 
 @app.route("/play")
 def play() :
-    if 'username' not in session:
-        flash("Please be connected to play !", "danger")
-        return redirect("/login")
+    # if 'username' not in session:
+    #     flash("Please be connected to play !", "danger")
+    #     return redirect("/login")
 
     if session.get("map") and session.get("player") :
         if session.get("gamestate", default=0) > 0 :
@@ -148,8 +118,8 @@ def play() :
                         match session.get("gamestate") :
                             # case 2 : # add to bd
                             case 3 : # walked on a triggered bat
+                                add_info_in_db(3)
                                 # remove bat and player
-                                finish_game(3)
                                 matrix[player[0]][player[1]][T_ELEMS] -= TRIG_BAT
                                 matrix[player[0]][player[1]][T_PLAYER] = IS_NOT_HERE
                                 matrix[player[0]][player[1]][T_VISION] = not session.get("blind", default=False)
@@ -161,23 +131,19 @@ def play() :
 
                             case i if i < 0 :
                                 reveal_map(matrix)
-                                finish_game(i)
+                                add_info_in_db(i)
                                 match i :
                                     case -1 : # Win
-                                        print("\n\n\nWin")
-                                        flash("YOU WIN ! You have killed the wumpus, congratulations !", "success")
+                                        flash("YOU WIN !\nYou have killed the wumpus !", "success")
 
                                     case -2 : # Wumpus
-                                        print("\n\n\nLoose by wumpus")
-                                        flash("YOU LOSE ! The wumpus got you.", "danger")
+                                        flash("YOU LOSE !\nThe wumpus got you.", "danger")
 
                                     case -3 : # Hole
-                                        print("\n\n\nLoose by hole")
-                                        flash("YOU LOSE ! You fell into the slime pit...", "danger")
+                                        flash("YOU LOSE !\nYou felt into the slime pit...", "danger")
 
                                     case -4 : # Missed
-                                        print("\n\n\nLoose by missing")
-                                        flash("YOU LOSE ! You shoot your only arrow !", "danger")
+                                        flash("YOU LOSE !\nYou missed your only arrow !", "danger")
 
                                 session["gamestate"] = -9
 
@@ -190,13 +156,11 @@ def play() :
                     matrix[player[0]][player[1]][T_PLAYER] = player_pos
 
                     if session["gamestate"] == -1:
-                        print("\n\n\nWIN\n")
-                        flash("YOU WIN ! You have killed the wumpus, congratulations !", "success")
+                        flash("YOU WIN !\nYou have killed the wumpus !", "success")
                     else:
-                        print("\n\n\nYOU LOSE, MISSED THE WUMPUS !\n")
-                        flash("YOU LOSE ! You shoot your only arrow !", "danger")
+                        flash("YOU LOSE !\nYou missed your only arrow !", "danger")
 
-                    finish_game(session["gamestate"])
+                    add_info_in_db(session["gamestate"])
 
                     session["gamestate"] = -9
 
@@ -211,9 +175,9 @@ def play() :
 
 @app.route('/select-difficulty', methods=["GET", "POST"])
 def select() :
-    if 'username' not in session:
-        flash("Please be connected to play !", "danger")
-        return redirect("/login")
+    # if 'username' not in session:
+    #     flash("Please be connected to play !", "danger")
+    #     return redirect("/login")
 
     if request.method == "POST":
         correct = False
@@ -285,6 +249,10 @@ def login():
         username = request.form['username']
         password = request.form['password']
 
+        if not re.match(r"^[a-zA-Z0-9_]{3,10}$", username):
+            flash("Username doesn't respect conditions !", "danger")
+            return redirect("/login")
+
         try:
             with get_connection() as conn:
                 with conn.cursor(row_factory=dict_row) as cursor:
@@ -297,11 +265,11 @@ def login():
                         print("Connection en cours...")
                         session['user_id'] = user['id']
                         session['username'] = user['username']
-                        flash("You are connected, welcome back!", "success")
+                        flash("You are connected !", "success")
                         return redirect("/play")
 
                     else:
-                        flash("Your username or password is incorrect. Please check, and retry.", "danger")
+                        flash("Your username or password is incorrect.", "danger")
                         return redirect("/login")
 
         except Exception as e:
@@ -317,18 +285,18 @@ def register():
         icon_base64 = request.form.get('icon', '')
 
         if not re.match(r"^[a-zA-Z0-9_]{3,10}$", username):
-            flash("Username must be between 3 and 10 characters (letters, numbers, underscores).", "danger")
+            flash("Username doesn't respect conditions !", "danger")
             return redirect("/register")
 
-        if not (re.match(r"^.{3,10}$", password) and
+        if not (re.match(r"^.{10,30}$", password) and
                 re.search(r"[A-Z]", password) and
                 re.search(r"[a-z]", password) and
                 re.search(r"[0-9]", password)):
-            flash("Password must be 3-10 characters long and contain at least one uppercase, one lowercase, and one number.", "danger")
+            flash("Password doesn't respect conditions !", "danger")
             return redirect("/register")
 
         if password != confirm_password:
-            flash("Passwords are not matching.", "danger")
+            flash("Passwords are not matching !", "danger")
             return redirect("/register")
 
         try:
@@ -346,7 +314,7 @@ def register():
                     )
                     conn.commit()
 
-            flash("Your account has been created, you can now log in!", "success")
+            flash("Account has been created !", "success")
             return redirect("/login")
 
         except Exception as e:
@@ -358,7 +326,6 @@ def register():
 @app.route('/logout')
 def logout():
     session.clear()
-    flash("Goodbye !", "success")
     return redirect("/login")
 
 if __name__ == '__main__' :

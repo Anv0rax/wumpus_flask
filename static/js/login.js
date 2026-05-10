@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function()
     const liHelpPswd = document.querySelectorAll(".helpPswrdItem");
 
     let regexUserName = /^[a-zA-Z0-9_]{3,10}$/
-    let listRegexPswrd = [/^.{3,10}$/, /[A-Z]/, /[a-z]/, /[0-9]/];
+    let listRegexPswrd = [/^.{10,30}$/, /[A-Z]/, /[a-z]/, /[0-9]/];
 
     function initTools()
     {

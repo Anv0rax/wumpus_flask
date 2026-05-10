@@ -1,37 +1,6 @@
 main
 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    min-height: 100vh;
-    background-color: var(--night);
     overflow: hidden;
-    position: relative;
-    padding: 0;
-    margin: 0;
-}
-
-.stars-bg {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    pointer-events: none;
-    overflow: hidden;
-}
-
-.star {
-    position: absolute;
-    background-color: white;
-    border-radius: 50%;
-    animation: twinkle var(--dur, 3s) infinite ease-in-out var(--delay, 0s);
-    opacity: 0;
-    box-shadow: 0 0 5px white;
-}
-
-@keyframes twinkle {
-    0%, 100% { opacity: 0; }
-    50%       { opacity: var(--opacity, 0.8); }
 }
 
 .grid-floor {

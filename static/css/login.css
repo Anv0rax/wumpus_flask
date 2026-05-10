@@ -9,7 +9,7 @@
     height: 100%;
 }
 
-#login-form
+/* #login-form
 {
     background-color: var(--form);
     text-align: center;
@@ -25,7 +25,7 @@
     padding: 30px 20px;
     box-sizing: border-box;
     gap: 20px;
-}
+} */
 
 #login-form #labels-form
 {
@@ -45,28 +45,8 @@
     width: 100%;
     gap: 10px;
 }
-#login-form .label
-{
-    font-family: retro;
-    text-align: start;
-    color: var(--white);
-}
 
-#login-form .input
-{
-    height: 5.5vh;
-    width: min(80%, 300px);
-    background-image: url("../assets/BarText.png");
-    background-color: transparent;
-    background-repeat: no-repeat;
-    padding-left: min(75px, 15%);
-    image-rendering: pixelated;
-    background-size: 100% 100%;
-    border: none;
-    color: var(--white);
-}
-
-#login, #register
+/* #login, #register
 {
     image-rendering: pixelated;
     width: min(128px, 35vw);
@@ -75,18 +55,18 @@
     border: none;
     background-repeat: no-repeat;
     background-size: 100%;
-}
+} */
 
-#login
+/* #login
 {
-    background-image: url("../assets/LoginButton.png");
+    background-image: url("../assets/LoginButton.png"); 
 }
 
 #login:hover
 {
     --colorShadow : var(--mint);
     image-rendering: pixelated;
-    background-image: url("../assets/LoginButton-Hover.png");
+    background-image: url("../assets/LoginButton-Hover.png"); 
     background-size: 100%;
     filter: drop-shadow(0 0 10px var(--colorShadow));
     animation: led-anim 3s infinite ease-in-out;
@@ -105,7 +85,7 @@
     background-size: 100%;
     filter: drop-shadow(0 0 10px var(--colorShadow));
     animation: led-anim 3s infinite ease-in-out;
-}
+} */
 
 #showGrid
 {

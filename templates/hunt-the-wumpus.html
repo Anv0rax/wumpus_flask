@@ -4,7 +4,6 @@
 
 {% block add_css_js %}
     <link rel="stylesheet" href="{{url_for('static', filename='css/game.css')}}"/>
-    <link rel="stylesheet" href="{{url_for('static', filename='css/move.css')}}"/>
     <script src="{{url_for('static', filename='js/move.js')}}"></script>
 {% endblock %}
 
@@ -122,7 +121,17 @@
                 </tr>
             {% endfor %}
         </table>
-        {% if session['gamestate'] == -9 %}
+
+        {% if session['gamestate'] != -9 %}
+        <form id="ig_moving" method="get">
+            <button type="submit" class="ig_btn_move" id="ig_btn_move-top" name="y" value="-1"></button>
+            <button type="submit" class="ig_btn_move" id="ig_btn_move-bot" name="y" value="1"></button>
+            <input type="checkbox" class="ig_btn_move" id="ig_shoot" name="shoot" value="True"></button>
+            <button type="submit" class="ig_btn_move" id="ig_btn_move-left" name="x" value="-1"></button>
+            <button type="submit" class="ig_btn_move" id="ig_btn_move-right" name="x" value="1"></button>
+        </form>
+
+        {% else %}
             <div id="ig_end_screen">
                 {% with messages = get_flashed_messages(with_categories=true) %}
                     {% if messages %}
@@ -140,22 +149,6 @@
                     <a href="/menu" class="btn_end" id="btn_menu">Main menu</a>
                 </div>
             </div>
-                <div class="ig_end_actions">
-                    <a href="/select-difficulty" class="btn_end" id="btn_replay">Replay</a>
-                    <a href="/stats" class="btn_end" id="btn_leaderboard">Leaderboard</a>
-                    <a href="/menu" class="btn_end" id="btn_menu">Main menu</a>
-                </div>
-            </div>
-        {% endif %}
-
-        {% if session['gamestate'] != -9 %}
-        <form id="ig_moving" method="get">
-            <button type="submit" class="ig_btn_move" id="ig_btn_move-top" name="y" value="-1"></button>
-            <button type="submit" class="ig_btn_move" id="ig_btn_move-bot" name="y" value="1"></button>
-            <input type="checkbox" class="ig_btn_move" id="ig_shoot" name="shoot" value="True"></button>
-            <button type="submit" class="ig_btn_move" id="ig_btn_move-left" name="x" value="-1"></button>
-            <button type="submit" class="ig_btn_move" id="ig_btn_move-right" name="x" value="1"></button>
-            </form>
         {% endif %}
     </div>
 {% endblock %}

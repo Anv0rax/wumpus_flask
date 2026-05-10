@@ -4,6 +4,8 @@
 
 {% block add_css_js %}
     <link rel="stylesheet" href="{{url_for('static', filename='css/select-difficulty.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/anim_bg.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/formulars.css')}}" />
     <script src="{{url_for('static', filename='js/select-difficulty.js')}}"></script>
 {% endblock %}
 
@@ -11,10 +13,9 @@
 
 {% block main_content %}
     <div id="visual_effects">
-        <div class="grid"></div>
+        <div class="animated-grid1"></div>
         <div class="overlay"></div>
     </div>
-    <img id="soundImage" src="{{url_for('static', filename='assets/SoundWhite.png')}}" width="70" height="70">
 
     <div id="functional">
         <audio id="son1" preload="auto">
@@ -26,7 +27,7 @@
         <audio id="son3" preload="auto">
             <source src="{{url_for('static', filename='assets/sounds/License-select.mp3')}}"type="audio/mp3">
         </audio>
-        <form id="form" method="post">
+        <form id="formu" class="formular" method="post">
             {% with messages = get_flashed_messages(with_categories=true) %}
               {% if messages %}
                 {% for category, message in messages %}
@@ -38,34 +39,34 @@
             {% endwith %}
             <h2>Game parameters</h2>
             <div class="container-explanations">
-                <img class="helpImage" src="{{url_for('static',filename='assets/QuestionMark.png')}}">
+                <img class="help-image" src="{{url_for('static',filename='assets/QuestionMark.png')}}">
                 <div class="explanations">Easy : One bat, less corridors, 1 hole.<br><br>Normal : 2 bats, 1 hole.<br><br>Hard : 2 bats, more corridors, 2 holes.</div>
             </div>
             <label for="difficulty-choice"><p>Select the difficulty</p></label>
             <br>
-            <select id="difficulty-choice" name="difficulty">
+            <select id="difficulty-choice" name="difficulty" class="select-options">
                 <option value="0" {{ 'selected' if s_diff == 0 else '' }} >Easy</option>
                 <option value="1" {{ 'selected' if s_diff == 1 else '' }} >Normal</option>
                 <option value="2" {{ 'selected' if s_diff == 2 else '' }} >Hard</option>
             </select>
             <p>Game Mode</p>
             <div class="container-explanations">
-                <img class="helpImage" src="{{url_for('static', filename='assets/QuestionMark.png')}}">
+                <img class="help-image" src="{{url_for('static', filename='assets/QuestionMark.png')}}">
                 <div class="explanations">
                     Express Mode : You can't stay in a corridor, you directly go out
                     <br><br>Blind Mode : You only your case. Remember your path, or die...
                     <br><br>Attention : the two modes can be activated
                 </div>
             </div>
-            <div class="checkButtonMode">
-                <label class="selectGamemode">Express Mode
+            <div class="checkbox-div">
+                <label class="label-checkbox">Express Mode
                     <input type="checkbox" name="express" value="1" {{ 'checked' if s_express else '' }} >
                 </label>
-                <label class="selectGamemode">Blind Mode
+                <label class="label-checkbox">Blind Mode
                     <input type="checkbox" name="blind" value="1" {{ 'checked' if s_blind else '' }}>
                 </label>
             </div>
-            <input class="validateForm" type="submit" value="Play">
+            <input class="validate-form button-in-form" type="submit" value="Play">
         </form>
     </div>
 {% endblock %}

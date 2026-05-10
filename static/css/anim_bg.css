@@ -1,0 +1,48 @@
+main {
+    overflow: hidden;
+}
+
+#visual_effects {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, transparent 20%, rgba(77, 122, 255, 0.2) 80%);
+}
+
+.animated-grid1 {
+    position: absolute;
+    width: 150%;
+    height: 150%;
+    background-image:
+        linear-gradient(to right, var(--coral) 2px, transparent 2px),
+        linear-gradient(to bottom, var(--coral) 2px, transparent 2px) !important;
+    background-size: 50px 50px;
+    animation: moveGrid1 2s linear infinite;
+}
+
+@keyframes moveGrid1 {
+    from { transform: translate(0, 0); }
+    to   { transform: translate(-50px, -50px); }
+}
+
+.animated-grid2 {
+    position: absolute;
+    width: 150%;
+    height: 150%;
+    background-image:
+        linear-gradient(to right, var(--mint) 2px, transparent 2px),
+        linear-gradient(to bottom, var(--mint) 2px, transparent 2px) !important;
+    background-size: 50px 50px;
+    animation: moveGrid2 2s linear infinite;
+}
+
+@keyframes moveGrid2 {
+    from { transform: translate(0, -50px); }
+    to   { transform: translate(0, 0); }
+}

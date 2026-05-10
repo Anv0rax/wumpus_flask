@@ -3,49 +3,30 @@
 {% block page_title %}Register - Hunt the Wumpus{% endblock %}
 
 {% block add_css_js %}
-    <link rel="stylesheet" href="{{url_for('static', filename='css/common.css')}}" />
-    <link rel="stylesheet" href="{{url_for('static', filename='css/register.css')}}"/>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/pixel_art.css')}}"/>
+    <script src="{{url_for('static', filename='js/stars.js')}}"></script>
     <script src="{{url_for('static', filename='js/login.js')}}"></script>
 {% endblock %}
 
 {% block class_home %} class="page_here" {% endblock %}
 
 {% block main_content %}
-    <div class="login-container">
-        <h1>Create a new account !</h1>
-        <button id="returnLogin" type="button">Go back to the login menu</button>
+    <div class="stars-bg" id="stars"></div>
 
-        {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-            {% for category, message in messages %}
-              <div class="alert alert-{{ category }}" role="alert">
-                {{ message }}
-              </div>
-            {% endfor %}
-          {% endif %}
-        {% endwith %}
-
-        <form id="login-form" method="POST" action="/register">
-            <div id="labels-form">
-                {% with messages = get_flashed_messages(with_categories=true) %}
-                    {% if messages %}
-                        {% for category, message in messages %}
-                            <div class="alert alert-{{ category }}" role="alert">
-                                {{ message }}
-                            </div>
-                        {% endfor %}
-                    {% endif %}
-                {% endwith %}
+    <div class="functional">
+        <form id="login-form" class="formular long-formular" method="POST" action="/register">
+            <h2>Create an account</h2>
+            <div class="labels-form">
                 <label for="username" class="label">Username</label>
                 <input id="username" class="input" type="text" name="username" placeholder="Username" required autofocus>
-                <ul id="helpUserName" class="error">
-                    <li class="helpUserNameItem">Between 3 and 10 characters, Upper & lower case & underscore & numbers authorized</li>
+                <ul id="helpUserName" class="error help-indications">
+                    <li class="helpUserNameItem" title="Letters, numbers and _">Between 3 and 10 normal characters</li>
                 </ul>
 
                 <label for="password" class="label">Password</label>
                 <input id="password" class="input" type="password" name="password" placeholder="Password" required>
-                <ul id="helpPswrd" class="error">
-                    <li class="helpPswrdItem">Maximum 10 characters</li>
+                <ul id="helpPswrd" class="error help-indications">
+                    <li class="helpPswrdItem">Minimum 10 characters</li>
                     <li class="helpPswrdItem">Use at least 1 uppercase</li>
                     <li class="helpPswrdItem">Use at least 1 lowercase</li>
                     <li class="helpPswrdItem">Use at least 1 number</li>
@@ -55,15 +36,27 @@
                 <input id="confirmPassword" class="input" type="password" name="confirm" placeholder="Confirm Password" required>
 
                 <div id="icon-preview">
-                    <p>Icon :</p>
+                    <p class="label">Icon :</p>
                     <img id="user-pixel-art" src="" alt="Your own-made icon" onerror="this.src='/static/assets/Placeholder.png'">
+                    <button id="showGrid" class="button-in-form" type="button">Change icon</button>
                 </div>
             </div>
 
-            <div id="buttons-form">
-                <button id="login" type="submit"></button>
-                <button id="showGrid" type="button"></button>
-            </div>
+            
+            <button id="login" class="validate-form button-in-form" type="submit">Register</button>
+
+            <button id="returnLogin" class="button-in-form" type="button">You have an account</button>
+
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}" role="alert">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
 
             <input type="hidden" name="icon" id="icon-data">
 
