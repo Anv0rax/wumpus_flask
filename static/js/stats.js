@@ -1,8 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const rows = document.querySelectorAll("table tr");
-    const soundAnimation = document.getElementById("soundTableAnimation");
-    const click = document.getElementById('click');
     const table = document.getElementById('table');
+    const soundHoverRow = document.getElementById('soundTableAnimation')
 
             const colors = [
             'rgba(64,200,224,VAL)',
@@ -27,30 +26,29 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-    click.addEventListener('click', () =>{
-        soundAnimation.currentTime = 1;
-        soundAnimation.play();
-        click.style.display = 'none';
-        table.style.display = 'table';
-
-        rows.forEach((row, index) => {
+    rows.forEach((row, index) => {
         row.animate(
-        [
-            { opacity: 0, transform: "translateY(20px)" },
-            { opacity: 1, transform: "translateY(0)" }
-        ],
-        {
-            duration: 500,
-            fill: "forwards",
-            easing: "ease-out",
-            delay: index * 100
+            [
+                { opacity: 0, transform: "translateY(20px)" },
+                { opacity: 1, transform: "translateY(0)" }
+            ],
+            {
+                duration: 500,
+                fill: "forwards",
+                easing: "ease-out",
+                delay: index * 100
+            }
+        );
+    });
+
+    rows.forEach(row => {
+        row.addEventListener("mouseenter", () => {
+            // Si le son est déjà en train de jouer, on le remet à 0
+            soundHoverRow.currentTime = 0;
+            // On joue le son
+            soundHoverRow.play().catch(e => {
+                console.log("Lecture audio bloquée par le navigateur (il faut une interaction avant)");
+            });
         });
     });
-    })
 });
-
-function PlaySound(el)
-{
-    el.currentTime = 0;
-    el.play();
-}

@@ -4,7 +4,12 @@
 
 {% block add_css_js %}
     <link rel="stylesheet" href="{{url_for('static', filename='css/game.css')}}"/>
+<<<<<<< HEAD
     <script src="{{url_for('static', filename='js/move.js')}}"></script>
+=======
+    <link rel="stylesheet" href="{{url_for('static', filename='css/move.css')}}"/>
+    <script src="{{url_for('static', filename='js/move.js')}}" defer></script>
+>>>>>>> 46ae050bc074289693517e4c69db9739c282fbae
 {% endblock %}
 
 {% block class_play %} class="page_here" {% endblock %}
@@ -149,6 +154,19 @@
                     <a href="/menu" class="btn_end" id="btn_menu">Main menu</a>
                 </div>
             </div>
+<<<<<<< HEAD
+=======
+        {% endif %}
+
+        {% if session['gamestate'] != -9 %}
+        <form id="ig_moving" method="get">
+            <button type="submit" class="ig_btn_move" id="ig_btn_move-top" name="y" value="-1"></button>
+            <button type="submit" class="ig_btn_move" id="ig_btn_move-bot" name="y" value="1"></button>
+            <input type="checkbox" class="ig_btn_move" id="ig_shoot" name="shoot" value="True"></button>
+            <button type="submit" class="ig_btn_move" id="ig_btn_move-left" name="x" value="-1"></button>
+            <button type="submit" class="ig_btn_move" id="ig_btn_move-right" name="x" value="1"></button>
+            </form>
+>>>>>>> 46ae050bc074289693517e4c69db9739c282fbae
         {% endif %}
     </div>
 {% endblock %}

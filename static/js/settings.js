@@ -3,7 +3,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     /* ========= the const ==========*/
-    const soundOnMove = document.getElementById('son1');
+    /*const soundOnMove = document.getElementById('son1');
     const interactSound = document.getElementById('son2');
     const lowPerformanceMode = document.getElementById('backgroundAnimationRings');
     const checkBouton = document.querySelectorAll('.check');
@@ -15,19 +15,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const paragraphLum = document.getElementById('pLum');
     const paragraphSfx = document.getElementById('pSfx');
 
-    const checkFullScreen = document.getElementById('checkFs');
+
     const checkPerformanceMode = document.getElementById('checkPerf');
 
-    const sliders = document.querySelectorAll('.slider');
+    const sliders = document.querySelectorAll('.slider');*/
 
     /* =========================================== */
     let currentColor = "none";
     let currentTool = "pencil";
-    const greenColor = "#18ff03";
-    const redColor = "#ff0000";
     /* ======== the code ========== */
 
-    let soundVolume = 0.25;
+    /*let soundVolume = 0.25;
     sliderSound.volume = soundVolume;
 
 
@@ -83,34 +81,10 @@ document.addEventListener('DOMContentLoaded', () => {
         sliderSound.volume = val;
         soundVolume = val;
         paragraphSfx.textContent = sfx.value + "%";
-    });
+    });*/
 
 
-    checkPerformanceMode.addEventListener('click', (event) =>
-    {
-        const testCheck = event.target.checked;
-        if(testCheck == true)
-        {
-            lowPerformanceMode.style.setProperty('display', 'none', 'important');
-        }
-        else
-        {
-            lowPerformanceMode.style.setProperty('display', 'block', 'important');
-        }
-    });
 
-    checkFullScreen.addEventListener('click', (event) =>
-    {
-        const testCheck = event.target.checked;
-        if(testCheck == true)
-        {
-            OpenFs();
-        }
-        else
-        {
-            CloseFs();
-        }
-    });
     function initTools()
     {
         let pencil = document.getElementById('pencil');
@@ -128,7 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
             eraser.style.filter = 'none';
             bucket.style.filter = "none";
             pencil.style.filter = 'drop-shadow(0 0 5px #00d4ff)';
-            console.log("Le crayon a été sélectionné - mode de tools en " + currentTool);
         });
 
         eraser.addEventListener('click', function(e)
@@ -138,7 +111,6 @@ document.addEventListener('DOMContentLoaded', () => {
             eraser.style.filter = 'drop-shadow(0 0 5px #00d4ff)';
             pencil.style.filter = 'none';
             bucket.style.filter = "none";
-            console.log("La gomme est selectionne - mode de tools en " + currentTool);
         });
 
         bucket.addEventListener('click', function(e)
@@ -148,7 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
             bucket.style.filter = "drop-shadow(0 0 5px #00d4ff)";
             eraser.style.filter = "none";
             pencil.style.filter = "none";
-            console.log("Le Seau a été sélectionné - mode de tools en " + currentTool);
         });
     }
 
@@ -237,6 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initToggleGrid();
     initLeaveTheGrid();
     initTools();
+    //DisableGridGame();
 
     function Save_Pixart()
     {
@@ -360,7 +332,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* ================= Functions ==================== */
 
-function PlaySound(el)
+/*function PlaySound(el)
 {
     el.currentTime = 0;
     el.play();
@@ -385,32 +357,9 @@ function DisableSlider(el)
 
 function EnableSlider(el)
 {
-    console.log(el.value);
     el.disabled = false;
     el.style.setProperty('--range-pct', el.value + '%');
 }
-
-function OpenFs()
-{
-    if(document.body)
-    {
-        document.body.requestFullscreen();
-    }
-    /* sa c'est pour safari */
-    else if(document.body.webkitRequestFullscreen)
-    {
-        document.body.webkitRequestFullscreen();
-    }
-}
-
-function CloseFs()
-{
-    if(document.body)
-    {
-        document.exitFullscreen();
-    }
-}
-
 
 function InitSlidersColor(event)
 {
@@ -426,11 +375,27 @@ function UpdateSlidersColor()
         s.addEventListener('input', function()
         {
             const ratio = (this.value - this.min) / (this.max - this.min) * 100;
-            console.log(ratio);
             this.style.setProperty('--range-pct', ratio + '%');
         });
     })
 }
+
+function DisableGridGame()
+{
+    const checkTheGrid = document.getElementById('checkGrid');
+
+    if(checkTheGrid) {
+        if (localStorage.getItem('checkgriddisable') === "true") {
+            checkTheGrid.checked = true;
+        }
+
+        // On utilise 'el' ou 'checkTheGrid' au lieu de 'this'
+        checkTheGrid.addEventListener('input', () => {
+            localStorage.setItem('checkgriddisable', checkTheGrid.checked);
+            console.log("Status grille enregistré :", checkTheGrid.checked);
+        });
+    }
+} */
 
 
 

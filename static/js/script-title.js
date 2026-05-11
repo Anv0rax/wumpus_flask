@@ -1,6 +1,6 @@
 /* =========== Main ================= */
 
-document.addEventListener('DOMContentLoaded', () => 
+document.addEventListener('DOMContentLoaded', () =>
 {
     const containerWelcomeText = document.getElementById('container-texts');
     const spacePressSound = document.getElementById('son');
@@ -22,17 +22,17 @@ document.addEventListener('DOMContentLoaded', () =>
             setTimeout( () => { playSound(spacePressSound); }, "500");
             setTimeout( () => { fadeOut(containerWelcomeText); }, "500");
             form.style.visibility = "visible";
-            
+
         }
 
-    }
+    }is
 
     document.addEventListener('keydown', keyPress); // The parameter once : true is to prevent the user to press multiple time his key, making the sound repeat himself.
 });
 
 /* =============== Fonctions ============== */
 
-function playSound(el) 
+function playSound(el)
 {
     el.currentTime = 0;
     el.volume = 0.5;

@@ -1,4 +1,9 @@
-window.addEventListener('load', () => { 
+if(localStorage.getItem('checkgriddisable') === "true")
+    document.body.classList.add('no_grid');
+else
+    document.body.classList.remove('no_grid');
+
+window.addEventListener('load', () => {
 
     formMoveIg = document.getElementById("ig_moving");
     xMoveIg = document.getElementById("ig_form_move-x");
@@ -16,6 +21,7 @@ window.addEventListener('load', () => {
     listBtnMoveIg = document.querySelectorAll(".ig_btn_move");
 
     // addListenerBtnMoveIg();
+
 });
 
 let movementTop = 'jsp'
@@ -52,3 +58,4 @@ function pressKey(event)
         listBtnMoveIg[2].click();
     }
 }
+
