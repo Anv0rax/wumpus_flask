@@ -45,8 +45,8 @@
 
         <nav class="nav-buttons">
             <a href="/select-difficulty" class="btn-retro btn-primary">▶ &nbsp;Play</a>
-            <a href="/profile" class="btn-retro btn-secondary">⚙ &nbsp;Profile</a>
             {% if 'user_id' in session %}
+                <a href="/profile" class="btn-retro btn-secondary">⚙ &nbsp;Profile</a>
                 <a href="/logout" class="btn-retro btn-tertiary">✖ &nbsp;Logout</a>
             {% else %}
                 <a href="/login" class="btn-retro btn-tertiary">★ &nbsp;Login</a>

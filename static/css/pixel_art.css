@@ -1,14 +1,15 @@
-#icon-preview {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+.pixart-grid
+{
+    display : grid;
+    grid-template-columns: repeat(24, 1fr);
+    width: min(500px, 60vw);
+    height: min(500px, 60vw);
+    background-color: rgba(255, 255, 255, 0.22);
 }
 
-#user-pixel-art {
-    width: 64px;
-    height: 64px;
-    image-rendering: pixelated;
-    border: 3px double var(--night);
+.pixart-grid .cell
+{
+    border: 1px solid var(--night)
 }
 
 .container-pixArtMaker {
@@ -35,19 +36,12 @@
     transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), visibility 0.4s;
 }
 
-.container-pixArtMaker.active {
-    opacity: 1;
+.container-pixArtMaker.active
+{
+    opacity : 1;
     visibility: visible;
-    pointer-events: auto;
-    transform: translate(-50%, -50%) scale(1);
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(24, 1fr);
-    width: min(500px, 60vw);
-    height: min(500px, 60vw);
-    background-color: rgba(255, 255, 255, 0.22);
+    pointer-events: all;
+    transform: translate(-50%, -50%);
 }
 
 .palette {
@@ -63,10 +57,6 @@
 .palette .color {
     width: 100%;
     aspect-ratio: 1 / 1;
-}
-
-.cell {
-    border: 1px solid var(--night);
 }
 
 .palette .color:nth-child(1) { background-color: red; }
@@ -103,21 +93,37 @@
 #leave { background-image: url("../assets/Leave.png"); background-size: 100% 100%; }
 #confirm { background-image: url("../assets/Confirm.png"); background-size: 100% 100%; }
 
-.error {
-    color: var(--corail);
-    font-family: retro;
+#icon-preview {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-@keyframes led-anim {
-    0% { filter: drop-shadow(0 0 10px var(--colorShadow)); }
-    15% { scale: 1.05; }
-    30% { filter: drop-shadow(0 0 10px var(--white)); }
-    100% { filter: drop-shadow(0 0 10px var(--colorShadow)); }
+#user-pixel-art {
+    width: 64px;
+    height: 64px;
+    image-rendering: pixelated;
+    border: 3px double black;
 }
 
-@media (max-width: 480px) {
-    #returnLogin {
-        margin: 10px auto;
-        padding: 8px 5px;
+#modifyIcon
+{
+    left : 50%;
+    text-align: center;
+    align-items: center;
+}
+
+@media (max-height: 800px)
+{
+    form
+    {
+        font-size: x-small;
+        height : 50%;
     }
+
+    #buttons-form .btn
+    {
+        font-size : x-small;
+    }
+
 }

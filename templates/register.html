@@ -5,7 +5,7 @@
 {% block add_css_js %}
     <link rel="stylesheet" href="{{url_for('static', filename='css/pixel_art.css')}}"/>
     <script src="{{url_for('static', filename='js/stars.js')}}"></script>
-    <script src="{{url_for('static', filename='js/login.js')}}"></script>
+    <script src="{{url_for('static', filename='js/register.js')}}"></script>
 {% endblock %}
 
 {% block class_home %} class="page_here" {% endblock %}
@@ -61,7 +61,7 @@
             <input type="hidden" name="icon" id="icon-data">
 
             <div class="container-pixArtMaker">
-                <div class="grid"></div>
+                <div class="pixart-grid"></div>
                 <div class="palette">
                     <div class="color" data-color="red"></div>
                     <div class="color" data-color="white"></div>

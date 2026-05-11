@@ -3,9 +3,9 @@
 {% block page_title %}Leaderboard - Hunt the Wumpus{% endblock %}
 
 {% block add_css_js %}
-    <link rel="stylesheet" href="{{url_for('static', filename='css/common.css')}}" />
-    <link rel="stylesheet" href="{{url_for('static', filename='css/stats.css')}}"/>
-    <script src="{{url_for('static', filename='js/stats.js')}}"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/stats.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/anim_bg.css')}}" />
+    <script src="{{url_for('static', filename='js/pulse-dot.js.js')}}"></script>
 {% endblock %}
 
 {% block class_stats %} class="page_here" {% endblock %}
@@ -16,9 +16,6 @@
         <div class="grid"></div>
         <div class="overlay"></div>
     </div>
-        <audio id="soundTableAnimation" preload="auto">
-            <source id="son" src="{{url_for('static', filename='assets/sounds/Slider.mp3')}}" type="audio/mp3">
-        </audio>
     <div id="functional">
         <div id="table-wrapper">
             <table id="table">

@@ -4,9 +4,7 @@
 
 {% block add_css_js %}
     <link rel="stylesheet" href="{{url_for('static', filename='css/common.css')}}" />
-    <link rel="stylesheet" href="{{url_for('static', filename='css/login.css')}}"/>
     <link rel="stylesheet" href="{{url_for('static', filename='css/anim_bg.css')}}" />
-    <link rel="stylesheet" href="{{url_for('static', filename='css/formulars.css')}}"/>
 
     <script src="{{url_for('static', filename='js/login.js')}}"></script>
 {% endblock %}
@@ -33,9 +31,9 @@
             <h2>Login</h2>
             <div class="labels-form">
                 <label class="label" for="username">Username</label>
-                <input class="input" type="text" name="username" placeholder="Username" autofocus>
+                <input class="input" type="text" id="username" name="username" placeholder="Username" autofocus>
                 <label class="label" for="password">Password</label>
-                <input class="input" type="password" name="password" placeholder="Password">
+                <input class="input" type="password" id="password" name="password" placeholder="Password">
             </div>
             <button class="validate-form button-in-form" id="login" type="submit">Login</button>
             <button class="button-in-form" id="register" type="button">Create an account</button>

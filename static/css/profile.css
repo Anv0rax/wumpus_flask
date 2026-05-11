@@ -1,17 +1,4 @@
-:root
- {
-    --maskImageSettingsColorBg : radial-gradient(black 75%, transparent 75%);
-	--bgImageSettingsAnimationColor : radial-gradient(rgb(255, 255, 255) 75%, transparent 75%), radial-gradient(white 75%, transparent 75%);
-	--gridColorSettings : repeating-linear-gradient(45deg, var(--gridsettingcolor1) 1%,  var(--gridsettingcolor2) 50%), repeating-linear-gradient(180deg, var(--gridsettingcolor1) 1%,  var(--gridsettingcolor2) 50%),repeating-linear-gradient(315deg, var(--gridsettingcolor1) 1%,  var(--gridsettingcolor2) 50%);
-    --colorTextDisconnectButton : red;
-    --bgrdColorDisconnectButton : rgb(193, 162, 165);
-    --borderColorDisconnectButton : white;
-    --bckGrdColorPixelArtSetting  : #878685;
- }
-
 .overlay {
-    position: absolute;
-
     width: 100%;
     height: 100%;
 
@@ -19,7 +6,6 @@
 
     pointer-events: none;
 }
-
 
 #saveButton {
     color: var(--mint) !important;
@@ -41,136 +27,7 @@
     font-weight: bold;
     text-shadow: 0 0 8px rgba(205, 127, 50, 0.4);
 }
+
 .rank-default {
     color: #ffffff;
-}
-
-.pixart-grid
-{
-    display : grid;
-    grid-template-columns: repeat(24, 1fr);
-    width: min(500px, 60vw);
-    height: min(500px, 60vw);
-    background-color: rgba(255, 255, 255, 0.22);
-}
-
-.pixart-grid .cell
-{
-    border: 1px solid var(--night)
-}
-
-.container-pixArtMaker {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.8);
-    z-index: 10;
-    width: min(70vw, 700px);
-    height: auto;
-    background-color: var(--blue);
-    border-radius: 20px;
-    border: 2px solid var(--white);
-    padding: 20px;
-    box-sizing: border-box;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), visibility 0.4s;
-}
-
-.container-pixArtMaker.active
-{
-    opacity : 1;
-    visibility: visible;
-    pointer-events: all;
-    transform: translate(-50%, -50%);
-}
-
-.palette {
-    position: relative;
-    left: auto;
-    bottom: auto;
-    display: grid;
-    width: 100%;
-    height: auto;
-    grid-template-columns: repeat(18, 1fr);
-}
-
-.palette .color {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-}
-
-.palette .color:nth-child(1) { background-color: red; }
-.palette .color:nth-child(2) { background-color: white; }
-.palette .color:nth-child(3) { background-color: blue; }
-.palette .color:nth-child(4) { background-color: green; }
-.palette .color:nth-child(5) { background-color: orange; }
-.palette .color:nth-child(6) { background-color: pink; }
-.palette .color:nth-child(7) { background-color: purple; }
-.palette .color:nth-child(8) { background-color: brown; }
-.palette .color:nth-child(9) { background-color: black; }
-.palette .color:nth-child(10) { background-color: yellow; }
-.palette .color:nth-child(11) { background-color: lightgreen; }
-.palette .color:nth-child(12) { background-color: lightblue; }
-.palette .color:nth-child(13) { background-color: magenta; }
-.palette .color:nth-child(14) { background-color: cyan; }
-.palette .color:nth-child(15) { background-color: gold; }
-.palette .color:nth-child(16) { background-color: silver; }
-.palette .color:nth-child(17) { background-color: khaki; }
-.palette .color:nth-child(18) { background-color: darkred; }
-
-#pencil, #eraser, #bucket, #leave, #confirm {
-    background-size: 100%;
-    background-color: transparent;
-    border: none;
-    width: 64px;
-    height: 64px;
-    image-rendering: pixelated;
-}
-
-#pencil { background-image: url("../assets/Pencil.png"); }
-#eraser { background-image: url("../assets/Eraser.png"); }
-#bucket { background-image: url("../assets/ColorBucket.png"); }
-#leave { background-image: url("../assets/Leave.png"); background-size: 100% 100%; }
-#confirm { background-image: url("../assets/Confirm.png"); background-size: 100% 100%; }
-
-#icon-preview {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-#user-pixel-art {
-    width: 64px;
-    height: 64px;
-    image-rendering: pixelated;
-    border: 3px double black;
-}
-
-#modifyIcon
-{
-    left : 50%;
-    text-align: center;
-    align-items: center;
-}
-
-@media (max-height: 800px)
-{
-    form
-    {
-        font-size: x-small;
-        height : 50%;
-    }
-
-    #buttons-form .btn
-    {
-        font-size : x-small;
-    }
-
 }

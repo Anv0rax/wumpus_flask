@@ -156,6 +156,7 @@ main
 }
 
 .btn-retro:hover { transform: translateY(-3px); }
+
 .btn-retro:hover::after { bottom: -3px; right: -3px; }
 
 .btn-primary {
@@ -163,6 +164,7 @@ main
     background: rgba(64,200,224,0.06);
     box-shadow: 0 0 22px rgba(64,200,224,0.25);
 }
+
 .btn-primary:hover {
     color: var(--cyan);
     background: rgba(64,200,224,0.16);

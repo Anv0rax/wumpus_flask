@@ -15,6 +15,8 @@ main {
     background: radial-gradient(circle, transparent 20%, rgba(77, 122, 255, 0.2) 80%);
 }
 
+
+
 .animated-grid1 {
     position: absolute;
     width: 150%;
@@ -31,6 +33,8 @@ main {
     to   { transform: translate(-50px, -50px); }
 }
 
+
+
 .animated-grid2 {
     position: absolute;
     width: 150%;
@@ -46,6 +50,7 @@ main {
     from { transform: translate(0, -50px); }
     to   { transform: translate(0, 0); }
 }
+
 
 
 .animated-grid3 {
@@ -138,4 +143,22 @@ main {
     {
         background-position: 0% 42%;
     }
+}
+
+
+
+.pulse-dot {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0;
+    transform: scale(0);
+    animation: pulseDot var(--dur, 3s) ease-out var(--delay, 0s) infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes pulseDot {
+    0%   { opacity: 0;    transform: scale(0); }
+    15%  { opacity: 0.55; transform: scale(0.4); }
+    100% { opacity: 0;    transform: scale(1); }
 }

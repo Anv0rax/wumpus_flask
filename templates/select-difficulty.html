@@ -18,16 +18,7 @@
     </div>
 
     <div id="functional">
-        <audio id="son1" preload="auto">
-            <source id="son" src="{{url_for('static', filename='assets/sounds/Move.mp3')}}" type="audio/mp3">
-        </audio>
-        <audio id="son2" preload="auto">
-            <source src="{{url_for('static', filename='assets/sounds/License-move.mp3')}}" type="audio/mp3">
-        </audio>
-        <audio id="son3" preload="auto">
-            <source src="{{url_for('static', filename='assets/sounds/License-select.mp3')}}"type="audio/mp3">
-        </audio>
-        <form id="formu" class="formular" method="post">
+        <form id="form-select" class="formular" method="post">
             {% with messages = get_flashed_messages(with_categories=true) %}
               {% if messages %}
                 {% for category, message in messages %}
