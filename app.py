@@ -81,11 +81,6 @@ def start() :
 def menu():
     return render_template("main_page.html")
 
-@app.route("/Antoine")
-def Antoine() :
-    print(generate_password_hash("Test1234="))
-    return redirect("/select-difficulty")
-
 @app.route("/play")
 def play() :
     # if 'username' not in session:
