@@ -1,8 +1,3 @@
-if(localStorage.getItem('checkgriddisable') === "true")
-    document.body.classList.add('no_grid');
-else
-    document.body.classList.remove('no_grid');
-
 window.addEventListener('load', () => {
 
     formMoveIg = document.getElementById("ig_moving");
