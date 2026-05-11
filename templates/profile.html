@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block page_title %}Hunt the Wumpus - Profile{% endblock %}
+
+{% block add_css_js %}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/profile.css')}}"/>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/anim_bg.css')}}"/>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/forumlars.css')}}"/>
+    <script src="{{url_for('static', filename='js/profile.js')}}"></script>
+{% endblock %}
+
+{% block class_profile %} class="page_here" {% endblock %}
+
+{% block main_content %}
+{% macro format_rank(rank_val) -%}
+    {% if rank_val == 1 %}
+        <span class="rank-1">🥇 #1</span>
+    {% elif rank_val == 2 %}
+        <span class="rank-2">🥈 #2</span>
+    {% elif rank_val == 3 %}
+        <span class="rank-3">🥉 #3</span>
+    {% else %}
+        <span class="rank-default">#{{ rank_val }}</span>
+    {% endif %}
+{%- endmacro %}
+    <div id="visual_effects">
+        <div id="backgroundAnimationRings"></div>
+        <div class="animated-grid3"></div>
+        <div class="overlay"></div>
+    </div>
+
+    <div id="functional">
+        <form id="form" class="formular long-formular" method="POST" action="/profile">
+            <h2>Your profile, {{ user.username }}</h2>
+            <div class="profile-stats">
+                <img id="user-pixel-art"
+                 src="data:image/png;base64,{{ user.icon }}"
+                 alt="Your own-made icon"
+                 onerror="this.src='/static/assets/Placeholder.png'"
+                 style="image-rendering: pixelated; width: 100px; height: 100px;">
+            <div>
+                <p>🌍 Total Score 🌍 : {{ user.score }}</p>
+                <p>Your score depends on your wins<br>Rank {{ format_rank(ranks.rank_score) }}</p>
+                <br>
+
+                <p>🏆 Number of victories 🏆 : {{ user.numberofvictories }}</p>
+                <p>Rank {{ format_rank(ranks.rank_wins) }}</p>
+                <br>
+
+                <p>💀 Eaten by wumpus 💀 : {{ user.defeats }}</p>
+                <p>Rank {{ format_rank(ranks.rank_survivor) }}</p>
+                <br>
+
+                <p>🟩 Felt in slime pit 🟩 : {{ user.fell_slime_pit }}</p>
+                <p>Rank {{ format_rank(ranks.rank_slime) }}</p>
+                <br>
+
+                <p>🎯 Missed arrouws 🎯 : {{ user.missed }}</p>
+                <p>Rank {{ format_rank(ranks.rank_missed) }}</p>
+                <br>
+
+                <p>🦇 Moved by a bat 🦇 : {{ user.bat_touched }}</p>
+                <p>Rank {{ format_rank(ranks.rank_bats) }}</p>
+            </div>
+            </div>
+            <div class="modifyIcon">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                  {% if messages %}
+                    {% for category, message in messages %}
+                      <div class="alert alert-{{ category }}" role="alert">
+                        {{ message }}
+                      </div>
+                    {% endfor %}
+                  {% endif %}
+                {% endwith %}
+
+                    <div id="buttons-form">
+                        <button id="showGrid" type="button" class="button-in-form">Change icon</button>
+
+                        <button id="saveButton" type="submit" class="button-in-form validate-form">Save changes</button>
+                    </div>
+
+                    <div id="icon-preview">
+                        <p>Icon :</p>
+                        <img id="user-pixel-art" src="" alt="Your own-made icon" onerror="this.src='/static/assets/Placeholder.png'">
+                    </div>
+
+                    <input type="hidden" name="icon" id="icon-data">
+
+                    <div class="container-pixArtMaker">
+                        <div class="pixart-grid"></div>
+                        <div class="palette">
+                            <div class="color" data-color="red"></div>
+                            <div class="color" data-color="white"></div>
+                            <div class="color" data-color="blue"></div>
+                            <div class="color" data-color="green"></div>
+                            <div class="color" data-color="orange"></div>
+                            <div class="color" data-color="pink"></div>
+                            <div class="color" data-color="purple"></div>
+                            <div class="color" data-color="brown"></div>
+                            <div class="color" data-color="black"></div>
+                            <div class="color" data-color="yellow"></div>
+                            <div class="color" data-color="lightgreen"></div>
+                            <div class="color" data-color="lightblue"></div>
+                            <div class="color" data-color="magenta"></div>
+                            <div class="color" data-color="cyan"></div>
+                            <div class="color" data-color="gold"></div>
+                            <div class="color" data-color="silver"></div>
+                            <div class="color" data-color="khaki"></div>
+                            <div class="color" data-color="darkred"></div>
+                        </div>
+                        <div class="pencil-eraserButtons">
+                            <button type="button" id="eraser"></button>
+                            <button type="button" id="pencil"></button>
+                            <button type="button" id="bucket"></button>
+                            <button type="button" id="leave"></button>
+                            <button type="button" id="confirm"></button>
+                        </div>
+                    </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

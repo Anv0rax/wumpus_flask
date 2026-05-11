@@ -21,7 +21,7 @@
             <span class="title-the">WEB GAME</span>
         </div>
 
-<pre class="wumpus-ascii" aria-hidden="true">
+        <pre class="wumpus-ascii" aria-hidden="true">
            +++++++
        +++++++++++++++
      +++++  +++++  +++++
@@ -37,15 +37,15 @@
  +++++++   +++++++   +++++++
 ++++ +++++         +++++ ++++
 ++     +++         +++     ++
-</pre>
+        </pre>
 
         {% if 'user_id' in session %}
-        <div class="session-badge">▶ WELCOME BACK, {{ user.username }}</div>
+        <div class="session-badge">▶ WELCOME BACK, {{ session.username }}</div>
         {% endif %}
 
         <nav class="nav-buttons">
             <a href="/select-difficulty" class="btn-retro btn-primary">▶ &nbsp;Play</a>
-            <a href="/settings" class="btn-retro btn-secondary">⚙ &nbsp;Profile</a>
+            <a href="/profile" class="btn-retro btn-secondary">⚙ &nbsp;Profile</a>
             {% if 'user_id' in session %}
                 <a href="/logout" class="btn-retro btn-tertiary">✖ &nbsp;Logout</a>
             {% else %}

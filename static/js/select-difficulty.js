@@ -1,4 +1,3 @@
-// TODO : Essayer de faire en sorte que si on a activé le param FullScreen, Mute ou autre dans le menu Settings, que ces changements soient aussi effectués partout.
 document.addEventListener('DOMContentLoaded', () =>
 {
     /* ======== Constantes ========*/

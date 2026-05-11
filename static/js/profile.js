@@ -1,87 +1,6 @@
-// TODO : Essayer de faire le lien entre la page du choix de la difficulté, et que la aussi le son par exemple de la musique soit la même dans le menu paramétres ou dans le menu choix difficulté.
-
 document.addEventListener('DOMContentLoaded', () => {
-
-    /* ========= the const ==========*/
-    /*const soundOnMove = document.getElementById('son1');
-    const interactSound = document.getElementById('son2');
-    const lowPerformanceMode = document.getElementById('backgroundAnimationRings');
-    const checkBouton = document.querySelectorAll('.check');
-    const sliderSound = document.getElementById('son4');
-
-    const luminosity = document.getElementById('light');
-    const sfx = document.getElementById('sfx');
-    const imageOfSound = document.getElementById('sound');
-    const paragraphLum = document.getElementById('pLum');
-    const paragraphSfx = document.getElementById('pSfx');
-
-
-    const checkPerformanceMode = document.getElementById('checkPerf');
-
-    const sliders = document.querySelectorAll('.slider');*/
-
-    /* =========================================== */
     let currentColor = "none";
     let currentTool = "pencil";
-    /* ======== the code ========== */
-
-    /*let soundVolume = 0.25;
-    sliderSound.volume = soundVolume;
-
-
-    paragraphLum.textContent = luminosity.value + '%';
-    paragraphSfx.textContent = sfx.value + "%";
-
-    checkBouton.forEach((el) => {
-        el.addEventListener('click', () => {
-            PlaySound(interactSound)
-        });
-    });
-
-    sliders.forEach((s) =>
-    {
-        InitSlidersColor(s);
-        UpdateSlidersColor();
-    });
-
-    imageOfSound.addEventListener('click', () => {
-        if(imageOfSound.src.includes("SoundWhite.png"))
-        {
-            imageOfSound.src = "../static/assets/SoundMuteWhite.png";
-            soundOnMove.volume = 0;
-            interactSound.volume = 0;
-            sliderSound.volume = 0;
-            sfx.value = 0;
-            paragraphSfx.textContent = "Mute activé !";
-            DisableSlider(sfx);
-        }
-        else
-        {
-            imageOfSound.src = "../static/assets/SoundWhite.png";
-            soundOnMove.volume = soundVolume;
-            interactSound.volume = soundVolume;
-            sliderSound.volume = soundVolume;
-            sfx.value = soundVolume*100;
-            EnableSlider(sfx);
-            paragraphSfx.textContent = sfx.value + "%";
-        }
-    });
-
-    luminosity.addEventListener('input', () => {
-        PlaySound(sliderSound);
-        UpdateBrightness(luminosity);
-        paragraphLum.textContent = luminosity.value  + "%";
-    });
-
-    sfx.addEventListener('input', () => {
-        PlaySound(sliderSound);
-        var val = sfx.value / 100;
-        soundOnMove.volume = val;
-        interactSound.volume = val;
-        sliderSound.volume = val;
-        soundVolume = val;
-        paragraphSfx.textContent = sfx.value + "%";
-    });*/
 
 
 
@@ -208,7 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initToggleGrid();
     initLeaveTheGrid();
     initTools();
-    //DisableGridGame();
 
     function Save_Pixart()
     {
@@ -244,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if(hiddenInput)
             hiddenInput.value = imgStringBase64;
 
-        document.getElementById("settings-form").submit();
+        document.getElementById("profile-form").submit();
 
         document.querySelector('.container-pixArtMaker').classList.remove('active');
 
@@ -327,76 +245,3 @@ document.addEventListener('DOMContentLoaded', () => {
         allTheOtherColors = null;
     }
 });
-
-    /* ================================================== */
-
-    /* ================= Functions ==================== */
-
-/*function PlaySound(el)
-{
-    el.currentTime = 0;
-    el.play();
-}
-
-function UpdateBrightness(slider)
-{
-    const val = slider.value;
-    ApplyBrightnessToGame(val / 100);
-}
-
-function ApplyBrightnessToGame(level)
-{
-    document.body.style.filter = `brightness(${level})`;
-}
-
-function DisableSlider(el)
-{
-    el.disabled = true;
-    el.style.setProperty('--range-pct', 0 + '%');
-}
-
-function EnableSlider(el)
-{
-    el.disabled = false;
-    el.style.setProperty('--range-pct', el.value + '%');
-}
-
-function InitSlidersColor(event)
-{
-    const initValue = ((event.value - event.min) / (event.max - event.min)) * 100
-    event.style.setProperty('--range-pct', initValue + '%');
-}
-
-function UpdateSlidersColor()
-{
-    const sliders = document.querySelectorAll('.slider');
-    sliders.forEach((s) =>
-    {
-        s.addEventListener('input', function()
-        {
-            const ratio = (this.value - this.min) / (this.max - this.min) * 100;
-            this.style.setProperty('--range-pct', ratio + '%');
-        });
-    })
-}
-
-function DisableGridGame()
-{
-    const checkTheGrid = document.getElementById('checkGrid');
-
-    if(checkTheGrid) {
-        if (localStorage.getItem('checkgriddisable') === "true") {
-            checkTheGrid.checked = true;
-        }
-
-        // On utilise 'el' ou 'checkTheGrid' au lieu de 'this'
-        checkTheGrid.addEventListener('input', () => {
-            localStorage.setItem('checkgriddisable', checkTheGrid.checked);
-            console.log("Status grille enregistré :", checkTheGrid.checked);
-        });
-    }
-} */
-
-
-
-    /* ===================================== */

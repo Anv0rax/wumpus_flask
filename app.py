@@ -202,10 +202,10 @@ def select() :
                                    s_blind=session.get("blind", default=False))
 
 
-@app.route('/settings', methods=["GET", "POST"])
-def settings():
+@app.route('/profile', methods=["GET", "POST"])
+def profile():
     if 'username' not in session :
-        flash("Please, log into the site or create a account to see your account.", "danger")
+        flash("You're not connected !", "danger")
         return redirect("/login")
 
     if request.method == "POST":
@@ -222,7 +222,7 @@ def settings():
                 flash("Icon updated !", "success")
             except Exception as e:
                 flash(f"SQL error : {e}", "danger")
-            return redirect("/settings")
+            return redirect("/profile")
 
     user_ranks = None
     try:
@@ -237,11 +237,7 @@ def settings():
     except Exception as e:
         print(f"Error fetching ranks: {e}")
 
-    return render_template("settings.html",ranks=user_ranks)
-
-@app.route('/title-screen')
-def title() :
-    return render_template("title-screen.html")
+    return render_template("profile.html",ranks=user_ranks)
 
 @app.route('/stats')
 def stats():

@@ -4,11 +4,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block page_title %}Wumpus{% endblock %}</title>
     <link rel="icon" href="{{url_for('static', filename='assets/wumpus-discord.png')}}" />
-    <link rel="stylesheet" href="{{url_for('static', filename='css/common.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/formulars.css')}}"/>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/common.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/formulars.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/anim_bg.css')}}" />
     {% block add_css_js %} {% endblock %}
 </head>
-<body id="global-body">
+<body>
     <div id="sidebar">
         <header>
             <h1><a href="/">Hunt the Wumpus</a></h1>
@@ -17,7 +18,7 @@
             <div>
                 <a href="/menu" {% block class_home %} {% endblock %}>Home</a>
                 <a href="/play" {% block class_play %} {% endblock %}>Play</a>
-                <a href="/settings" {% block class_settings %} {% endblock %}>Profile</a>
+                <a href="/profile" {% block class_profile %} {% endblock %}>Profile</a>
                 <a href="/stats" {% block class_stats %} {% endblock %}>Stats</a>
                 {% if 'user_id' in session %}
                     <a href="/logout" class="user-disconnect-link">
@@ -36,11 +37,13 @@
 
         <main>
             {% block main_content %}
-                <h1>ERROR 404</h1>
+            <div id="functional">
+                <h1><a href="/">EREEUR 404</a></h1>
                 <br>
-                <img src="{{url_for('static', filename='wumpus-discord.png')}}">
+                <img src="{{url_for('static', filename='assets/wumpus-discord.png')}}">
                 <br>
                 <h1><a href="/">Retourner à l'acceuil</a></h1>
+            </div>
             {% endblock %}
         </main>
     </div>
