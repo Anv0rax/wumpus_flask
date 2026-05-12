@@ -35,8 +35,6 @@ def inject_user():
                     user = cursor.fetchone()
         except Exception as e:
             print(f"Error, user surely not found : {e}")
-    # La variable 'user' sera maintenant accessible dans TOUS les fichiers .html.
-    # je vais donc pouvoir avoir accès aux infos de l'user quand il est connecté pour pouvoir afficher son image
     return dict(user=user)
 
 @app.errorhandler(404)
@@ -64,13 +62,14 @@ def start() :
         wumpus = random_init(matrix, val=WUMPUS)
         generate_around(matrix, wumpus, type=N_WUMP)
 
+        hide_map(matrix)
+        session["player"] = init_player(matrix, first_init=True)
+
         n = 2 if difficulty > EASY else 1
         for i in range(n) :
             bat = random_init(matrix, val=BAT)
             matrix[bat[0]][bat[1]][T_ELEMS] += BAT
 
-        hide_map(matrix)
-        session["player"] = init_player(matrix)
         session["map"] = matrix
         session["gamestate"] = 1
         return redirect("/play")
@@ -83,10 +82,6 @@ def menu():
 
 @app.route("/play")
 def play() :
-    # if 'username' not in session:
-    #     flash("Please be connected to play !", "danger")
-    #     return redirect("/login")
-
     if session.get("map") and session.get("player") :
         if session.get("gamestate", default=0) > 0 :
             coord = request.args
@@ -170,9 +165,6 @@ def play() :
 
 @app.route('/select-difficulty', methods=["GET", "POST"])
 def select() :
-    # if 'username' not in session:
-    #     flash("Please be connected to play !", "danger")
-    #     return redirect("/login")
 
     if request.method == "POST":
         correct = False
@@ -188,18 +180,12 @@ def select() :
             session["express"] = bool(express)
             session["blind"] = bool(blind)
             session["gamestate"] = 0
-            # Ajouter une game au joueur
             return redirect("/start")
-        else :
-            return render_template("select-difficulty.html",
-                                   s_diff=session.get("difficulty", default=1),
-                                   s_express=session.get("express", default=False),
-                                   s_blind=session.get("blind", default=False))
-    else :
-       return render_template("select-difficulty.html",
-                                   s_diff=session.get("difficulty", default=1),
-                                   s_express=session.get("express", default=False),
-                                   s_blind=session.get("blind", default=False))
+        
+    return render_template("select-difficulty.html",
+                                s_diff=session.get("difficulty", default=1),
+                                s_express=session.get("express", default=False),
+                                s_blind=session.get("blind", default=False))
 
 
 @app.route('/profile', methods=["GET", "POST"])

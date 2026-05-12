@@ -13,30 +13,42 @@ def random_init(matrix, n_rows=N_ROW, n_cols=N_COL, val=PLAYER) :
         row = random.randint(0, n_rows-1)
         col = random.randint(0, n_cols-1)
         
-        if val == PLAYER or val == BAT :
-            if ( matrix[row][col][T_ELEMS] in (0, N_WUMP) ) \
-             and ( matrix[row][col][T_BOX] in (CAVERN, N_HOLE) ) :
-                toReturn = (row, col)
-                retry = False
-        elif val == HOLE :
-            if matrix[row][col][T_BOX] in (CAVERN, N_HOLE) :
-                toReturn = (row, col)
-                retry = False
+        match val :
+            case 0 : # First init player
+                if ( matrix[row][col][T_ELEMS] == 0 ) \
+                 and ( matrix[row][col][T_BOX] == CAVERN ) :
+                    toReturn = (row, col)
+                    retry = False
 
-        elif val == WUMPUS :
-            if matrix[row][col][T_BOX] in (CAVERN, N_HOLE, HOLE) :
-                toReturn = (row, col)
-                retry = False
-        else :
-            return False
+            case 32 : # WUMPUS
+                if matrix[row][col][T_BOX] in (CAVERN, N_HOLE, HOLE) :
+                    toReturn = (row, col)
+                    retry = False
+
+            case 8 : # HOLE
+                if matrix[row][col][T_BOX] in (CAVERN, N_HOLE) :
+                    toReturn = (row, col)
+                    retry = False
+
+            case i if i == PLAYER or i == BAT :
+                if ( matrix[row][col][T_ELEMS] in (0, N_WUMP) ) \
+                 and ( matrix[row][col][T_BOX] in (CAVERN, N_HOLE) ) :
+                    toReturn = (row, col)
+                    retry = False
+
+            case _ :
+                return False
     return toReturn
 
 # =========================================================
 #
 # =========================================================
 
-def init_player(matrix, n_rows=N_ROW, n_cols=N_COL) :
-    pos = random_init(matrix, val=PLAYER)
+def init_player(matrix, n_rows=N_ROW, n_cols=N_COL, first_init=False) :
+    if first_init :
+        pos = random_init(matrix, val=0)
+    else :
+        pos = random_init(matrix, val=PLAYER)
     y = pos[0]
     x = pos[1]
     matrix[y][x][T_PLAYER] = IS_HERE
@@ -96,7 +108,6 @@ def generate_around(matrix, pos, type=N_WUMP, wump=False) :
         (possible, next_y, next_x) = move_item(matrix, y, x, my, mx)
 
         if (next_y, next_x) == wump : # if the wumpus is here, continue
-            matrix[wump[0]][wump[1]][T_ELEMS] = WUMPUS
             matrix[next_y][next_x][T_PLAYER] = IS_NOT_HERE
             continue
 
@@ -107,7 +118,6 @@ def generate_around(matrix, pos, type=N_WUMP, wump=False) :
             if matrix[next_y][next_x][T_BOX] in (CAVERN, N_HOLE) :
 
                 if (next_y, next_x) == wump : # if the wumpus is here, continue
-                    matrix[wump[0]][wump[1]][T_ELEMS] = WUMPUS
                     matrix[next_y][next_x][T_PLAYER] = IS_NOT_HERE
                     continue
 
@@ -117,3 +127,4 @@ def generate_around(matrix, pos, type=N_WUMP, wump=False) :
 
         if type == N_WUMP and not wump :
             generate_around(matrix, (next_y, next_x), wump=pos, type=N_WUMP)
+            matrix[pos[0]][pos[1]][T_ELEMS] = WUMPUS
