@@ -81,7 +81,7 @@ h1 {
     padding: 1cqh 2cqw;
     margin-bottom: 1cqh;
     border-radius: 6px;
-    font-size: clamp(6px, 1.8cqh, 11px);
+    font-size: clamp(12px, 3cqh, 15px);
 	font-family: monospace;
     color: var(--white);
     background-color: rgba(255, 90, 61, 0.25);
@@ -554,7 +554,8 @@ footer {
     height: min(520px, 86vh);
 
     padding: 2cqh 3cqw;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
 
     font-family: retro;
     font-size: clamp(8px, 3cqh, 13px);
