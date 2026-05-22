@@ -51,8 +51,7 @@
 	src: url('../assets/fonts/funky_star.ttf');
 }
 
-@font-face
-{
+@font-face {
 	font-family: retro;
 	src : url('../assets/fonts/PressStart2P-Regular.ttf')
 }
@@ -64,6 +63,10 @@
     font-weight: normal;
     box-sizing: border-box;
 	cursor: var(--cursor-default);
+}
+
+.display-none {
+    display: none !important;
 }
 
 html, body {
@@ -78,33 +81,25 @@ h1 {
 }
 
 .alert {
-    padding: 1cqh 2cqw;
-    margin-bottom: 1cqh;
-    border-radius: 6px;
-    font-size: clamp(12px, 3cqh, 15px);
-	font-family: monospace;
+    padding: 1cqw;
+    margin-bottom: 4cqh;
+    border-radius: 8px;
+    font-size: clamp(14px, 4cqh, 18px);
+    font-family: titles;
     color: var(--white);
     background-color: rgba(255, 90, 61, 0.25);
     border: 1px solid var(--coral);
 }
 
 .alert-danger {
-    font-family: titles;
     color: var(--coral);
-    padding: 15px;
-    margin: 10px 0;
-    border-radius: 8px;
     text-shadow: 1px 1px 2px black;
     background-color: rgba(255, 90, 61, 0.25);
     border: 1px solid var(--coral);
 }
 
 .alert-success {
-    font-family: titles;
     color: var(--mint);
-    padding: 15px;
-    margin: 10px 0;
-    border-radius: 8px;
     text-shadow: 1px 1px 2px black;
     background-color: rgba(61, 204, 106, 0.25);
     border: 1px solid var(--mint); 
@@ -550,15 +545,15 @@ footer {
     container-type: size;
     container-name: card;
 
-    width: min(520px, 92vw);
-    height: min(520px, 86vh);
+    width: min(550px, 92vw);
+    height: min(600px, 89vh);
 
-    padding: 2cqh 3cqw;
+    padding: 2cqh;
     overflow-y: auto;
     overflow-x: hidden;
 
     font-family: retro;
-    font-size: clamp(8px, 3cqh, 13px);
+    font-size: clamp(12px, 5cqh, 17px);
     text-align: center;
     letter-spacing: 1.5px;
     line-height: 1.9;
@@ -571,8 +566,8 @@ footer {
 }
 
 .long-formular {
-    width: min(600px, 90vw);
-    height: min(850px, 86vh);
+    width: min(620px, 92vw);
+    height: min(870px, 90vh);
 
     justify-content: start;
 
@@ -581,7 +576,7 @@ footer {
 
 .formular h2 {
     font-family: titles;
-    font-size: clamp(18px, 9cqh, 40px);
+    font-size: clamp(20px, 11cqh, 42px);
     color: var(--coral);
     text-shadow: 0 0 12px var(--blue);
     margin-bottom: min(0.8vw, 1.2vh);
@@ -590,7 +585,7 @@ footer {
 }
 
 .formular label > p, .formular > p {
-    font-size: clamp(8px, 2.8cqh, 12px);
+    font-size: clamp(10px, 4cqh, 15px);
     margin: 1.2cqh 0 0.5cqh 0;
     color: var(--white);
     cursor: var(--cursor-default);
@@ -603,7 +598,7 @@ footer {
     margin: 0.8cqh auto 1.5cqh auto;
 
     font-family: retro;
-    font-size: clamp(8px, 2.5cqh, 12px);
+    font-size: clamp(10px, 4cqh, 15px);
     letter-spacing: 2px;
 
     color: var(--white);
@@ -761,16 +756,21 @@ footer {
 
 .formular .input
 {
-    height: 4vh;
+    height: 4.5vh;
     width: min(80%, 300px);
     
+    padding: 0;
     padding-left: min(30px, 5%);
 
     color: var(--white);
 
     background-color: var(--blue);
-    border: none;
-    border-radius: 3px;
+    border: 2px solid var(--white);
+    border-radius: 5px;
+}
+
+.formular .input:focus {
+    outline: none;
 }
 
 .formular .input::placeholder {

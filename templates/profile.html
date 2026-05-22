@@ -82,7 +82,7 @@
 
                     <div id="icon-preview">
                         <p>Icon :</p>
-                        <img id="user-pixel-art" src="" alt="Your own-made icon" onerror="this.src='/static/assets/Placeholder.png'">
+                        <img id="user-pixel-art" src="data:image/png;base64,{{ user.icon }}" alt="Your own-made icon" onerror="this.src='/static/assets/Placeholder.png'">
                     </div>
 
                     <input type="hidden" name="icon" id="icon-data">
